@@ -1,5 +1,6 @@
 package com.jvel.studentdatabasemanagementsystem.config;
 
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,12 +24,11 @@ public class SecurityConfig {
         http
             .csrf()
             .disable()
-            .authorizeHttpRequests()
-            .requestMatchers("")
-            .permitAll()
-            .anyRequest()
-            .authenticated()
-            .and()
+            .authorizeHttpRequests((auth) -> {
+                auth.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                    .requestMatchers("/**").permitAll()
+                    .anyRequest().authenticated();
+            })
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()

@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -67,8 +67,12 @@ public class JwtService {
                 .setAudience(JwtConfig.AUDIENCE)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-                .signWith(getSignInKey(), SignatureAlgorithm.ES256)
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String generateToken(UserDetails userDetails) {
+        return generateToken(new HashMap<>(), userDetails);
     }
 
     private Key getSignInKey() {
@@ -77,7 +81,7 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String userEmail = this.extractUsername(token); // todo extract the user email from JWT;
+        final String userEmail = this.extractUsername(token);
         final String audience = this.extractAudience(token);
         final String issuer = this.extractIssuer(token);
         final Date expiration = this.extractExpiration(token);
@@ -97,7 +101,7 @@ public class JwtService {
             return false;
         }
 
-        if ((expiration == null) || !expiration.before(new Date())) {
+        if ((expiration == null) || expiration.before(new Date())) {
             System.out.println("JWT invalid: expiration date");
             return false;
         }

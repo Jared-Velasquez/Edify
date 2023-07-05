@@ -28,7 +28,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-    private final AuthenticationProvider authenticationProvider;
 
     @Override
     protected void doFilterInternal(
@@ -78,7 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            String jwt = bearerToken.substring(7, bearerToken.length());
+            String jwt = bearerToken.substring(7);
             return jwt;
         }
         return null;
