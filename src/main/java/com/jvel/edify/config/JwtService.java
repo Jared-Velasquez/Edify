@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,13 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
+
+    @Value("${edify-jwt.SECRET_KEY}")
+    private String SECRET_KEY;
+    @Value("${edify-jwt.ISSUER}")
+    private String ISSUER;
+    @Value("${edify-jwt.AUDIENCE}")
+    private String AUDIENCE;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -63,8 +71,8 @@ public class JwtService {
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
-                .setIssuer(JwtConfig.ISSUER)
-                .setAudience(JwtConfig.AUDIENCE)
+                .setIssuer(ISSUER)
+                .setAudience(AUDIENCE)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -76,7 +84,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(JwtConfig.SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -91,12 +99,12 @@ public class JwtService {
             return false;
         }
 
-        if ((audience == null) || !audience.equals(JwtConfig.AUDIENCE)) {
+        if ((audience == null) || !audience.equals(AUDIENCE)) {
             System.out.println("JWT invalid: audience");
             return false;
         }
 
-        if ((issuer == null) || !issuer.equals(JwtConfig.ISSUER)) {
+        if ((issuer == null) || !issuer.equals(ISSUER)) {
             System.out.println("JWT invalid: issuer");
             return false;
         }

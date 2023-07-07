@@ -1,5 +1,8 @@
 package com.jvel.edify.auth;
 
+import com.jvel.edify.auth.requests.AuthenticationRequest;
+import com.jvel.edify.auth.requests.RegisterRequest;
+import com.jvel.edify.auth.responses.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,5 +1,8 @@
 package com.jvel.edify.auth;
 
+import com.jvel.edify.auth.requests.AuthenticationRequest;
+import com.jvel.edify.auth.requests.RegisterRequest;
+import com.jvel.edify.auth.responses.AuthenticationResponse;
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.user.Role;
 import com.jvel.edify.user.User;
