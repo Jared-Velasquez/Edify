@@ -1,4 +1,4 @@
-package com.jvel.studentdatabasemanagementsystem.user;
+package com.jvel.edify.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

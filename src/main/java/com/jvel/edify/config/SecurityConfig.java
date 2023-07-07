@@ -1,7 +1,6 @@
-package com.jvel.studentdatabasemanagementsystem.config;
+package com.jvel.edify.config;
 
 import jakarta.servlet.DispatcherType;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

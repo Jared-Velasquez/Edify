@@ -1,4 +1,4 @@
-package com.jvel.studentdatabasemanagementsystem.config;
+package com.jvel.edify.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

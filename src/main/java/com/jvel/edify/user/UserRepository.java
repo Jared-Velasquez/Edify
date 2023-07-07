@@ -1,4 +1,4 @@
-package com.jvel.studentdatabasemanagementsystem.user;
+package com.jvel.edify.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

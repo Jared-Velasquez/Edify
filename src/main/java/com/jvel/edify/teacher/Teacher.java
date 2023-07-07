@@ -1,4 +1,4 @@
-package com.jvel.studentdatabasemanagementsystem.teacher;
+package com.jvel.edify.teacher;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

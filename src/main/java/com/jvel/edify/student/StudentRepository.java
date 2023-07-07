@@ -1,4 +1,4 @@
-package com.jvel.studentdatabasemanagementsystem.student;
+package com.jvel.edify.student;
 
 import org.springframework.stereotype.Repository;
 

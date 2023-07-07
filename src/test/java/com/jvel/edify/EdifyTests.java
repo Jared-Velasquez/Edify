@@ -1,10 +1,10 @@
-package com.jvel.studentdatabasemanagementsystem;
+package com.jvel.edify;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StudentDatabaseManagementSystemApplicationTests {
+class EdifyTests {
 
 	@Test
 	void contextLoads() {

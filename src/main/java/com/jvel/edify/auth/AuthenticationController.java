@@ -1,4 +1,4 @@
-package com.jvel.studentdatabasemanagementsystem.auth;
+package com.jvel.edify.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

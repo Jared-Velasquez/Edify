@@ -1,9 +1,9 @@
-package com.jvel.studentdatabasemanagementsystem.auth;
+package com.jvel.edify.auth;
 
-import com.jvel.studentdatabasemanagementsystem.config.JwtService;
-import com.jvel.studentdatabasemanagementsystem.user.Role;
-import com.jvel.studentdatabasemanagementsystem.user.User;
-import com.jvel.studentdatabasemanagementsystem.user.UserRepository;
+import com.jvel.edify.config.JwtService;
+import com.jvel.edify.user.Role;
+import com.jvel.edify.user.User;
+import com.jvel.edify.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

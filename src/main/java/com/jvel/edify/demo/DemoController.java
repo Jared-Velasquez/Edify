@@ -1,4 +1,4 @@
-package com.jvel.studentdatabasemanagementsystem.demo;
+package com.jvel.edify.demo;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
