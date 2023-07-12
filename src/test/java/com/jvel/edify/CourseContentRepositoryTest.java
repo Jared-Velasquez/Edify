@@ -17,11 +17,11 @@ public class CourseContentRepositoryTest {
     @Test
     public void SaveCourseContent() {
         Course course = Course.builder()
-                .title("Data Structures and Algorithms")
-                .units(6)
+                .title("DSA")
+                .units(5)
                 .build();
         CourseContent courseContent = CourseContent.builder()
-                .url("www.google.com")
+                .url("www.test.com")
                 .course(course)
                 .build();
 

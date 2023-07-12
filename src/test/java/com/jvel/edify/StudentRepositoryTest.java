@@ -55,6 +55,6 @@ public class StudentRepositoryTest {
 
     @Test
     public void updateFirstNameTest() {
-        studentRepository.updateFirstNameByEmailAddress("Darren", "jaredvel24@gmail.com");
+        studentRepository.updateFirstNameByEmailAddress("Jared 3", "jaredvel24@gmail.com");
     }
 }

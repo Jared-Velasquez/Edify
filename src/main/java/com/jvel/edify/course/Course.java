@@ -1,11 +1,14 @@
 package com.jvel.edify.course;
 
 import com.jvel.edify.coursecontent.CourseContent;
+import com.jvel.edify.student.Student;
+import com.jvel.edify.teacher.Teacher;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(
         name = "course_table"
 )
+@ToString(exclude = "students")
 public class Course {
     @Id
     @SequenceGenerator(
@@ -34,4 +38,31 @@ public class Course {
             mappedBy = "course"
     )
     private CourseContent courseContent;
+
+    // Consider deletion of CascadeType
+    @ManyToMany
+    @JoinTable(
+            name = "student_course_map",
+            joinColumns = @JoinColumn(
+                    name = "course_id",
+                    referencedColumnName = "courseId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "student_id",
+                    referencedColumnName = "studentId"
+            )
+    )
+    private List<Student> students;
+
+    public void addStudents(Student student) {
+        if (students == null) students = new ArrayList<>();
+        students.add(student);
+    }
+
+    @ManyToOne()
+    @JoinColumn(
+            name = "teacher_id",
+            referencedColumnName = "teacherId"
+    )
+    private Teacher teacher;
 }

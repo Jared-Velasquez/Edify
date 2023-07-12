@@ -54,7 +54,4 @@ public class Student {
             nullable = false
     )
     private Integer SSN;
-    //@ManyToMany
-    //private List<Course> courses;
-
 }
