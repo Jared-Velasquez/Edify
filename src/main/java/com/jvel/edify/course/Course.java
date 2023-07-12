@@ -1,5 +1,6 @@
 package com.jvel.edify.course;
 
+import com.jvel.edify.coursecontent.CourseContent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,15 +18,20 @@ import lombok.NoArgsConstructor;
 public class Course {
     @Id
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "course_sequence",
+            sequenceName = "course_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "course_sequence"
     )
     private Long courseId;
     private String title;
     private Integer units;
+
+    @OneToOne(
+            mappedBy = "course"
+    )
+    private CourseContent courseContent;
 }

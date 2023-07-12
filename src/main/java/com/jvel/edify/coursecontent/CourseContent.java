@@ -1,0 +1,39 @@
+package com.jvel.edify.coursecontent;
+
+import com.jvel.edify.course.Course;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(
+        name = "course_content_table"
+)
+@ToString(exclude = "course")
+public class CourseContent {
+    @Id
+    @SequenceGenerator(
+            name = "course_content_sequence",
+            sequenceName = "course_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "course_content_sequence"
+    )
+    private Long courseContentId;
+    private String url;
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(
+            name = "course_id",
+            referencedColumnName = "courseId"
+    )
+    private Course course;
+}
