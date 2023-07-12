@@ -1,10 +1,14 @@
 package com.jvel.edify.student;
 
+import com.jvel.edify.course.Course;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -13,10 +17,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(
         name = "student_table",
-        uniqueConstraints = @UniqueConstraint(
-                name="emailid_unique",
-                columnNames = "emailAddress"
-        )
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name="email_address_unique",
+                        columnNames = "emailAddress"
+                ),
+                @UniqueConstraint(
+                        name = "ssn_unique",
+                        columnNames = "ssn"
+                )
+        }
 )
 public class Student {
     @Id
@@ -33,8 +43,18 @@ public class Student {
     private String firstName;
     private String lastName;
     @Column(
-            name = "emailAddress",
             nullable = false
     )
-    private String emailId;
+    private String emailAddress;
+    private String gender;
+    private Date DOB;
+    private String address;
+    private String phoneNumber;
+    @Column(
+            nullable = false
+    )
+    private Integer SSN;
+    //@ManyToMany
+    //private List<Course> courses;
+
 }
