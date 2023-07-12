@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 !**/src/main/java/com/jvel/studentdatabasemanagementsystem/config/JwtConfig.java
+src/main/resources
 
 ### STS ###
 .apt_generated

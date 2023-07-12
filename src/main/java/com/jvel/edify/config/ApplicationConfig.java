@@ -1,6 +1,6 @@
 package com.jvel.edify.config;
 
-import com.jvel.edify.user.UserRepository;
+import com.jvel.edify.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

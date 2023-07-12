@@ -1,5 +1,6 @@
-package com.jvel.edify.student;
+package com.jvel.edify.repository;
 
+import com.jvel.edify.entity.Student;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

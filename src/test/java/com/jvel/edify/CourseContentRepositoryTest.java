@@ -1,8 +1,8 @@
 package com.jvel.edify;
 
-import com.jvel.edify.course.Course;
-import com.jvel.edify.coursecontent.CourseContent;
-import com.jvel.edify.coursecontent.CourseContentRepository;
+import com.jvel.edify.entity.Course;
+import com.jvel.edify.entity.CourseContent;
+import com.jvel.edify.repository.CourseContentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,16 +1,15 @@
 package com.jvel.edify;
 
-import com.jvel.edify.course.Course;
-import com.jvel.edify.course.CourseRepository;
-import com.jvel.edify.student.Student;
-import com.jvel.edify.student.StudentRepository;
-import com.jvel.edify.teacher.Teacher;
-import com.jvel.edify.teacher.TeacherRepository;
+import com.jvel.edify.entity.Course;
+import com.jvel.edify.repository.CourseRepository;
+import com.jvel.edify.entity.Student;
+import com.jvel.edify.repository.StudentRepository;
+import com.jvel.edify.entity.Teacher;
+import com.jvel.edify.repository.TeacherRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

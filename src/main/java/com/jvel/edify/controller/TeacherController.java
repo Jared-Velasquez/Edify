@@ -1,4 +1,4 @@
-package com.jvel.edify.teacher;
+package com.jvel.edify.controller;
 
 public class TeacherController {
 }

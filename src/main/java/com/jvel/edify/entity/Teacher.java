@@ -1,15 +1,10 @@
-package com.jvel.edify.teacher;
+package com.jvel.edify.entity;
 
-import com.jvel.edify.course.Course;
-import com.jvel.edify.student.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder

@@ -1,11 +1,7 @@
-package com.jvel.edify.course;
+package com.jvel.edify.entity;
 
-import com.jvel.edify.coursecontent.CourseContent;
-import com.jvel.edify.student.Student;
-import com.jvel.edify.teacher.Teacher;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;

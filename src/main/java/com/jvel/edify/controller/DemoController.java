@@ -1,4 +1,4 @@
-package com.jvel.edify.demo;
+package com.jvel.edify.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

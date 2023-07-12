@@ -1,5 +1,6 @@
-package com.jvel.edify.teacher;
+package com.jvel.edify.repository;
 
+import com.jvel.edify.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

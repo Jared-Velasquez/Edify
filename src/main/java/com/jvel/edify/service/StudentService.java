@@ -1,4 +1,4 @@
-package com.jvel.edify.student;
+package com.jvel.edify.service;
 
 public class StudentService {
 }

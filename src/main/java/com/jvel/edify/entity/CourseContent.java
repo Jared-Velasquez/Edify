@@ -1,6 +1,6 @@
-package com.jvel.edify.coursecontent;
+package com.jvel.edify.entity;
 
-import com.jvel.edify.course.Course;
+import com.jvel.edify.entity.Course;
 import jakarta.persistence.*;
 import lombok.*;
 

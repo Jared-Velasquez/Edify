@@ -1,5 +1,6 @@
-package com.jvel.edify.user;
+package com.jvel.edify.entity;
 
+import com.jvel.edify.user.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
