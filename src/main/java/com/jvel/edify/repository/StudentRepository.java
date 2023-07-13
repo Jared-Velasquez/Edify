@@ -26,5 +26,12 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             value = "update student_table set first_name = ?1 where email_address = ?2",
             nativeQuery = true
     )
-    int updateFirstNameByEmailAddress(String firstName, String emailAddress);
+    long updateFirstNameByEmailAddress(String firstName, String emailAddress);
+
+    @Modifying
+    @Transactional
+    long deleteByEmailAddress(String emailAddress);
+
+    boolean existsByEmailAddress(String emailAddress);
+
 }
