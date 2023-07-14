@@ -45,11 +45,11 @@ public class Student {
     )
     private String emailAddress;
     private String gender;
-    private Date DOB;
+    private Date dob;
     private String address;
     private String phoneNumber;
     @Column(
             nullable = false
     )
-    private Integer SSN;
+    private Integer ssn;
 }

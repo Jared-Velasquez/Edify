@@ -6,12 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Optional;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentQueryResponse {
-    private Student student;
+public class StudentQueryMultipleResponse {
+    private List<Student> students;
 }

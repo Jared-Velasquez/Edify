@@ -1,10 +1,12 @@
 package com.jvel.edify.service;
 
+import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
 import com.jvel.edify.repository.CourseRepository;
 import com.jvel.edify.repository.StudentRepository;
 import com.jvel.edify.repository.TeacherRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,43 +24,158 @@ public class StudentService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public StudentQueryResponse getAllStudents() {
-        List<Student> students = studentRepository.findAll();
-        return StudentQueryResponse.builder()
-                .students(students)
-                .build();
-    }
-
     public void addStudent(Student student) {
+        //System.out.println("student = " + student);
         // Check if email is present
         if (student.getEmailAddress() == null)
             throw new IllegalStateException("Email address is not present");
 
         // Check if SSN is present
-        if (student.getSSN() == null)
+        if (student.getSsn() == null)
             throw new IllegalStateException("SSN is not present");
 
         // Check if another student has the same email address as this student
-        Optional<Student> studentOptional = studentRepository.findByEmailAddress(student.getEmailAddress());
-        if (studentOptional.isPresent())
+        Optional<Student> studentOptionalEmail = studentRepository.findByEmailAddress(student.getEmailAddress());
+        if (studentOptionalEmail.isPresent())
             throw new IllegalStateException("email taken");
+
+        // Check if another student has the sane SSN as this student
+        Optional<Student> studentOptionalSSN = studentRepository.findBySsn(student.getSsn());
+        if (studentOptionalSSN.isPresent())
+            throw new IllegalStateException("ssn taken");
 
         studentRepository.save(student);
     }
 
+    public StudentQueryMultipleResponse getAllStudents() {
+        List<Student> students = studentRepository.findAll();
+        return StudentQueryMultipleResponse.builder()
+                .students(students)
+                .build();
+    }
+
+    public StudentQueryResponse getStudentById(Long studentId) {
+        Optional<Student> student = studentRepository.findById(studentId);
+
+        if (student.isPresent())
+            return StudentQueryResponse.builder()
+                    .student(student.get())
+                    .build();
+        return StudentQueryResponse.builder()
+                .student(null)
+                .build();
+    }
+
+    public StudentQueryResponse getStudentByEmailAddress(String emailAddress) {
+        Optional<Student> student = studentRepository.findByEmailAddress(emailAddress);
+
+        if (student.isPresent())
+            return StudentQueryResponse.builder()
+                    .student(student.get())
+                    .build();
+        return StudentQueryResponse.builder()
+                .student(null)
+                .build();
+    }
+
+    @Transactional
+    public void updateStudentEmail(Long studentId, String newEmail) {
+        if (studentId == null)
+            throw new IllegalStateException("Student ID not specified");
+        if (newEmail == null || newEmail.length() == 0)
+            throw new IllegalStateException("Desired email not specified");
+
+        Optional<Student> studentWithId = studentRepository.findById(studentId);
+        Optional<Student> studentNewEmail = studentRepository.findByEmailAddress(newEmail);
+
+        // If no student has this old email
+        if (!studentWithId.isPresent())
+            throw new IllegalStateException("Student with email " + studentId + " does not exist");
+        // If a student already has this new email
+        if (studentNewEmail.isPresent())
+            throw new IllegalStateException("Student with email " + newEmail + " already exists");
+
+        studentWithId.get().setEmailAddress(newEmail);
+    }
+
+    @Transactional
+    public void updateStudentEmail(String oldEmail, String newEmail) {
+        if (oldEmail == null || oldEmail.length() == 0)
+            throw new IllegalStateException("Current email not specified");
+        if (newEmail == null || newEmail.length() == 0)
+            throw new IllegalStateException("Desired email not specified");
+
+        Optional<Student> studentOldEmail = studentRepository.findByEmailAddress(oldEmail);
+        Optional<Student> studentNewEmail = studentRepository.findByEmailAddress(newEmail);
+
+        // If no student has this old email
+        if (!studentOldEmail.isPresent())
+            throw new IllegalStateException("Student with email " + oldEmail + " does not exist");
+        // If a student already has this new email
+        if (studentNewEmail.isPresent())
+            throw new IllegalStateException("Student with email " + newEmail + " already exists");
+
+        studentOldEmail.get().setEmailAddress(newEmail);
+    }
+
+    @Transactional
+    public void updateStudentName(Long studentId, String firstName, String lastName) {
+        if (studentId == null)
+            throw new IllegalStateException("Student ID not specified");
+
+        Optional<Student> student = studentRepository.findById(studentId);
+
+        // If first name is specified but is an empty string
+        if (firstName != null && firstName.length() == 0)
+            throw new IllegalStateException("First name cannot be empty");
+
+        // If last name is specified but is an empty string
+        if (lastName != null && lastName.length() == 0)
+            throw new IllegalStateException("Last name cannot be empty");
+
+        if (firstName != null && firstName.length() > 0)
+            student.get().setFirstName(firstName);
+
+        if (lastName != null && lastName.length() > 0)
+            student.get().setLastName(lastName);
+    }
+
+    @Transactional
+    public void updateStudentName(String emailAddress, String firstName, String lastName) {
+        if (emailAddress == null)
+            throw new IllegalStateException("Student email not specified");
+
+        Optional<Student> student = studentRepository.findByEmailAddress(emailAddress);
+
+        // If first name is specified but is an empty string
+        if (firstName != null && firstName.length() == 0)
+            throw new IllegalStateException("First name cannot be empty");
+
+        // If last name is specified but is an empty string
+        if (lastName != null && lastName.length() == 0)
+            throw new IllegalStateException("Last name cannot be empty");
+
+        if (firstName != null && firstName.length() > 0)
+            student.get().setFirstName(firstName);
+
+        if (lastName != null && lastName.length() > 0)
+            student.get().setLastName(lastName);
+    }
+
+
     public void deleteStudent(Long studentId) {
         boolean exists = studentRepository.existsById(studentId);
-        if (!exists) {
-            throw new IllegalStateException("student with id " + studentId + " does not exist");
-        }
+        if (!exists)
+            throw new IllegalStateException("Student with id " + studentId + " does not exist");
+
         studentRepository.deleteById(studentId);
     }
 
     public void deleteStudent(String emailAddress) {
         boolean exists = studentRepository.existsByEmailAddress(emailAddress);
-        if (!exists) {
-            throw new IllegalStateException("student with email " + emailAddress + " does not exist");
-        }
+        if (!exists)
+            throw new IllegalStateException("Student with email " + emailAddress + " does not exist");
+
         studentRepository.deleteByEmailAddress(emailAddress);
     }
 
