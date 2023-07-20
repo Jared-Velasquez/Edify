@@ -45,7 +45,7 @@ public class Course {
             ),
             inverseJoinColumns = @JoinColumn(
                     name = "student_id",
-                    referencedColumnName = "studentId"
+                    referencedColumnName = "id"
             )
     )
     private List<Student> students;
@@ -58,7 +58,7 @@ public class Course {
     @ManyToOne()
     @JoinColumn(
             name = "teacher_id",
-            referencedColumnName = "teacherId"
+            referencedColumnName = "id"
     )
     private Teacher teacher;
 }

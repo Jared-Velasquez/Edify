@@ -1,39 +1,36 @@
 package com.jvel.edify.entity;
 
+import com.jvel.edify.entity.roles.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+import java.sql.Date;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(
-        name = "teacher_table",
-        uniqueConstraints = @UniqueConstraint(
-                name="email_address_unique",
-                columnNames = "emailAddress"
-        )
+        name = "teacher_table"
 )
-public class Teacher {
-    @Id
-    @SequenceGenerator(
-            name = "teacher_sequence",
-            sequenceName = "teacher_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "teacher_sequence"
-    )
-    private Long teacherId;
-    private String firstName;
-    private String lastName;
-    @Column(
-            nullable = false
-    )
-    private String emailAddress;
+@DiscriminatorValue("TEACHER")
+public class Teacher extends User {
+    private String gender;
+    private String address;
+    private String phoneNumber;
+
+    @Builder
+    public Teacher(String firstName, String lastName, String emailAddress, Integer ssn, String password, Date dob, String gender, String address, String phoneNumber) {
+        super(firstName, lastName, emailAddress, ssn, password, dob, Role.TEACHER);
+        this.gender = gender;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Builder
+    public Teacher() {
+        super();
+    }
 }

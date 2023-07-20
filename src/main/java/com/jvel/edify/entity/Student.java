@@ -4,52 +4,33 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import com.jvel.edify.entity.roles.Role;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.sql.Date;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(
-        name = "student_table",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name="email_address_unique",
-                        columnNames = "emailAddress"
-                ),
-                @UniqueConstraint(
-                        name = "ssn_unique",
-                        columnNames = "ssn"
-                )
-        }
+        name = "student_table"
 )
-public class Student {
-    @Id
-    @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
-    )
-    private Long studentId;
-    private String firstName;
-    private String lastName;
-    @Column(
-            nullable = false
-    )
-    private String emailAddress;
+@DiscriminatorValue("STUDENT")
+public class Student extends User {
     private String gender;
-    private Date dob;
     private String address;
     private String phoneNumber;
-    @Column(
-            nullable = false
-    )
-    private Integer ssn;
+
+    @Builder
+    public Student(String firstName, String lastName, String emailAddress, Integer ssn, String password, Date dob, String gender, String address, String phoneNumber) {
+        super(firstName, lastName, emailAddress, ssn, password, dob, Role.STUDENT);
+        this.gender = gender;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Builder
+    public Student() {
+        super();
+    }
 }

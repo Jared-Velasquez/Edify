@@ -1,4 +1,4 @@
-package com.jvel.edify.user;
+package com.jvel.edify.entity.roles;
 
 public enum Role {
     STUDENT,

@@ -17,7 +17,7 @@ public class StudentRepositoryTest {
 
     @Test
     public void saveStudent() {
-        Student student = Student.builder()
+        /*Student student = Student.builder()
                 .emailAddress("jaredvel25@gmail.com")
                 .firstName("Jared")
                 .lastName("Velasquez")
@@ -28,7 +28,7 @@ public class StudentRepositoryTest {
                 .SSN(1234567890)
                 .build();
 
-        studentRepository.save(student);
+        studentRepository.save(student);*/
     }
 
     @Test

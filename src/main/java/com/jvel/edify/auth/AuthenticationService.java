@@ -4,7 +4,7 @@ import com.jvel.edify.auth.requests.AuthenticationRequest;
 import com.jvel.edify.auth.requests.RegisterRequest;
 import com.jvel.edify.auth.responses.AuthenticationResponse;
 import com.jvel.edify.config.JwtService;
-import com.jvel.edify.user.Role;
+import com.jvel.edify.entity.roles.Role;
 import com.jvel.edify.entity.User;
 import com.jvel.edify.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
+        /*var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
@@ -32,6 +32,9 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .build();*/
+        return AuthenticationResponse.builder()
+                .token("test")
                 .build();
     }
 
@@ -42,7 +45,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail()).orElseThrow();
+        var user = repository.findByEmail(request.getEmail()).orElseThrow(); // ENSURE THIS STUDENT HAS A UNIQUE EMAIL ADDRESS
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            final String userEmail = jwtService.extractUsername(jwt); // todo extract the user email from JWT;
+            final String userEmail = jwtService.extractUsername(jwt);
 
             // Verify authenticity of JWT
             // If the user has not been authenticated
@@ -64,8 +64,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (UsernameNotFoundException eje) {
+            System.out.println(eje.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } catch (Exception eje) {
+            System.out.println(eje.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
