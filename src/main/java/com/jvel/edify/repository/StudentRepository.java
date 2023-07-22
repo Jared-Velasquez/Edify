@@ -11,28 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
-    List<Student> findByFirstName(String firstName);
-    List<Student> findByLastName(String lastName);
-    List<Student> findByFirstNameContaining(String firstName);
-    List<Student> findByLastNameContaining(String lastName);
-
-    List<Student> findByFirstNameAndLastName(String firstName, String lastName);
-    Optional<Student> findByEmailAddress(String emailAddress);
-    Optional<Student> findBySsn(Integer ssn);
-
-    @Modifying
-    @Transactional
-    @Query(
-            value = "update student_table set first_name = ?1 where email_address = ?2",
-            nativeQuery = true
-    )
-    long updateFirstNameByEmailAddress(String firstName, String emailAddress);
-
-    @Modifying
-    @Transactional
-    long deleteByEmailAddress(String emailAddress);
-
-    boolean existsByEmailAddress(String emailAddress);
+public interface StudentRepository extends UserRepository {
 
 }

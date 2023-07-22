@@ -27,9 +27,11 @@ public class SecurityConfig {
             .csrf()
             .disable()
             .authorizeHttpRequests((auth) -> {
-                auth.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                /*auth.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                     .requestMatchers("/**").permitAll()
-                    .anyRequest().authenticated();
+                    .anyRequest().authenticated();*/
+                auth.requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated();
             })
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -1,7 +1,7 @@
 package com.jvel.edify.auth;
 
 import com.jvel.edify.auth.requests.AuthenticationRequest;
-import com.jvel.edify.auth.requests.RegisterRequest;
+import com.jvel.edify.auth.requests.RegisterStudentRequest;
 import com.jvel.edify.auth.responses.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +18,9 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            @RequestBody RegisterStudentRequest request
     ) {
-        return ResponseEntity.ok(service.register(request));
+        return ResponseEntity.ok(service.registerStudent(request));
     }
 
     @PostMapping("/authenticate")

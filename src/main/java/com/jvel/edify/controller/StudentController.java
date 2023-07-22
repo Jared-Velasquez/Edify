@@ -15,7 +15,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping("/add")
+    @PostMapping("/register")
     public ResponseEntity<String> addNewStudent(@RequestBody Student student) {
         try {
             studentService.addStudent(student);
@@ -45,7 +45,7 @@ public class StudentController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<StudentQueryResponse> getStudentById(@PathVariable("id") Long id) {
+    public ResponseEntity<StudentQueryResponse> getStudentById(@PathVariable("id") Integer id) {
         try {
             StudentQueryResponse response = studentService.getStudentById(id);
             return new ResponseEntity<>(
