@@ -1,9 +1,10 @@
 package com.jvel.edify.auth;
 
 import com.jvel.edify.auth.requests.AuthenticationRequest;
-import com.jvel.edify.auth.requests.RegisterStudentRequest;
+import com.jvel.edify.auth.requests.RegisterRequest;
 import com.jvel.edify.auth.responses.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +19,21 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterStudentRequest request
+            @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(service.registerStudent(request));
+        try {
+            return ResponseEntity.ok(service.register(request));
+        } catch (IllegalArgumentException iae) {
+            System.out.println("iae = " + iae);
+            return new ResponseEntity<>(
+                    HttpStatus.BAD_REQUEST
+            );
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return new ResponseEntity<>(
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
     @PostMapping("/authenticate")

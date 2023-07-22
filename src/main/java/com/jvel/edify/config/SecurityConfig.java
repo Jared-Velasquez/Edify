@@ -30,7 +30,7 @@ public class SecurityConfig {
                 /*auth.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                     .requestMatchers("/**").permitAll()
                     .anyRequest().authenticated();*/
-                auth.requestMatchers("/auth/**").permitAll()
+                auth.requestMatchers("/**").permitAll()
                         .anyRequest().authenticated();
             })
             .sessionManagement()

@@ -11,7 +11,7 @@ import java.sql.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterStudentRequest {
+public class RegisterRequest {
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -21,4 +21,5 @@ public class RegisterStudentRequest {
     private String address;
     private String phoneNumber;
     private String password;
+    private String role;
 }

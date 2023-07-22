@@ -76,8 +76,8 @@ public class StudentController {
         }
     }
 
-    @PutMapping("/id/{id}")
-    public ResponseEntity<String> updateStudentById(@PathVariable("id") Long id) {
+    /*@PutMapping("/id/{id}")
+    public ResponseEntity<String> updateStudentById(@PathVariable("id") Integer id) {
         try {
             studentService.deleteStudent(id);
             return new ResponseEntity<>(
@@ -95,47 +95,5 @@ public class StudentController {
                     HttpStatus.BAD_REQUEST
             );
         }
-    }
-
-    @DeleteMapping("/id/{id}")
-    public ResponseEntity<String> deleteStudentById(@PathVariable("id") Long id) {
-        try {
-            studentService.deleteStudent(id);
-            return new ResponseEntity<>(
-                    "Student successfully deleted",
-                    HttpStatus.OK
-            );
-        } catch(IllegalStateException ise) {
-            return new ResponseEntity<>(
-                ise.getMessage(),
-                HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-    }
-
-    @DeleteMapping("/email/{email}")
-    public ResponseEntity<String> deleteStudentByEmail(@PathVariable("email") String email) {
-        try {
-            studentService.deleteStudent(email);
-            return new ResponseEntity<>(
-                    "Student successfully deleted",
-                    HttpStatus.OK
-            );
-        } catch(IllegalStateException ise) {
-            return new ResponseEntity<>(
-                    ise.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-    }
+    }*/
 }

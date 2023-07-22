@@ -1,10 +1,11 @@
 package com.jvel.edify.auth;
 
 import com.jvel.edify.auth.requests.AuthenticationRequest;
-import com.jvel.edify.auth.requests.RegisterStudentRequest;
+import com.jvel.edify.auth.requests.RegisterRequest;
 import com.jvel.edify.auth.responses.AuthenticationResponse;
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.entity.Student;
+import com.jvel.edify.entity.Teacher;
 import com.jvel.edify.repository.StudentRepository;
 import com.jvel.edify.repository.TeacherRepository;
 import com.jvel.edify.repository.UserRepository;
@@ -23,19 +24,26 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    public AuthenticationResponse registerStudent(RegisterStudentRequest request) {
-        /*var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.STUDENT)
-                .build();
-        repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();*/
+
+    public AuthenticationResponse register(RegisterRequest request) {
+        boolean emailExists = userRepository.existsByEmailAddress(request.getEmailAddress());
+        boolean ssnExists = userRepository.existsBySsn(request.getSsn());
+
+        if (emailExists) throw new IllegalArgumentException("Email already exists");
+        if (ssnExists) throw new IllegalArgumentException("SSN already exists");
+
+        System.out.println(request.getRole());
+        System.out.println(request.getRole() == "STUDENT");
+
+        if (request.getRole().contains("STUDENT")) {
+            return registerStudent(request);
+        } else if (request.getRole().contains("TEACHER")) {
+            return registerTeacher(request);
+        } else {
+            throw new IllegalArgumentException("Unmatched Role");
+        }
+    }
+    public AuthenticationResponse registerStudent(RegisterRequest request) {
         Student student = new Student(
                 request.getFirstName(),
                 request.getLastName(),
@@ -51,6 +59,27 @@ public class AuthenticationService {
         studentRepository.save(student);
 
         var jwtToken = jwtService.generateToken(student);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+    public AuthenticationResponse registerTeacher(RegisterRequest request) {
+        Teacher teacher = new Teacher(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getEmailAddress(),
+                request.getSsn(),
+                passwordEncoder.encode(request.getPassword()),
+                request.getDob(),
+                request.getGender(),
+                request.getAddress(),
+                request.getPhoneNumber()
+        );
+
+        teacherRepository.save(teacher);
+
+        var jwtToken = jwtService.generateToken(teacher);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

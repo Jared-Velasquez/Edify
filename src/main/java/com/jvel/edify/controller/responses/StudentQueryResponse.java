@@ -1,6 +1,6 @@
 package com.jvel.edify.controller.responses;
 
-import com.jvel.edify.entity.Student;
+import com.jvel.edify.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +13,5 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentQueryResponse {
-    private Student student;
+    private User student;
 }
