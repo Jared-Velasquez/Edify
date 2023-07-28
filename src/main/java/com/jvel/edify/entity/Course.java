@@ -1,5 +1,6 @@
 package com.jvel.edify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -54,6 +55,7 @@ public class Course {
                     referencedColumnName = "id"
             )
     )
+    @JsonIgnore
     private List<Student> students;
 
     public void addStudents(Student student) {
@@ -66,5 +68,6 @@ public class Course {
             name = "teacher_id",
             referencedColumnName = "id"
     )
+    @JsonIgnore
     private Teacher teacher;
 }

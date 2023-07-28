@@ -1,9 +1,6 @@
 package com.jvel.edify.service;
 
-import com.jvel.edify.entity.Course;
-import com.jvel.edify.entity.Student;
-import com.jvel.edify.entity.Teacher;
-import com.jvel.edify.entity.User;
+import com.jvel.edify.entity.*;
 import com.jvel.edify.entity.roles.Role;
 import com.jvel.edify.repository.CourseRepository;
 import com.jvel.edify.repository.StudentRepository;
@@ -13,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,6 +40,27 @@ public class CourseService {
                 .teacher((Teacher) teacher.get())
                 .build();
         courseRepository.save(newCourse);
+    }
+
+    public Course getCourse(Long courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (courseOptional.isEmpty())
+            throw new IllegalArgumentException("no course found by id " + courseId);
+        return courseOptional.get();
+    }
+
+    public Teacher getTeacher(Long courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (courseOptional.isEmpty())
+            throw new IllegalArgumentException("no course found by id " + courseId);
+        return courseOptional.get().getTeacher();
+    }
+
+    public List<Student> getStudents(Long courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (courseOptional.isEmpty())
+            throw new IllegalArgumentException("no course found by id " + courseId);
+        return courseOptional.get().getStudents();
     }
 
     @Transactional

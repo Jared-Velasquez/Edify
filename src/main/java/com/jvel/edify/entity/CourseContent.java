@@ -1,5 +1,6 @@
 package com.jvel.edify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jvel.edify.entity.Course;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,5 +37,6 @@ public class CourseContent {
             name = "course_id",
             referencedColumnName = "courseId"
     )
+    @JsonIgnore
     private Course course;
 }

@@ -34,6 +34,13 @@ public class CourseContentService {
         courseContentRepository.save(newCourseContent);
     }
 
+    public CourseContent getCourseContent(Long courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (courseOptional.isEmpty())
+            throw new IllegalArgumentException("no course found by id " + courseId);
+        return courseOptional.get().getCourseContent();
+    }
+
     @Transactional
     public void deleteCourseContent(Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
@@ -44,6 +51,7 @@ public class CourseContentService {
         if (course.getCourseContent() == null)
             throw new IllegalArgumentException("course does not have content to delete");
 
-        Optional<CourseContent> courseContentOptional = courseContentRepository.findBy
+        CourseContent courseContent = course.getCourseContent();
+        courseContentRepository.delete(courseContent);
     }
 }
