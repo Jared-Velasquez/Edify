@@ -6,6 +6,7 @@ import com.jvel.edify.auth.responses.AuthenticationResponse;
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.entity.Student;
 import com.jvel.edify.entity.Teacher;
+import com.jvel.edify.entity.User;
 import com.jvel.edify.repository.StudentRepository;
 import com.jvel.edify.repository.TeacherRepository;
 import com.jvel.edify.repository.UserRepository;
@@ -32,9 +33,6 @@ public class AuthenticationService {
         if (emailExists) throw new IllegalArgumentException("Email already exists");
         if (ssnExists) throw new IllegalArgumentException("SSN already exists");
 
-        System.out.println(request.getRole());
-        System.out.println(request.getRole() == "STUDENT");
-
         if (request.getRole().contains("STUDENT")) {
             return registerStudent(request);
         } else if (request.getRole().contains("TEACHER")) {
@@ -58,7 +56,7 @@ public class AuthenticationService {
 
         studentRepository.save(student);
 
-        var jwtToken = jwtService.generateToken(student);
+        String jwtToken = jwtService.generateToken(student);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -79,7 +77,7 @@ public class AuthenticationService {
 
         teacherRepository.save(teacher);
 
-        var jwtToken = jwtService.generateToken(teacher);
+        String jwtToken = jwtService.generateToken(teacher);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -92,8 +90,8 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = userRepository.findByEmailAddress(request.getEmailAddress()).orElseThrow(); // ENSURE THIS STUDENT HAS A UNIQUE EMAIL ADDRESS
-        var jwtToken = jwtService.generateToken(user);
+        User user = userRepository.findByEmailAddress(request.getEmailAddress()).orElseThrow();
+        String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

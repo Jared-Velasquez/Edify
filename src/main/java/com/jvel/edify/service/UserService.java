@@ -1,19 +1,31 @@
 package com.jvel.edify.service;
 
+import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.UserQueryMultipleResponse;
 import com.jvel.edify.entity.User;
 import com.jvel.edify.repository.UserRepository;
+import com.jvel.edify.util.StreamFilters;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    public UserQueryMultipleResponse getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return UserQueryMultipleResponse.builder()
+                .users(users)
+                .build();
+    }
 
     @Transactional
     public void updateEmail(Integer id, String newEmail) {

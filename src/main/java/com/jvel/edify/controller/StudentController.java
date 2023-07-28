@@ -21,7 +21,7 @@ public class StudentController {
             studentService.addStudent(student);
             return new ResponseEntity<>(
                     "Student successfully added",
-                    HttpStatus.OK
+                    HttpStatus.CREATED
             );
         } catch(IllegalStateException ise) {
             return new ResponseEntity<>(

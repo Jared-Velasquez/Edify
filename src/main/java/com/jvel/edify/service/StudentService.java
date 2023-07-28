@@ -57,6 +57,7 @@ public class StudentService {
     public StudentQueryMultipleResponse getAllStudents() {
         List<User> students = studentRepository.findAll().stream().filter(StreamFilters.byStudent).collect(Collectors.toList());
         return StudentQueryMultipleResponse.builder()
+                .students(students)
                 .build();
     }
 

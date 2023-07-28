@@ -12,7 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(
-        name = "course_table"
+        name = "course_table",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name="title_unique",
+                        columnNames = "title"
+                )
+        }
 )
 @ToString(exclude = "students")
 public class Course {

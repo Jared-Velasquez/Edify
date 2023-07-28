@@ -22,7 +22,10 @@ public class AuthenticationController {
             @RequestBody RegisterRequest request
     ) {
         try {
-            return ResponseEntity.ok(service.register(request));
+            return new ResponseEntity<>(
+                    service.register(request),
+                    HttpStatus.CREATED
+            );
         } catch (IllegalArgumentException iae) {
             System.out.println("iae = " + iae);
             return new ResponseEntity<>(

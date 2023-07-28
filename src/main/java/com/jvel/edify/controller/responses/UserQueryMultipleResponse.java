@@ -13,6 +13,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentQueryMultipleResponse {
-    private List<User> students;
+public class UserQueryMultipleResponse {
+    private List<User> users;
 }
