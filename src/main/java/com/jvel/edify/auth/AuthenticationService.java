@@ -5,6 +5,7 @@ import com.jvel.edify.auth.requests.RegisterRequest;
 import com.jvel.edify.auth.responses.AuthenticationResponse;
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.exceptions.DuplicateEntryException;
+import com.jvel.edify.controller.exceptions.UserNotFoundException;
 import com.jvel.edify.entity.Student;
 import com.jvel.edify.entity.Teacher;
 import com.jvel.edify.entity.User;
@@ -17,6 +18,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -28,6 +31,11 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if (request.getEmailAddress() == null || request.getEmailAddress().length() == 0)
+            throw new IllegalStateException("Email address not specified");
+        if (request.getSsn() == null)
+            throw new IllegalStateException("SSN not specified");
+
         boolean emailExists = userRepository.existsByEmailAddress(request.getEmailAddress());
         boolean ssnExists = userRepository.existsBySsn(request.getSsn());
 
@@ -43,6 +51,20 @@ public class AuthenticationService {
         }
     }
     public AuthenticationResponse registerStudent(RegisterRequest request) {
+        if (request.getFirstName() == null || request.getFirstName().length() == 0)
+            throw new IllegalStateException("First name not specified");
+        if (request.getLastName() == null || request.getLastName().length() == 0)
+            throw new IllegalStateException("Last name not specified");
+        if (request.getDob() == null)
+            throw new IllegalStateException("Date of Birth not specified");
+        if (request.getPassword() == null || request.getPassword().length() == 0)
+        if (request.getGender() == null || request.getGender().length() == 0)
+            throw new IllegalStateException("Gender not specified");
+        if (request.getAddress() == null || request.getAddress().length() == 0)
+            throw new IllegalStateException("Address not specified");
+        if (request.getPhoneNumber() == null || request.getPhoneNumber().length() == 0)
+            throw new IllegalStateException("Phone number not specified");
+
         Student student = new Student(
                 request.getFirstName(),
                 request.getLastName(),
@@ -64,6 +86,21 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse registerTeacher(RegisterRequest request) {
+        if (request.getFirstName() == null || request.getFirstName().length() == 0)
+            throw new IllegalStateException("First name not specified");
+        if (request.getLastName() == null || request.getLastName().length() == 0)
+            throw new IllegalStateException("Last name not specified");
+        if (request.getDob() == null)
+            throw new IllegalStateException("Date of Birth not specified");
+        if (request.getPassword() == null || request.getPassword().length() == 0)
+            throw new IllegalStateException("Password not specified");
+        if (request.getGender() == null || request.getGender().length() == 0)
+            throw new IllegalStateException("Gender not specified");
+        if (request.getAddress() == null || request.getAddress().length() == 0)
+            throw new IllegalStateException("Address not specified");
+        if (request.getPhoneNumber() == null || request.getPhoneNumber().length() == 0)
+            throw new IllegalStateException("Phone number not specified");
+
         Teacher teacher = new Teacher(
                 request.getFirstName(),
                 request.getLastName(),
@@ -85,14 +122,20 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        if (request.getEmailAddress() == null || request.getEmailAddress().length() == 0)
+            throw new IllegalStateException("Email address not specified");
+        if (request.getPassword() == null || request.getPassword().length() == 0)
+            throw new IllegalStateException("Last name not specified");
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmailAddress(),
                         request.getPassword()
                 )
         );
-        User user = userRepository.findByEmailAddress(request.getEmailAddress()).orElseThrow();
-        String jwtToken = jwtService.generateToken(user);
+        Optional<User> user = userRepository.findByEmailAddress(request.getEmailAddress());
+        if (user.isEmpty()) throw new UserNotFoundException("User not found by email address " + request.getEmailAddress());
+        String jwtToken = jwtService.generateToken(user.get());
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

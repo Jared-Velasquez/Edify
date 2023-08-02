@@ -3,8 +3,10 @@ package com.jvel.edify.service;
 import com.jvel.edify.controller.exceptions.StudentNotFoundException;
 import com.jvel.edify.controller.exceptions.UserAlreadyExistsException;
 import com.jvel.edify.controller.exceptions.UserNotFoundException;
+import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryResponse;
+import com.jvel.edify.entity.Course;
 import com.jvel.edify.entity.Student;
 import com.jvel.edify.entity.User;
 import com.jvel.edify.entity.roles.Role;
@@ -82,7 +84,7 @@ public class StudentService {
         if (student.isEmpty())
             throw new UserNotFoundException("User not found by email address " + emailAddress);
         if (student.get().getRole() != Role.STUDENT)
-            throw new StudentNotFoundException("Student not found by email address" + emailAddress);
+            throw new StudentNotFoundException("Student not found by email address " + emailAddress);
 
         return StudentQueryResponse.builder()
                 .student(student.get())

@@ -26,159 +26,73 @@ public class CourseController {
     private CourseContentService courseContentService;
     @PostMapping()
     public ResponseEntity<String> addCourse(@RequestBody CourseCreateRequest course) {
-        try {
-            courseService.addCourse(course.getTitle(), course.getUnits(), course.getTeacherId());
-            return new ResponseEntity<>(
-                    "Course successfully added",
-                    HttpStatus.CREATED
-            );
-        } catch (IllegalArgumentException iae) {
-            return new ResponseEntity<>(
-                    iae.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        courseService.addCourse(course.getTitle(), course.getUnits(), course.getTeacherId());
+        return new ResponseEntity<>(
+                "Course successfully added",
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping()
     public ResponseEntity<Course> getCourse(@RequestBody CourseRequest courseRequest) {
-        try {
-            Course course = courseService.getCourse(courseRequest.getCourseId());
-            return new ResponseEntity<>(
-                    course,
-                    HttpStatus.OK
-            );
-        } catch (IllegalArgumentException iae) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        Course course = courseService.getCourse(courseRequest.getCourseId());
+        return new ResponseEntity<>(
+                course,
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/content")
     public ResponseEntity<CourseContent> getCourseContent(@RequestBody CourseRequest courseRequest) {
-        try {
-            CourseContent courseContent = courseContentService.getCourseContent(courseRequest.getCourseId());
-            return new ResponseEntity<>(
-                    courseContent,
-                    HttpStatus.OK
-            );
-        } catch (IllegalArgumentException iae) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        CourseContent courseContent = courseContentService.getCourseContent(courseRequest.getCourseId());
+        return new ResponseEntity<>(
+                courseContent,
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/teacher")
     public ResponseEntity<Teacher> getTeacher(@RequestBody CourseRequest courseRequest) {
-        try {
-            Teacher teacher = courseService.getTeacher(courseRequest.getCourseId());
-            return new ResponseEntity<>(
-                    teacher,
-                    HttpStatus.OK
-            );
-        } catch (IllegalArgumentException iae) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        Teacher teacher = courseService.getTeacher(courseRequest.getCourseId());
+        return new ResponseEntity<>(
+                teacher,
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/students")
     public ResponseEntity<List<Student>> getStudents(@RequestBody CourseRequest courseRequest) {
-        try {
-            List<Student> students = courseService.getStudents(courseRequest.getCourseId());
-            return new ResponseEntity<>(
-                    students,
-                    HttpStatus.OK
-            );
-        } catch (IllegalArgumentException iae) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        List<Student> students = courseService.getStudents(courseRequest.getCourseId());
+        return new ResponseEntity<>(
+                students,
+                HttpStatus.OK
+        );
     }
 
     @PutMapping("/add-student")
     public ResponseEntity<String> addStudent(@RequestBody CourseStudentRequest csRequest) {
-        try {
-            courseService.addStudentToCourse(csRequest.getCourseId(), csRequest.getStudentId());
-            return new ResponseEntity<>(
-                    "Student successfully added to course",
-                    HttpStatus.OK
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        courseService.addStudentToCourse(csRequest.getCourseId(), csRequest.getStudentId());
+        return new ResponseEntity<>(
+                "Student successfully added to course",
+                HttpStatus.OK
+        );
     }
 
     @PutMapping("/content")
     public ResponseEntity<String> addContent(@RequestBody CourseContentCreateRequest ccRequest) {
-        try {
-            courseContentService.addCourseContent(ccRequest.getContentURL(), ccRequest.getCourseId());
-            return new ResponseEntity<>(
-                    "Content successfully added to course",
-                    HttpStatus.CREATED
-            );
-        } catch (IllegalArgumentException iae) {
-            return new ResponseEntity<>(
-                    iae.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        courseContentService.addCourseContent(ccRequest.getContentURL(), ccRequest.getCourseId());
+        return new ResponseEntity<>(
+                "Content successfully added to course",
+                HttpStatus.CREATED
+        );
     }
 
     @DeleteMapping("/content")
     public ResponseEntity<String> deleteContent(@RequestBody CourseRequest course) {
-        try {
-            courseContentService.deleteCourseContent(course.getCourseId());
-            return new ResponseEntity<>(
-                    "Content successfully deleted from course",
-                    HttpStatus.OK
-            );
-        } catch (IllegalArgumentException iae) {
-            return new ResponseEntity<>(
-                    iae.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        courseContentService.deleteCourseContent(course.getCourseId());
+        return new ResponseEntity<>(
+                "Content successfully deleted from course",
+                HttpStatus.OK
+        );
     }
 }

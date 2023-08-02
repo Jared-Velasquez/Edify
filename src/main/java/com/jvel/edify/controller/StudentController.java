@@ -17,23 +17,11 @@ public class StudentController {
 
     @PostMapping("/register")
     public ResponseEntity<String> addNewStudent(@RequestBody Student student) {
-        try {
-            studentService.addStudent(student);
-            return new ResponseEntity<>(
-                    "Student successfully added",
-                    HttpStatus.CREATED
-            );
-        } catch(IllegalStateException ise) {
-            return new ResponseEntity<>(
-                    ise.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        studentService.addStudent(student);
+        return new ResponseEntity<>(
+                "Student successfully added",
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping(path = "/all")
@@ -46,33 +34,19 @@ public class StudentController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<StudentQueryResponse> getStudentById(@PathVariable("id") Integer id) {
-        try {
-            StudentQueryResponse response = studentService.getStudentById(id);
-            return new ResponseEntity<>(
-                    response,
-                    HttpStatus.OK
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        StudentQueryResponse response = studentService.getStudentById(id);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<StudentQueryResponse> getStudentByEmail(@PathVariable("email") String email) {
-        try {
-            StudentQueryResponse response = studentService.getStudentByEmailAddress(email);
-            return new ResponseEntity<>(
-                    response,
-                    HttpStatus.OK
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        StudentQueryResponse response = studentService.getStudentByEmailAddress(email);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.OK
+        );
     }
 }

@@ -20,22 +20,14 @@ public class TeacherController {
     private TeacherService teacherService;
     @GetMapping("/courses")
     public ResponseEntity<CourseQueryMultipleResponse> getCourses(@RequestBody Integer teacherId) {
-        try {
-            System.out.println("Test getCourses");
-            List<Course> courses = teacherService.getCourses(teacherId);
-            CourseQueryMultipleResponse cqmr = CourseQueryMultipleResponse.builder()
-                    .courses(courses)
-                    .build();
-            return new ResponseEntity<>(
-                    cqmr,
-                    HttpStatus.OK
-            );
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    null,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        List<Course> courses = teacherService.getCourses(teacherId);
+        CourseQueryMultipleResponse cqmr = CourseQueryMultipleResponse.builder()
+                .courses(courses)
+                .build();
+        return new ResponseEntity<>(
+                cqmr,
+                HttpStatus.OK
+        );
     }
 
     @GetMapping()
