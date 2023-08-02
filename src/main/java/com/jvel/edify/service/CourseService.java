@@ -73,12 +73,23 @@ public class CourseService {
         if (courseOptional.isEmpty())
             throw new CourseNotFoundException("Course not found by id " + courseId);
         if (studentOptional.isEmpty())
-            throw new UserNotFoundException("no student found by id " + studentId);
+            throw new UserNotFoundException("Student not found by id " + studentId);
         if (studentOptional.get().getRole() != Role.STUDENT)
-            throw new StudentNotFoundException("no student found by id " + studentId);
+            throw new StudentNotFoundException("Student not found by id " + studentId);
 
         Course course = courseOptional.get();
         Student student = (Student) studentOptional.get();
+
+        // Check if student has already been added to course
+
+        Student checkStudent = course.getStudents()
+                .stream()
+                .filter(stu -> studentId.equals(stu.getId()))
+                .findAny()
+                .orElse(null);
+        if (checkStudent != null)
+            throw new IllegalStateException("Student already added to course");
+
         course.addStudents(student);
     }
 }

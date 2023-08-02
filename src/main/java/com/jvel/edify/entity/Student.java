@@ -1,5 +1,6 @@
 package com.jvel.edify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class Student extends User {
     private String phoneNumber;
 
     @ManyToMany(mappedBy = "students")
+    @JsonIgnore
     private List<Course> courses;
 
     @Builder

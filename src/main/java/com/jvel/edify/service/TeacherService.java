@@ -1,6 +1,7 @@
 package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.StudentNotFoundException;
+import com.jvel.edify.controller.exceptions.TeacherNotFoundException;
 import com.jvel.edify.controller.exceptions.UserNotFoundException;
 import com.jvel.edify.controller.responses.TeacherQueryMultipleResponse;
 import com.jvel.edify.controller.responses.TeacherQueryResponse;
@@ -40,7 +41,7 @@ public class TeacherService {
         if (teacher.isEmpty())
             throw new UserNotFoundException("User not found by id " + teacherId);
         if (teacher.get().getRole() != Role.TEACHER)
-            throw new StudentNotFoundException("Teacher not found by id " + teacherId);
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
 
         return TeacherQueryResponse.builder()
                 .teacher(teacher.get())
@@ -53,7 +54,7 @@ public class TeacherService {
         if (teacher.isEmpty())
             throw new UserNotFoundException("User not found by email address " + emailAddress);
         if (teacher.get().getRole() != Role.TEACHER)
-            throw new StudentNotFoundException("Teacher not found by email address" + emailAddress);
+            throw new TeacherNotFoundException("Teacher not found by email address" + emailAddress);
 
         return TeacherQueryResponse.builder()
                 .teacher(teacher.get())

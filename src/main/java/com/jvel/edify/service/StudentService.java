@@ -6,7 +6,6 @@ import com.jvel.edify.controller.exceptions.UserNotFoundException;
 import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryResponse;
-import com.jvel.edify.entity.Course;
 import com.jvel.edify.entity.Student;
 import com.jvel.edify.entity.User;
 import com.jvel.edify.entity.roles.Role;
@@ -88,6 +87,36 @@ public class StudentService {
 
         return StudentQueryResponse.builder()
                 .student(student.get())
+                .build();
+    }
+
+    public CourseQueryMultipleResponse getCourses(Integer studentId) {
+        Optional<User> user = studentRepository.findById(studentId);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + studentId);
+        if (user.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by id " + studentId);
+
+        Student student = (Student) user.get();
+
+        return CourseQueryMultipleResponse.builder()
+                .courses(student.getCourses())
+                .build();
+    }
+
+    public CourseQueryMultipleResponse getCourses(String emailAddress) {
+        Optional<User> user = studentRepository.findByEmailAddress(emailAddress);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + emailAddress);
+        if (user.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by id " + emailAddress);
+
+        Student student = (Student) user.get();
+
+        return CourseQueryMultipleResponse.builder()
+                .courses(student.getCourses())
                 .build();
     }
 }

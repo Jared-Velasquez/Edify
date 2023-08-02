@@ -1,8 +1,11 @@
 package com.jvel.edify.controller;
 
+import com.jvel.edify.config.JwtService;
+import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
+import com.jvel.edify.entity.User;
 import com.jvel.edify.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<String> addNewStudent(@RequestBody Student student) {
@@ -31,6 +36,16 @@ public class StudentController {
                 HttpStatus.OK
         );
     }
+    
+    @GetMapping()
+    public ResponseEntity<StudentQueryResponse> getStudent(@RequestHeader("Authorization") String token) {
+        String userEmail = jwtService.resolveToken(token);
+        StudentQueryResponse response = studentService.getStudentByEmailAddress(userEmail);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.OK
+        );
+    }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<StudentQueryResponse> getStudentById(@PathVariable("id") Integer id) {
@@ -44,6 +59,34 @@ public class StudentController {
     @GetMapping("/email/{email}")
     public ResponseEntity<StudentQueryResponse> getStudentByEmail(@PathVariable("email") String email) {
         StudentQueryResponse response = studentService.getStudentByEmailAddress(email);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/courses")
+    public ResponseEntity<CourseQueryMultipleResponse> getCourses(@RequestHeader("Authorization") String token) {
+        String userEmail = jwtService.resolveToken(token);
+        CourseQueryMultipleResponse response = studentService.getCourses(userEmail);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/courses/id/{id}")
+    public ResponseEntity<CourseQueryMultipleResponse> getCoursesById(@PathVariable("id") Integer studentId) {
+        CourseQueryMultipleResponse response = studentService.getCourses(studentId);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/courses/email/{email}")
+    public ResponseEntity<CourseQueryMultipleResponse> getCoursesByEmail(@PathVariable("email") String emailAddress) {
+        CourseQueryMultipleResponse response = studentService.getCourses(emailAddress);
         return new ResponseEntity<>(
                 response,
                 HttpStatus.OK

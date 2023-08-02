@@ -1,8 +1,8 @@
-package com.jvel.edify.auth;
+package com.jvel.edify.service;
 
-import com.jvel.edify.auth.requests.AuthenticationRequest;
-import com.jvel.edify.auth.requests.RegisterRequest;
-import com.jvel.edify.auth.responses.AuthenticationResponse;
+import com.jvel.edify.controller.requests.AuthenticationRequest;
+import com.jvel.edify.controller.requests.RegisterRequest;
+import com.jvel.edify.controller.responses.AuthenticationResponse;
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.exceptions.DuplicateEntryException;
 import com.jvel.edify.controller.exceptions.UserNotFoundException;

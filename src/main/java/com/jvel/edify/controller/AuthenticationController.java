@@ -1,8 +1,9 @@
-package com.jvel.edify.auth;
+package com.jvel.edify.controller;
 
-import com.jvel.edify.auth.requests.AuthenticationRequest;
-import com.jvel.edify.auth.requests.RegisterRequest;
-import com.jvel.edify.auth.responses.AuthenticationResponse;
+import com.jvel.edify.service.AuthenticationService;
+import com.jvel.edify.controller.requests.AuthenticationRequest;
+import com.jvel.edify.controller.requests.RegisterRequest;
+import com.jvel.edify.controller.responses.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

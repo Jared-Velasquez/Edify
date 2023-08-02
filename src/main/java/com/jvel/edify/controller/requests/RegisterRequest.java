@@ -1,4 +1,4 @@
-package com.jvel.edify.auth.requests;
+package com.jvel.edify.controller.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
