@@ -4,6 +4,7 @@ import com.jvel.edify.auth.requests.AuthenticationRequest;
 import com.jvel.edify.auth.requests.RegisterRequest;
 import com.jvel.edify.auth.responses.AuthenticationResponse;
 import com.jvel.edify.config.JwtService;
+import com.jvel.edify.controller.exceptions.DuplicateEntryException;
 import com.jvel.edify.entity.Student;
 import com.jvel.edify.entity.Teacher;
 import com.jvel.edify.entity.User;
@@ -30,8 +31,8 @@ public class AuthenticationService {
         boolean emailExists = userRepository.existsByEmailAddress(request.getEmailAddress());
         boolean ssnExists = userRepository.existsBySsn(request.getSsn());
 
-        if (emailExists) throw new IllegalArgumentException("Email already exists");
-        if (ssnExists) throw new IllegalArgumentException("SSN already exists");
+        if (emailExists) throw new DuplicateEntryException("Email already exists");
+        if (ssnExists) throw new DuplicateEntryException("SSN already exists");
 
         if (request.getRole().contains("STUDENT")) {
             return registerStudent(request);

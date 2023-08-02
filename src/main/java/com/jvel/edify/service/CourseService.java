@@ -1,5 +1,6 @@
 package com.jvel.edify.service;
 
+import com.jvel.edify.controller.exceptions.*;
 import com.jvel.edify.entity.*;
 import com.jvel.edify.entity.roles.Role;
 import com.jvel.edify.repository.CourseRepository;
@@ -26,13 +27,15 @@ public class CourseService {
     public void addCourse(String title, Integer units, Integer teacherId) {
         // Check if teacher is present
         Optional<User> teacher = teacherRepository.findById(teacherId);
-        if (teacher.isEmpty() || (teacher.get().getRole() != Role.TEACHER))
-            throw new IllegalArgumentException("no teacher found by id " + teacherId);
+        if (teacher.isEmpty())
+            throw new UserNotFoundException("User not found by id " + teacherId);
+        if (teacher.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
 
         // Check if course title is not taken
         boolean titleExists = courseRepository.existsByTitle(title);
         if (titleExists)
-            throw new IllegalArgumentException("course title already exists");
+            throw new CourseAlreadyExistsException("Course already exists by title " + title);
 
         Course newCourse = Course.builder()
                 .title(title)
@@ -45,21 +48,21 @@ public class CourseService {
     public Course getCourse(Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (courseOptional.isEmpty())
-            throw new IllegalArgumentException("no course found by id " + courseId);
+            throw new CourseNotFoundException("Course not found by id " + courseId);
         return courseOptional.get();
     }
 
     public Teacher getTeacher(Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (courseOptional.isEmpty())
-            throw new IllegalArgumentException("no course found by id " + courseId);
+            throw new CourseNotFoundException("Course not found by id " + courseId);
         return courseOptional.get().getTeacher();
     }
 
     public List<Student> getStudents(Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (courseOptional.isEmpty())
-            throw new IllegalArgumentException("no course found by id " + courseId);
+            throw new CourseNotFoundException("Course not found by id " + courseId);
         return courseOptional.get().getStudents();
     }
 
@@ -68,9 +71,11 @@ public class CourseService {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         Optional<User> studentOptional = studentRepository.findById(studentId);
         if (courseOptional.isEmpty())
-            throw new IllegalArgumentException("no course found by id " + courseId);
-        if (studentOptional.isEmpty() || (studentOptional.get().getRole() != Role.STUDENT))
-            throw new IllegalArgumentException("no student found by id " + studentId);
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (studentOptional.isEmpty())
+            throw new UserNotFoundException("no student found by id " + studentId);
+        if (studentOptional.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("no student found by id " + studentId);
 
         Course course = courseOptional.get();
         Student student = (Student) studentOptional.get();

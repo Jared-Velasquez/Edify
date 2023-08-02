@@ -21,28 +21,21 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
-        try {
-            return new ResponseEntity<>(
-                    service.register(request),
-                    HttpStatus.CREATED
-            );
-        } catch (IllegalArgumentException iae) {
-            System.out.println("iae = " + iae);
-            return new ResponseEntity<>(
-                    HttpStatus.BAD_REQUEST
-            );
-        } catch (Exception e) {
-            System.out.println("e = " + e);
-            return new ResponseEntity<>(
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+        AuthenticationResponse authResponse = service.register(request);
+        return new ResponseEntity<>(
+                authResponse,
+                HttpStatus.CREATED
+        );
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+        AuthenticationResponse authResponse = service.authenticate(request);
+        return new ResponseEntity<>(
+                authResponse,
+                HttpStatus.OK
+        );
     }
 }

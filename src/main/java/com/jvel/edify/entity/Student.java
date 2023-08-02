@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,7 +24,7 @@ public class Student extends User {
     private String phoneNumber;
 
     @ManyToMany(mappedBy = "students")
-    List<Course> courses;
+    private List<Course> courses;
 
     @Builder
     public Student(String firstName, String lastName, String emailAddress, Integer ssn, String password, Date dob, String gender, String address, String phoneNumber) {
@@ -31,6 +32,7 @@ public class Student extends User {
         this.gender = gender;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.courses = new ArrayList<>();
     }
 
     @Builder

@@ -1,5 +1,7 @@
 package com.jvel.edify.service;
 
+import com.jvel.edify.controller.exceptions.UserAlreadyExistsException;
+import com.jvel.edify.controller.exceptions.UserNotFoundException;
 import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.UserQueryMultipleResponse;
 import com.jvel.edify.entity.User;
@@ -38,11 +40,11 @@ public class UserService {
         Optional<User> userNewEmail = userRepository.findByEmailAddress(newEmail);
 
         // If no student has this old email
-        if (!userWithId.isPresent())
-            throw new IllegalStateException("Student with email " + id + " does not exist");
+        if (userWithId.isEmpty())
+            throw new UserNotFoundException("User not found by id " + id);
         // If a student already has this new email
         if (userNewEmail.isPresent())
-            throw new IllegalStateException("Student with email " + newEmail + " already exists");
+            throw new UserAlreadyExistsException("User already exists by email address " + newEmail);
 
         userWithId.get().setEmailAddress(newEmail);
     }
@@ -58,11 +60,11 @@ public class UserService {
         Optional<User> userNewEmail = userRepository.findByEmailAddress(newEmail);
 
         // If no student has this old email
-        if (!userOldEmail.isPresent())
-            throw new IllegalStateException("Student with email " + oldEmail + " does not exist");
+        if (userOldEmail.isEmpty())
+            throw new IllegalStateException("User not found by email address " + oldEmail);
         // If a student already has this new email
         if (userNewEmail.isPresent())
-            throw new IllegalStateException("Student with email " + newEmail + " already exists");
+            throw new UserAlreadyExistsException("User already exists by email address " + newEmail);
 
         userOldEmail.get().setEmailAddress(newEmail);
     }

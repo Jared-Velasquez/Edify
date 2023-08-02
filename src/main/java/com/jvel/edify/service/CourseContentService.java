@@ -1,5 +1,8 @@
 package com.jvel.edify.service;
 
+import com.jvel.edify.controller.exceptions.ContentAlreadyExistsException;
+import com.jvel.edify.controller.exceptions.ContentNotFoundException;
+import com.jvel.edify.controller.exceptions.CourseNotFoundException;
 import com.jvel.edify.entity.Course;
 import com.jvel.edify.entity.CourseContent;
 import com.jvel.edify.repository.CourseContentRepository;
@@ -21,11 +24,11 @@ public class CourseContentService {
     public void addCourseContent(String contentURL, Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (courseOptional.isEmpty())
-            throw new IllegalArgumentException("no course found by id " + courseId);
+            throw new CourseNotFoundException("Course not found by id " + courseId);
 
         Course course = courseOptional.get();
         if (course.getCourseContent() != null)
-            throw new IllegalArgumentException("course already has content");
+            throw new ContentAlreadyExistsException("Course already contains content");
 
         CourseContent newCourseContent = CourseContent.builder()
                 .url(contentURL)
@@ -37,7 +40,7 @@ public class CourseContentService {
     public CourseContent getCourseContent(Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (courseOptional.isEmpty())
-            throw new IllegalArgumentException("no course found by id " + courseId);
+            throw new CourseNotFoundException("Course not found by id " + courseId);
         return courseOptional.get().getCourseContent();
     }
 
@@ -45,11 +48,11 @@ public class CourseContentService {
     public void deleteCourseContent(Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (courseOptional.isEmpty())
-            throw new IllegalArgumentException("no course found by id " + courseId);
+            throw new CourseNotFoundException("Course not found by id " + courseId);
 
         Course course = courseOptional.get();
         if (course.getCourseContent() == null)
-            throw new IllegalArgumentException("course does not have content to delete");
+            throw new ContentNotFoundException("Course does not have content to delete");
 
         CourseContent courseContent = course.getCourseContent();
         courseContentRepository.delete(courseContent);

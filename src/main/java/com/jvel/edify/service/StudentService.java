@@ -1,5 +1,8 @@
 package com.jvel.edify.service;
 
+import com.jvel.edify.controller.exceptions.StudentNotFoundException;
+import com.jvel.edify.controller.exceptions.UserAlreadyExistsException;
+import com.jvel.edify.controller.exceptions.UserNotFoundException;
 import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
@@ -10,7 +13,6 @@ import com.jvel.edify.repository.StudentRepository;
 import com.jvel.edify.repository.TeacherRepository;
 import com.jvel.edify.repository.UserRepository;
 import com.jvel.edify.util.StreamFilters;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,12 +46,12 @@ public class StudentService {
         // Check if another user has the same email address as this student
         Optional<User> userOptionalEmail = userRepository.findByEmailAddress(student.getEmailAddress());
         if (userOptionalEmail.isPresent())
-            throw new IllegalStateException("email taken");
+            throw new UserAlreadyExistsException("Email already taken by user");
 
-        // Check if another student has the sane SSN as this student
+        // Check if another student has the same SSN as this student
         Optional<User> userOptionalSSN = userRepository.findBySsn(student.getSsn());
         if (userOptionalSSN.isPresent())
-            throw new IllegalStateException("ssn taken");
+            throw new UserAlreadyExistsException("SSN already taken by user");
 
         studentRepository.save(student);
     }
@@ -64,24 +66,26 @@ public class StudentService {
     public StudentQueryResponse getStudentById(Integer studentId) {
         Optional<User> student = studentRepository.findById(studentId);
 
-        if (student.isPresent() && student.get().getRole() == Role.STUDENT)
-            return StudentQueryResponse.builder()
-                    .student(student.get())
-                    .build();
+        if (student.isEmpty())
+            throw new UserNotFoundException("User not found by id " + studentId);
+        if (student.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by id " + studentId);
+
         return StudentQueryResponse.builder()
-                .student(null)
+                .student(student.get())
                 .build();
     }
 
     public StudentQueryResponse getStudentByEmailAddress(String emailAddress) {
         Optional<User> student = studentRepository.findByEmailAddress(emailAddress);
 
-        if (student.isPresent() && student.get().getRole() == Role.STUDENT)
-            return StudentQueryResponse.builder()
-                    .student(student.get())
-                    .build();
+        if (student.isEmpty())
+            throw new UserNotFoundException("User not found by email address " + emailAddress);
+        if (student.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by email address" + emailAddress);
+
         return StudentQueryResponse.builder()
-                .student(null)
+                .student(student.get())
                 .build();
     }
 }

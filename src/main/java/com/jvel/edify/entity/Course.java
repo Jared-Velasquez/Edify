@@ -63,7 +63,9 @@ public class Course {
         students.add(student);
     }
 
-    @ManyToOne()
+    @ManyToOne(
+            optional = false
+    )
     @JoinColumn(
             name = "teacher_id",
             referencedColumnName = "id"
