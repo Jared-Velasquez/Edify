@@ -3,6 +3,7 @@ package com.jvel.edify.service;
 import com.jvel.edify.controller.exceptions.StudentNotFoundException;
 import com.jvel.edify.controller.exceptions.TeacherNotFoundException;
 import com.jvel.edify.controller.exceptions.UserNotFoundException;
+import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.TeacherQueryMultipleResponse;
 import com.jvel.edify.controller.responses.TeacherQueryResponse;
 import com.jvel.edify.entity.Course;
@@ -54,7 +55,7 @@ public class TeacherService {
         if (teacher.isEmpty())
             throw new UserNotFoundException("User not found by email address " + emailAddress);
         if (teacher.get().getRole() != Role.TEACHER)
-            throw new TeacherNotFoundException("Teacher not found by email address" + emailAddress);
+            throw new TeacherNotFoundException("Teacher not found by email address " + emailAddress);
 
         return TeacherQueryResponse.builder()
                 .teacher(teacher.get())
@@ -64,9 +65,26 @@ public class TeacherService {
     public List<Course> getCourses(Integer teacherId) {
         Optional<User> teacherOptional = teacherRepository.findById(teacherId);
 
-        if (teacherOptional.isEmpty() || (teacherOptional.get().getRole() != Role.TEACHER))
-            throw new IllegalArgumentException("no teacher found by id " + teacherId);
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
 
         return courseRepository.findByTeacher((Teacher) teacherOptional.get());
+    }
+
+    public CourseQueryMultipleResponse getCoursesByEmailAddress(String emailAddress) {
+        Optional<User> teacherOptional = teacherRepository.findByEmailAddress(emailAddress);
+
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("No user found by email address " + emailAddress);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("No teacher found by email address " + emailAddress);
+
+        List<Course> coursesList = courseRepository.findByTeacher((Teacher) teacherOptional.get());
+        CourseQueryMultipleResponse courses = CourseQueryMultipleResponse.builder()
+                .courses(coursesList)
+                .build();
+        return courses;
     }
 }

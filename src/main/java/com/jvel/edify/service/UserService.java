@@ -2,11 +2,10 @@ package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.UserAlreadyExistsException;
 import com.jvel.edify.controller.exceptions.UserNotFoundException;
-import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.UserQueryMultipleResponse;
+import com.jvel.edify.controller.responses.UserQueryResponse;
 import com.jvel.edify.entity.User;
 import com.jvel.edify.repository.UserRepository;
-import com.jvel.edify.util.StreamFilters;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +24,28 @@ public class UserService {
         List<User> users = userRepository.findAll();
         return UserQueryMultipleResponse.builder()
                 .users(users)
+                .build();
+    }
+
+    public UserQueryResponse getUserByEmailAddress(String emailAddress) {
+        Optional<User> user = userRepository.findByEmailAddress(emailAddress);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by email address " + emailAddress);
+
+        return UserQueryResponse.builder()
+                .user(user.get())
+                .build();
+    }
+
+    public UserQueryResponse getUserById(Integer userId) {
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+
+        return UserQueryResponse.builder()
+                .user(user.get())
                 .build();
     }
 
@@ -113,18 +133,18 @@ public class UserService {
             user.get().setLastName(lastName);
     }
 
-    public void deleteUser(Integer id) {
+    public void deleteUserById(Integer id) {
         boolean exists = userRepository.existsById(id);
         if (!exists)
-            throw new IllegalStateException("User with id " + id + " does not exist");
+            throw new UserNotFoundException("User not found by id " + id);
 
         userRepository.deleteById(id);
     }
 
-    public void deleteStudent(String emailAddress) {
+    public void deleteUserByEmailAddress(String emailAddress) {
         boolean exists = userRepository.existsByEmailAddress(emailAddress);
         if (!exists)
-            throw new IllegalStateException("User with email " + emailAddress + " does not exist");
+            throw new UserNotFoundException("User not found by email address " + emailAddress);
 
         userRepository.deleteByEmailAddress(emailAddress);
     }

@@ -1,10 +1,10 @@
 package com.jvel.edify.controller;
 
+import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.TeacherQueryMultipleResponse;
 import com.jvel.edify.controller.responses.TeacherQueryResponse;
 import com.jvel.edify.entity.Course;
-import com.jvel.edify.entity.Teacher;
 import com.jvel.edify.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,31 @@ import java.util.List;
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private JwtService jwtService;
+
+    @GetMapping
+    public ResponseEntity<TeacherQueryResponse> getTeacher(@RequestHeader("Authorization") String token) {
+        String userEmail = jwtService.resolveToken(token);
+        TeacherQueryResponse response = teacherService.getTeacherByEmailAddress(userEmail);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/courses")
+    public ResponseEntity<CourseQueryMultipleResponse> getCourses(@RequestHeader("Authorization") String token) {
+        String userEmail = jwtService.resolveToken(token);
+        CourseQueryMultipleResponse cqmr = teacherService.getCoursesByEmailAddress(userEmail);
+        return new ResponseEntity<>(
+                cqmr,
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/courses/id/{id}")
-    public ResponseEntity<CourseQueryMultipleResponse> getCourses(@PathVariable("id") Integer teacherId) {
+    public ResponseEntity<CourseQueryMultipleResponse> getCoursesById(@PathVariable("id") Integer teacherId) {
         List<Course> courses = teacherService.getCourses(teacherId);
         CourseQueryMultipleResponse cqmr = CourseQueryMultipleResponse.builder()
                 .courses(courses)
@@ -40,7 +63,7 @@ public class TeacherController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<TeacherQueryResponse> getTeacher(@PathVariable("id") Integer teacherId) {
+    public ResponseEntity<TeacherQueryResponse> getTeacherById(@PathVariable("id") Integer teacherId) {
         TeacherQueryResponse teacher = teacherService.getTeacherById(teacherId);
         return new ResponseEntity<>(
                 teacher,
@@ -49,7 +72,7 @@ public class TeacherController {
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<TeacherQueryResponse> getTeacher(@PathVariable("email") String emailAddress) {
+    public ResponseEntity<TeacherQueryResponse> getTeacherByEmail(@PathVariable("email") String emailAddress) {
         TeacherQueryResponse teacher = teacherService.getTeacherByEmailAddress(emailAddress);
         return new ResponseEntity<>(
                 teacher,
