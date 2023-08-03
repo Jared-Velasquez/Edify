@@ -62,7 +62,7 @@ public class TeacherService {
                 .build();
     }
 
-    public List<Course> getCourses(Integer teacherId) {
+    public CourseQueryMultipleResponse getCourses(Integer teacherId) {
         Optional<User> teacherOptional = teacherRepository.findById(teacherId);
 
         if (teacherOptional.isEmpty())
@@ -70,7 +70,11 @@ public class TeacherService {
         if (teacherOptional.get().getRole() != Role.TEACHER)
             throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
 
-        return courseRepository.findByTeacher((Teacher) teacherOptional.get());
+        List<Course> coursesList = courseRepository.findByTeacher((Teacher) teacherOptional.get());
+        CourseQueryMultipleResponse courses = CourseQueryMultipleResponse.builder()
+                .courses(coursesList)
+                .build();
+        return courses;
     }
 
     public CourseQueryMultipleResponse getCoursesByEmailAddress(String emailAddress) {

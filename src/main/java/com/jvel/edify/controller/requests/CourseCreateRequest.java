@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class CourseCreateRequest {
     private String title;
     private Integer units;
-    private Integer teacherId;
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -130,6 +131,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 map,
                 HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = UnauthorizedAccessException.class)
+    public ResponseEntity<Map<String, String>> unauthorizedAccess(UnauthorizedAccessException uae) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "UnauthorizedAccessException");
+        map.put("error", uae.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.FORBIDDEN
         );
     }
 

@@ -1,5 +1,6 @@
 package com.jvel.edify.controller;
 
+import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.CourseContentCreateRequest;
 import com.jvel.edify.controller.requests.CourseCreateRequest;
 import com.jvel.edify.controller.requests.CourseRequest;
@@ -24,9 +25,12 @@ public class CourseController {
     private CourseService courseService;
     @Autowired
     private CourseContentService courseContentService;
+    @Autowired
+    private JwtService jwtService;
     @PostMapping()
-    public ResponseEntity<String> addCourse(@RequestBody CourseCreateRequest course) {
-        courseService.addCourse(course.getTitle(), course.getUnits(), course.getTeacherId());
+    public ResponseEntity<String> addCourse(@RequestHeader("Authorization") String token, @RequestBody CourseCreateRequest course) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.addCourse(course.getTitle(), course.getUnits(), id);
         return new ResponseEntity<>(
                 "Course successfully added",
                 HttpStatus.CREATED
@@ -69,7 +73,7 @@ public class CourseController {
         );
     }
 
-    @PutMapping("/add-student")
+    @PutMapping("/student")
     public ResponseEntity<String> addStudent(@RequestBody CourseStudentRequest csRequest) {
         courseService.addStudentToCourse(csRequest.getCourseId(), csRequest.getStudentId());
         return new ResponseEntity<>(
@@ -79,8 +83,9 @@ public class CourseController {
     }
 
     @PutMapping("/content")
-    public ResponseEntity<String> addContent(@RequestBody CourseContentCreateRequest ccRequest) {
-        courseContentService.addCourseContent(ccRequest.getContentURL(), ccRequest.getCourseId());
+    public ResponseEntity<String> addContent(@RequestHeader("Authorization") String token, @RequestBody CourseContentCreateRequest ccRequest) {
+        Integer id = jwtService.resolveToken(token);
+        courseContentService.addCourseContent(id, ccRequest.getContentURL(), ccRequest.getCourseId());
         return new ResponseEntity<>(
                 "Content successfully added to course",
                 HttpStatus.CREATED
@@ -88,8 +93,9 @@ public class CourseController {
     }
 
     @DeleteMapping("/content")
-    public ResponseEntity<String> deleteContent(@RequestBody CourseRequest course) {
-        courseContentService.deleteCourseContent(course.getCourseId());
+    public ResponseEntity<String> deleteContent(@RequestHeader("Authorization") String token, @RequestBody CourseRequest course) {
+        Integer id = jwtService.resolveToken(token);
+        courseContentService.deleteCourseContent(id, course.getCourseId());
         return new ResponseEntity<>(
                 "Content successfully deleted from course",
                 HttpStatus.OK

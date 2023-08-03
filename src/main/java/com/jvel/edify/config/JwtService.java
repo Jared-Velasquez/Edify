@@ -57,6 +57,9 @@ public class JwtService {
         return extractClaim(token, Claims::getId);
     }
 
+    public Integer extractUserId(String token) { return (Integer) extractAllClaims(token).get("id"); }
+
+
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
@@ -125,12 +128,21 @@ public class JwtService {
         return true;
     }
 
-    public String resolveToken(String bearerToken) {
+    public String resolveTokenEmail(String bearerToken) {
         if (!StringUtils.hasText(bearerToken) || !bearerToken.startsWith("Bearer "))
             throw new IllegalStateException("Bearer token not specified");
 
         String jwt = bearerToken.substring(7);
         String userEmail = extractUsername(jwt);
         return userEmail;
+    }
+
+    public Integer resolveToken(String bearerToken) {
+        if (!StringUtils.hasText(bearerToken) || !bearerToken.startsWith("Bearer "))
+            throw new IllegalStateException("Bearer token not specified");
+
+        String jwt = bearerToken.substring(7);
+        Integer userId = extractUserId(jwt);
+        return userId;
     }
 }

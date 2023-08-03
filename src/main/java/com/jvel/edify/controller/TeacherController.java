@@ -23,8 +23,8 @@ public class TeacherController {
 
     @GetMapping
     public ResponseEntity<TeacherQueryResponse> getTeacher(@RequestHeader("Authorization") String token) {
-        String userEmail = jwtService.resolveToken(token);
-        TeacherQueryResponse response = teacherService.getTeacherByEmailAddress(userEmail);
+        Integer id = jwtService.resolveToken(token);
+        TeacherQueryResponse response = teacherService.getTeacherById(id);
         return new ResponseEntity<>(
                 response,
                 HttpStatus.OK
@@ -33,8 +33,8 @@ public class TeacherController {
 
     @GetMapping("/courses")
     public ResponseEntity<CourseQueryMultipleResponse> getCourses(@RequestHeader("Authorization") String token) {
-        String userEmail = jwtService.resolveToken(token);
-        CourseQueryMultipleResponse cqmr = teacherService.getCoursesByEmailAddress(userEmail);
+        Integer id = jwtService.resolveToken(token);
+        CourseQueryMultipleResponse cqmr = teacherService.getCourses(id);
         return new ResponseEntity<>(
                 cqmr,
                 HttpStatus.OK
@@ -43,12 +43,9 @@ public class TeacherController {
 
     @GetMapping("/courses/id/{id}")
     public ResponseEntity<CourseQueryMultipleResponse> getCoursesById(@PathVariable("id") Integer teacherId) {
-        List<Course> courses = teacherService.getCourses(teacherId);
-        CourseQueryMultipleResponse cqmr = CourseQueryMultipleResponse.builder()
-                .courses(courses)
-                .build();
+        CourseQueryMultipleResponse courses = teacherService.getCourses(teacherId);
         return new ResponseEntity<>(
-                cqmr,
+                courses,
                 HttpStatus.OK
         );
     }

@@ -5,7 +5,6 @@ import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
-import com.jvel.edify.entity.User;
 import com.jvel.edify.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,8 +38,8 @@ public class StudentController {
     
     @GetMapping()
     public ResponseEntity<StudentQueryResponse> getStudent(@RequestHeader("Authorization") String token) {
-        String userEmail = jwtService.resolveToken(token);
-        StudentQueryResponse response = studentService.getStudentByEmailAddress(userEmail);
+        Integer id = jwtService.resolveToken(token);
+        StudentQueryResponse response = studentService.getStudentById(id);
         return new ResponseEntity<>(
                 response,
                 HttpStatus.OK
@@ -67,8 +66,8 @@ public class StudentController {
 
     @GetMapping("/courses")
     public ResponseEntity<CourseQueryMultipleResponse> getCourses(@RequestHeader("Authorization") String token) {
-        String userEmail = jwtService.resolveToken(token);
-        CourseQueryMultipleResponse response = studentService.getCourses(userEmail);
+        Integer id = jwtService.resolveToken(token);
+        CourseQueryMultipleResponse response = studentService.getCourses(id);
         return new ResponseEntity<>(
                 response,
                 HttpStatus.OK

@@ -45,6 +45,27 @@ public class CourseService {
         courseRepository.save(newCourse);
     }
 
+    public void addCourse(String title, Integer units, String emailAddress) {
+        // Check if teacher is present
+        Optional<User> teacher = teacherRepository.findByEmailAddress(emailAddress);
+        if (teacher.isEmpty())
+            throw new UserNotFoundException("User not found by email address " + emailAddress);
+        if (teacher.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by email address " + emailAddress);
+
+        // Check if course title is not taken
+        boolean titleExists = courseRepository.existsByTitle(title);
+        if (titleExists)
+            throw new CourseAlreadyExistsException("Course already exists by title " + title);
+
+        Course newCourse = Course.builder()
+                .title(title)
+                .units(units)
+                .teacher((Teacher) teacher.get())
+                .build();
+        courseRepository.save(newCourse);
+    }
+
     public Course getCourse(Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (courseOptional.isEmpty())

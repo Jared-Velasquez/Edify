@@ -24,8 +24,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<UserQueryResponse> getUser(@RequestHeader("Authorization") String token) {
-        String userEmail = jwtService.resolveToken(token);
-        UserQueryResponse response = userService.getUserByEmailAddress(userEmail);
+        Integer id = jwtService.resolveToken(token);
+        UserQueryResponse response = userService.getUserById(id);
         return new ResponseEntity<>(
                 response,
                 HttpStatus.OK
@@ -48,10 +48,10 @@ public class UserController {
         );
     }
 
-    @PutMapping("/update-email")
+    @PutMapping("/email")
     public ResponseEntity<Map<String, String>> updateEmail(@RequestHeader("Authorization") String token, @RequestBody EmailRequest emailRequest) {
-        String userEmail = jwtService.resolveToken(token);
-        userService.updateEmail(userEmail, emailRequest.getEmailAddress());
+        Integer id = jwtService.resolveToken(token);
+        userService.updateEmail(id, emailRequest.getEmailAddress());
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "Email successfully updated");
         return new ResponseEntity<>(
@@ -60,10 +60,10 @@ public class UserController {
         );
     }
 
-    @PutMapping("/update-name")
+    @PutMapping("/name")
     public ResponseEntity<Map<String, String>> updateName(@RequestHeader("Authorization") String token, @RequestBody NameRequest nameRequest) {
-        String userEmail = jwtService.resolveToken(token);
-        userService.updateName(userEmail, nameRequest.getFirstName(), nameRequest.getLastName());
+        Integer id = jwtService.resolveToken(token);
+        userService.updateName(id, nameRequest.getFirstName(), nameRequest.getLastName());
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "Name successfully updated");
         return new ResponseEntity<>(
@@ -74,8 +74,8 @@ public class UserController {
 
     @DeleteMapping
     public ResponseEntity<Map<String, String>> deleteUser(@RequestHeader("Authorization") String token) {
-        String userEmail = jwtService.resolveToken(token);
-        userService.deleteUserByEmailAddress(userEmail);
+        Integer id = jwtService.resolveToken(token);
+        userService.deleteUserById(id);
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "User successfully deleted");
         return new ResponseEntity<>(

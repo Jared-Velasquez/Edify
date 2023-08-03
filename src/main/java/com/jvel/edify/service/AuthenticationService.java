@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -77,9 +78,10 @@ public class AuthenticationService {
                 request.getPhoneNumber()
         );
 
-        studentRepository.save(student);
+        Student savedStudent = studentRepository.saveAndFlush(student);
+        Map<String, Object> customClaims = Map.of("id", savedStudent.getId());
 
-        String jwtToken = jwtService.generateToken(student);
+        String jwtToken = jwtService.generateToken(customClaims, student);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -113,9 +115,10 @@ public class AuthenticationService {
                 request.getPhoneNumber()
         );
 
-        teacherRepository.save(teacher);
+        Teacher savedTeacher = teacherRepository.saveAndFlush(teacher);
+        Map<String, Object> customClaims = Map.of("id", savedTeacher.getId());
 
-        String jwtToken = jwtService.generateToken(teacher);
+        String jwtToken = jwtService.generateToken(customClaims, teacher);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -135,7 +138,8 @@ public class AuthenticationService {
         );
         Optional<User> user = userRepository.findByEmailAddress(request.getEmailAddress());
         if (user.isEmpty()) throw new UserNotFoundException("User not found by email address " + request.getEmailAddress());
-        String jwtToken = jwtService.generateToken(user.get());
+        Map<String, Object> customClaims = Map.of("id", user.get().getId());
+        String jwtToken = jwtService.generateToken(customClaims, user.get());
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
