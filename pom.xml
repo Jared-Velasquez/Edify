@@ -9,12 +9,12 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jvel</groupId>
-	<artifactId>student-database-management-system</artifactId>
+	<artifactId>edify</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>student-database-management-system</name>
+	<name>edify</name>
 	<description>Student Database Management System</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
