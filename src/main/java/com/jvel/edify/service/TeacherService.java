@@ -1,6 +1,7 @@
 package com.jvel.edify.service;
 
-import com.jvel.edify.controller.exceptions.StudentNotFoundException;
+import com.jvel.edify.controller.exceptions.DepartmentNotFoundException;
+import com.jvel.edify.controller.exceptions.MajorNotFoundException;
 import com.jvel.edify.controller.exceptions.TeacherNotFoundException;
 import com.jvel.edify.controller.exceptions.UserNotFoundException;
 import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
@@ -9,10 +10,14 @@ import com.jvel.edify.controller.responses.TeacherQueryResponse;
 import com.jvel.edify.entity.Course;
 import com.jvel.edify.entity.Teacher;
 import com.jvel.edify.entity.User;
-import com.jvel.edify.entity.roles.Role;
+import com.jvel.edify.entity.enums.Department;
+import com.jvel.edify.entity.enums.Major;
+import com.jvel.edify.entity.enums.Position;
+import com.jvel.edify.entity.enums.Role;
 import com.jvel.edify.repository.CourseRepository;
 import com.jvel.edify.repository.TeacherRepository;
 import com.jvel.edify.util.StreamFilters;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,5 +95,39 @@ public class TeacherService {
                 .courses(coursesList)
                 .build();
         return courses;
+    }
+
+    @Transactional
+    public void updatePositionById(Integer teacherId, String position) {
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("No user found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("No teacher found by id " + teacherId);
+        Position positionEnum = Position.valueOfLabel(position);
+        if (positionEnum == null)
+            throw new MajorNotFoundException("Position not found by " + position);
+
+        Teacher teacher = (Teacher) teacherOptional.get();
+        teacher.setPosition(positionEnum);
+        teacherRepository.save(teacher);
+    }
+
+    @Transactional
+    public void updateDepartmentById(Integer teacherId, String department) {
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("No user found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("No teacher found by id " + teacherId);
+        Department departmentEnum = Department.valueOfLabel(department);
+        if (departmentEnum == null)
+            throw new DepartmentNotFoundException("Department not found by " + department);
+
+        Teacher teacher = (Teacher) teacherOptional.get();
+        teacher.setDepartment(departmentEnum);
+        teacherRepository.save(teacher);
     }
 }

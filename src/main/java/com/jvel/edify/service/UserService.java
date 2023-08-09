@@ -5,6 +5,7 @@ import com.jvel.edify.controller.exceptions.UserNotFoundException;
 import com.jvel.edify.controller.responses.UserQueryMultipleResponse;
 import com.jvel.edify.controller.responses.UserQueryResponse;
 import com.jvel.edify.entity.User;
+import com.jvel.edify.entity.enums.Gender;
 import com.jvel.edify.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -131,6 +132,15 @@ public class UserService {
 
         if (lastName != null && lastName.length() > 0)
             user.get().setLastName(lastName);
+    }
+
+    @Transactional
+    public void updateGenderById(Integer id, Gender gender) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + id);
+        userOptional.get().setGender(gender);
     }
 
     public void deleteUserById(Integer id) {

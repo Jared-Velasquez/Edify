@@ -1,8 +1,7 @@
 package com.jvel.edify.util;
 
-import com.jvel.edify.entity.Student;
 import com.jvel.edify.entity.User;
-import com.jvel.edify.entity.roles.Role;
+import com.jvel.edify.entity.enums.Role;
 
 import java.util.function.Predicate;
 

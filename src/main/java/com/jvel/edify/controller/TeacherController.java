@@ -1,6 +1,8 @@
 package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
+import com.jvel.edify.controller.requests.DepartmentRequest;
+import com.jvel.edify.controller.requests.PositionRequest;
 import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.TeacherQueryMultipleResponse;
 import com.jvel.edify.controller.responses.TeacherQueryResponse;
@@ -73,6 +75,30 @@ public class TeacherController {
         TeacherQueryResponse teacher = teacherService.getTeacherByEmailAddress(emailAddress);
         return new ResponseEntity<>(
                 teacher,
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/department")
+    public ResponseEntity<CourseQueryMultipleResponse> updateDepartment(
+            @RequestHeader("Authorization") String token,
+            @RequestBody DepartmentRequest departmentRequest) {
+        Integer id = jwtService.resolveToken(token);
+        System.out.println("Request: " + departmentRequest);
+        teacherService.updateDepartmentById(id, departmentRequest.getDepartment());
+        return new ResponseEntity<>(
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/position")
+    public ResponseEntity<CourseQueryMultipleResponse> updatePosition(
+            @RequestHeader("Authorization") String token,
+            @RequestBody PositionRequest positionRequest) {
+        Integer id = jwtService.resolveToken(token);
+        System.out.println(positionRequest);
+        teacherService.updatePositionById(id, positionRequest.getPosition());
+        return new ResponseEntity<>(
                 HttpStatus.OK
         );
     }

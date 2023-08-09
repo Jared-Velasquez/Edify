@@ -2,7 +2,7 @@ package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.*;
 import com.jvel.edify.entity.*;
-import com.jvel.edify.entity.roles.Role;
+import com.jvel.edify.entity.enums.Role;
 import com.jvel.edify.repository.CourseRepository;
 import com.jvel.edify.repository.StudentRepository;
 import com.jvel.edify.repository.TeacherRepository;

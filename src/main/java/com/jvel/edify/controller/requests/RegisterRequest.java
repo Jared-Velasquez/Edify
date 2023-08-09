@@ -1,5 +1,6 @@
 package com.jvel.edify.controller.requests;
 
+import com.jvel.edify.entity.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class RegisterRequest {
     private String emailAddress;
     private Integer ssn;
     private Date dob;
-    private String gender;
+    private Gender gender;
     private String address;
     private String phoneNumber;
     private String password;

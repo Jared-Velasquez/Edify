@@ -1,9 +1,11 @@
 package com.jvel.edify.controller.exceptions.handler;
 
 import com.jvel.edify.controller.exceptions.*;
+import org.hibernate.DuplicateMappingException;
 import org.hibernate.HibernateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
@@ -123,11 +125,44 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(value = DuplicateEntryException.class)
-    public ResponseEntity<Map<String, String>> duplicateEntry(DuplicateEntryException dee) {
+    @ExceptionHandler(value = DepartmentNotFoundException.class)
+    public ResponseEntity<Map<String, String>> departmentNotFound(DepartmentNotFoundException dnfe) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("exception", "DuplicateEntryException");
-        map.put("error", dee.getMessage());
+        map.put("exception", "DepartmentNotFoundException");
+        map.put("error", dnfe.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = GenderNotFoundException.class)
+    public ResponseEntity<Map<String, String>> genderNotFound(GenderNotFoundException gnfe) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "GenderNotFoundException");
+        map.put("error", gnfe.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = MajorNotFoundException.class)
+    public ResponseEntity<Map<String, String>> majorNotFound(MajorNotFoundException mnfe) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "MajorNotFoundException");
+        map.put("error", mnfe.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = PositionNotFoundException.class)
+    public ResponseEntity<Map<String, String>> positionNotFound(PositionNotFoundException pnfe) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "PositionNotFoundException");
+        map.put("error", pnfe.getMessage());
         return new ResponseEntity<>(
                 map,
                 HttpStatus.BAD_REQUEST
@@ -142,6 +177,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 map,
                 HttpStatus.FORBIDDEN
+        );
+    }
+
+    @ExceptionHandler(value = DuplicateEntryException.class)
+    public ResponseEntity<Map<String, String>> duplicateEntry(DuplicateEntryException dee) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "DuplicateEntryException");
+        map.put("error", dee.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
         );
     }
 
@@ -161,6 +207,17 @@ public class GlobalExceptionHandler {
         HashMap<String, String> map = new HashMap<>();
         map.put("exception", "IllegalStateException");
         map.put("error", ise.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> notReadable(HttpMessageNotReadableException hmnr) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "HttpMessageNotReadable");
+        map.put("error", hmnr.getMessage());
         return new ResponseEntity<>(
                 map,
                 HttpStatus.BAD_REQUEST

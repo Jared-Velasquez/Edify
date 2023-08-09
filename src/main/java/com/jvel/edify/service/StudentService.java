@@ -1,19 +1,21 @@
 package com.jvel.edify.service;
 
-import com.jvel.edify.controller.exceptions.StudentNotFoundException;
-import com.jvel.edify.controller.exceptions.UserAlreadyExistsException;
-import com.jvel.edify.controller.exceptions.UserNotFoundException;
+import com.jvel.edify.controller.exceptions.*;
 import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
+import com.jvel.edify.entity.Teacher;
 import com.jvel.edify.entity.User;
-import com.jvel.edify.entity.roles.Role;
+import com.jvel.edify.entity.enums.Major;
+import com.jvel.edify.entity.enums.Position;
+import com.jvel.edify.entity.enums.Role;
 import com.jvel.edify.repository.CourseRepository;
 import com.jvel.edify.repository.StudentRepository;
 import com.jvel.edify.repository.TeacherRepository;
 import com.jvel.edify.repository.UserRepository;
 import com.jvel.edify.util.StreamFilters;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,5 +120,22 @@ public class StudentService {
         return CourseQueryMultipleResponse.builder()
                 .courses(student.getCourses())
                 .build();
+    }
+
+    @Transactional
+    public void updateMajorById(Integer studentId, String major) {
+        Optional<User> studentOptional = studentRepository.findById(studentId);
+
+        if (studentOptional.isEmpty())
+            throw new UserNotFoundException("No user found by id " + studentId);
+        if (studentOptional.get().getRole() != Role.STUDENT)
+            throw new TeacherNotFoundException("No student found by id " + studentId);
+        Major majorEnum = Major.valueOfLabel(major);
+        if (majorEnum == null)
+            throw new MajorNotFoundException("Major not found by " + major);
+
+        Student student = (Student) studentOptional.get();
+        student.setMajor(majorEnum);
+        studentRepository.save(student);
     }
 }

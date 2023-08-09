@@ -1,12 +1,9 @@
 package com.jvel.edify.entity;
 
-import com.jvel.edify.entity.roles.Role;
+import com.jvel.edify.entity.enums.Gender;
+import com.jvel.edify.entity.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,12 +60,16 @@ public abstract class User implements UserDetails {
             updatable=false
     )
     private Role role;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    private String address;
+    private String phoneNumber;
 
     public User() {
 
     }
 
-    public User(String firstName, String lastName, String emailAddress, Integer ssn, String password, Date dob, Role role) {
+    public User(String firstName, String lastName, String emailAddress, Integer ssn, String password, Date dob, Role role, Gender gender, String address, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
@@ -76,6 +77,9 @@ public abstract class User implements UserDetails {
         this.password = password;
         this.dob = dob;
         this.role = role;
+        this.gender = gender;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

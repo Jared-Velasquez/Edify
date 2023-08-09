@@ -1,12 +1,12 @@
 package com.jvel.edify.entity;
 
-import com.jvel.edify.entity.roles.Role;
+import com.jvel.edify.entity.enums.Department;
+import com.jvel.edify.entity.enums.Gender;
+import com.jvel.edify.entity.enums.Position;
+import com.jvel.edify.entity.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.sql.Date;
 
@@ -17,16 +17,20 @@ import java.sql.Date;
 )
 @DiscriminatorValue("TEACHER")
 public class Teacher extends User {
-    private String gender;
-    private String address;
-    private String phoneNumber;
-
+    @Enumerated(EnumType.STRING)
+    private Department department;
+    @Enumerated(EnumType.STRING)
+    private Position position;
     @Builder
-    public Teacher(String firstName, String lastName, String emailAddress, Integer ssn, String password, Date dob, String gender, String address, String phoneNumber) {
-        super(firstName, lastName, emailAddress, ssn, password, dob, Role.TEACHER);
-        this.gender = gender;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+    public Teacher(String firstName,
+                   String lastName,
+                   String emailAddress,
+                   Integer ssn, String password,
+                   Date dob,
+                   Gender gender,
+                   String address,
+                   String phoneNumber) {
+        super(firstName, lastName, emailAddress, ssn, password, dob, Role.TEACHER, gender, address, phoneNumber);
     }
 
     @Builder
