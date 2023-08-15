@@ -26,10 +26,8 @@ public class JwtService {
 
     @Value("${edify-jwt.SECRET_KEY}")
     private String SECRET_KEY;
-    @Value("${edify-jwt.ISSUER}")
-    private String ISSUER;
-    @Value("${edify-jwt.AUDIENCE}")
-    private String AUDIENCE;
+    private String ISSUER = "Edify";
+    private String AUDIENCE = "Edify";
     @Autowired
     private UserRepository userRepository;
 

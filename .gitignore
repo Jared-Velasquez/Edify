@@ -6,7 +6,7 @@ target/
 
 ### macOS ###
 .DS_STORE
-backend/src/.DS_STORE
+backend/.DS_STORE
 
 ### STS ###
 .apt_generated

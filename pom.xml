@@ -85,12 +85,17 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<sourceDirectory>backend/src/main/java</sourceDirectory>
-		<testSourceDirectory>backend/src/test/java</testSourceDirectory>
+		<sourceDirectory>backend/main/java</sourceDirectory>
+		<testSourceDirectory>backend/test/java</testSourceDirectory>
 		<resources>
 			<resource>
 				<directory>
-					backend/src/test/java
+					backend/main/resources
+				</directory>
+			</resource>
+			<resource>
+				<directory>
+					backend/test/java
 				</directory>
 			</resource>
 		</resources>
