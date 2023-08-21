@@ -1,12 +1,33 @@
-<div class="bg-primary w-full overflow-hidden flex flex-row">
-  <div class="w-2/5 bg-blue-200 h-screen">
-    Test1
+<div class="{{styles.flexCenter}} flex-col bg-[url('assets/img/mountains.jpeg')]">
+  <!-- Logo -->
+  <div class="flex p-[2rem] mt-[3rem]">
+    <img src="assets/img/edify-logo-transparent.png" alt="Edify Logo" class="h-[100px]" />
   </div>
-
-  <div class="w-3/5 bg-red-200 h-screen">
-    <!-- Login Form -->
-    <div class="{{styles.flexCenter}} align-items bg-green-200">
-      
+  <!-- Login Form -->
+  <div class="flex flex-col mt-[5rem] mx-auto mb-[15rem] sm:w-[45rem] mx-auto bg-dimWhite rounded-md px-[3.5%] py-[2.5%]">
+    <div class="">
+      <!-- Header -->
+      <div class="{{styles.flexCenter}} w-full mb-[2rem]">
+        <h1 class="font-medium font-raleway text-3xl">Sign in with your Edify Email</h1>
+      </div>
+      <!-- Input Space -->
+      <div class="flex flex-col">
+        <input type="text" placeholder="Your Edify Email" class="rounded-md w-full p-[10px] pl-[7px]" #email />
+        <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] w-full p-[10px] pl-[7px]" #password />
+      </div>
+      <!-- Sign-in -->
+      <div class="flex flex-row pt-[0.75rem] mt-[0.75rem]">
+        <div class="flex-[1]">
+          <button (click)="onLogin(email.value, password.value)" class="bg-primary text-dimWhite font-raleway px-[1rem] py-[0.75rem] rounded-md">
+            Sign in
+          </button>
+        </div>
+        <div class="flex-[1.5] font-raleway space-y-[0.25rem]">
+          <p>Forgot your <a href="#" class="text-purple-600">Edify Logon</a> or <a href="#" class="text-purple-600">Password</a>?</p>
+          <p>Need an <a href="#" class="text-purple-600">Edify Logon</a>?</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<app-footer></app-footer>
