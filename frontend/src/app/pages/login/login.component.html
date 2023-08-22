@@ -1,14 +1,17 @@
-<div class="{{styles.flexCenter}} flex-col bg-[url('assets/img/mountains.jpeg')]">
+<div class="{{styles.flexCenter}} flex-col bg-[url('assets/img/mountains.jpeg')] w-full h-screen">
   <!-- Logo -->
-  <div class="flex p-[2rem] mt-[3rem]">
+  <div class="block sm:hidden flex bg-dimWhite p-[1.5rem] w-full border-b-[1px] border-b-primary">
+    <img src="assets/img/edify-logo-transparent.png" alt="Edify Logo" class="h-[50px]" />
+  </div>
+  <div class="hidden sm:block flex mt-[4rem] p-[2rem]">
     <img src="assets/img/edify-logo-transparent.png" alt="Edify Logo" class="h-[100px]" />
   </div>
   <!-- Login Form -->
-  <div class="flex flex-col mt-[5rem] mx-auto mb-[15rem] sm:w-[45rem] mx-auto bg-dimWhite rounded-md px-[3.5%] py-[2.5%]">
+  <div class="flex flex-col mt-[4rem] mx-auto mb-[15rem] w-[90%] sm:w-[45rem] mx-auto bg-dimWhite rounded-md px-[3.5%] py-[2.5%]">
     <div class="">
       <!-- Header -->
       <div class="{{styles.flexCenter}} w-full mb-[2rem]">
-        <h1 class="font-medium font-raleway text-3xl">Sign in with your Edify Email</h1>
+        <h1 class="font-medium font-raleway text-2xl sm:text-3xl">Sign in with your Edify Email</h1>
       </div>
       <!-- Input Space -->
       <div class="flex flex-col">
@@ -30,4 +33,3 @@
     </div>
   </div>
 </div>
-<app-footer></app-footer>

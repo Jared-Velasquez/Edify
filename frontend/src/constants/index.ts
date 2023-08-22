@@ -6,7 +6,7 @@ interface Footer {
     }[]
 };
 
-interface SocialMedia {
+interface Links {
     id: string,
     icon: string,
     link: string
@@ -78,7 +78,7 @@ export const footerLinks: Footer[] = [
     }
 ];
 
-export const socialMedia: SocialMedia[] = [
+export const socialMedia: Links[] = [
     {
         id: "facebook",
         icon: "assets/img/icons8-facebook-48.png",
@@ -98,5 +98,48 @@ export const socialMedia: SocialMedia[] = [
         id: "twitter",
         icon: "assets/img/icons8-twitter-48.png",
         link: "twitter.com"
+    },
+];
+
+export const navLinks: Links[] = [
+    {
+        id: "account",
+        icon: "",
+        link: ""
+    },
+    {
+        id: "dashboard",
+        icon: "",
+        link: ""
+    },
+    {
+        id: "courses",
+        icon: "",
+        link: ""
+    },
+    {
+        id: "calendar",
+        icon: "",
+        link: ""
+    },
+    {
+        id: "inbox",
+        icon: "",
+        link: ""
+    },
+    {
+        id: "history",
+        icon: "",
+        link: ""
+    },
+    {
+        id: "search",
+        icon: "",
+        link: ""
+    },
+    {
+        id: "help",
+        icon: "",
+        link: ""
     },
 ];

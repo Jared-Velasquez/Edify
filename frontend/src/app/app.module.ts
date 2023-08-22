@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { FooterComponent } from './components/core/footer/footer.component';
 import { NavbarComponent } from './components/core/navbar/navbar.component';
+import { BodyComponent } from './components/core/body/body.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NavbarComponent } from './components/core/navbar/navbar.component';
     LandingPageComponent,
     FooterComponent,
     NavbarComponent,
+    BodyComponent,
   ],
   imports: [
     BrowserModule,
