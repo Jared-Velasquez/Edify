@@ -38,13 +38,14 @@ export class NavLinkComponent {
   @Input() navIcon: string;
   @Input() navLink: string | undefined;
   @Input() navName: string;
-
+  @Input() expanded: boolean;
   isOver: boolean;
 
   constructor() {
     this.navIcon = "";
     this.navLink = "";
     this.navName = "";
+    this.expanded = true;
     this.isOver = false;
   }
 }

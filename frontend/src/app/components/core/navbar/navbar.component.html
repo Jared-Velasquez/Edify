@@ -10,7 +10,7 @@
     </div>
     <!-- Menu -->
     <div class="mx-[0.5rem]">
-        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name"></app-nav-link>
+        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded"></app-nav-link>
     </div>
 </div>
 <div *ngIf="!expanded" class="flex flex-col w-[5rem] h-[100vh] bg-richBlack z-1 absolute">
@@ -21,9 +21,7 @@
         </div>
     </div>
     <!-- Menu -->
-    <!--<div class="mx-[0.5rem]">
-        <a [routerLink]="navElement.link" [routerLinkActive]="'active'" class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg items-center justify-center" *ngFor="let navElement of navElements">
-            <i class="text-[25px] w-[3rem] min-w-[2rem] mx-0 my-[0.25rem] text-white items-center navbar-item-active" [class]="navElement.icon"></i>
-        </a>
-    </div>-->
+    <div class="mx-[0.5rem]">
+        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded"></app-nav-link>
+    </div>
 </div>

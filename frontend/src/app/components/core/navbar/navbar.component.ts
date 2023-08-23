@@ -9,5 +9,5 @@ import { navLinkOptions, NavLinksInterface } from 'src/constants';
 })
 export class NavbarComponent {
   navElements: NavLinksInterface[] = navLinkOptions;
-  expanded: boolean = true;
+  expanded: boolean = false;
 }
