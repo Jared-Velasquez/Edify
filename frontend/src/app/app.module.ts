@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,11 +13,10 @@ import { StoreModule } from '@ngrx/store';
 import { LoginComponent } from './pages/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
-import { FooterComponent } from './components/core/footer/footer.component';
-import { NavbarComponent } from './components/core/navbar/navbar.component';
-import { BodyComponent } from './components/core/body/body.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { CoreModule } from './components/core/core.module';
 
 @NgModule({
   declarations: [
@@ -27,17 +27,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CourseComponent,
     LoginComponent,
     LandingPageComponent,
-    FooterComponent,
-    NavbarComponent,
-    BodyComponent,
+    SettingsComponent,
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({}, {}),
     BrowserAnimationsModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

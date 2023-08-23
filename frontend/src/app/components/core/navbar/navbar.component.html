@@ -9,12 +9,10 @@
         </div>
     </div>
     <!-- Menu -->
-    <div class="">
-        <a href="{{navElement.link}}" *ngFor="let navElement of navElements">
-            <div class="flex flex-row p-[0.5rem] m-[0.5rem] bg-white rounded-lg items-center">
-                <i class="text-[25px] w-[3rem] min-w-[2rem] mx-0 my-[0.25rem] items-center" [class]="navElement.icon"></i>
-                <h3 class="font-raleway text-xl">{{navElement.name}}</h3>
-            </div>
+    <div class="mx-[0.5rem]">
+        <a [routerLink]="navElement.link" [routerLinkActive]="'bg-white'" class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg items-center" *ngFor="let navElement of navElements">
+            <i class="text-[25px] w-[3rem] min-w-[2rem] mx-0 my-[0.25rem] items-center" [class]="navElement.icon"></i>
+            <h3 class="font-raleway text-xl">{{navElement.name}}</h3>
         </a>
     </div>
 </div>

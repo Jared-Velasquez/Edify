@@ -6,6 +6,7 @@ import { AccountComponent } from './pages/account/account.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'course/:id', component: CourseComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'settings', component: SettingsComponent },
   { path: '', component: LandingPageComponent },
 ];
 
