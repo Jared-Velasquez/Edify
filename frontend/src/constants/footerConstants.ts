@@ -1,6 +1,6 @@
-import { Footer, Links } from './interfaceConstants';
+import { FooterInterface, LinksInterface } from './interfaceConstants';
 
-export const footerLinks: Footer[] = [
+export const footerLinks: FooterInterface[] = [
     {
         title: "Contact",
         links: [
@@ -66,7 +66,7 @@ export const footerLinks: Footer[] = [
     }
 ];
 
-export const socialMedia: Links[] = [
+export const socialMedia: LinksInterface[] = [
     {
         id: "facebook",
         icon: "assets/img/icons8-facebook-48.png",

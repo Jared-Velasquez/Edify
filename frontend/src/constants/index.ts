@@ -1,12 +1,12 @@
-import { Footer, Links, NavLinks } from './interfaceConstants';
+import { FooterInterface, LinksInterface, NavLinksInterface } from './interfaceConstants';
 import { footerLinks, socialMedia } from './footerConstants';
-import { navLinks } from './navConstants';
+import { navLinkOptions } from './navConstants';
 
 export {
     footerLinks,
     socialMedia,
-    navLinks,
-    Footer,
-    Links,
-    NavLinks,
+    navLinkOptions,
+    FooterInterface,
+    LinksInterface,
+    NavLinksInterface,
 };

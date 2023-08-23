@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import styles from 'src/styles';
-import { socialMedia, footerLinks, Footer, Links } from 'src/constants';
+import { socialMedia, footerLinks, FooterInterface, LinksInterface } from 'src/constants';
 
 @Component({
   selector: 'app-footer',
@@ -9,6 +9,6 @@ import { socialMedia, footerLinks, Footer, Links } from 'src/constants';
 })
 export class FooterComponent {
   styles = styles;
-  socialMediaList: Links[] = socialMedia;
-  footerLinksList: Footer[] = footerLinks;
+  socialMediaList: LinksInterface[] = socialMedia;
+  footerLinksList: FooterInterface[] = footerLinks;
 }

@@ -1,4 +1,4 @@
-export interface Footer {
+export interface FooterInterface {
     title: string,
     links: {
         name: string,
@@ -6,15 +6,15 @@ export interface Footer {
     }[]
 };
 
-export interface Links {
+export interface LinksInterface {
     id: string,
     icon: string,
     link: string,
 };
 
-export interface NavLinks {
+export interface NavLinksInterface {
     icon: string,
     link?: string,
     name: string,
-    items?: NavLinks[],
+    items?: NavLinksInterface[],
 };

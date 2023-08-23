@@ -1,0 +1,9 @@
+<a 
+    [routerLink]="navLink" 
+    [routerLinkActive]="'active'"
+    (mouseover)="test()" (mouseout)="test2()"
+    class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg items-center"
+>
+    <i class="text-[25px] w-[3rem] min-w-[2rem] mx-0 my-[0.25rem] text-white items-center navbar-item-active" [class]="navIcon"></i>
+    <h3 class="font-raleway text-xl text-white navbar-item-active">{{navName}}</h3>
+</a>

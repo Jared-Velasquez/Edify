@@ -1,28 +1,29 @@
-import { NavLinks } from "./interfaceConstants";
+import { NavLinksInterface } from "./interfaceConstants";
 
-export const navLinks: NavLinks[] = [
+export const navLinkOptions: NavLinksInterface[] = [
     {
         icon: "fal fa-user",
-        link: "/account",
+        link: "account",
         name: "Account",
     },
     {
         icon: "fal fa-tachometer",
-        link: "/dashboard",
+        link: "dashboard",
         name: "Dashboard",
     },
     {
         icon: "fal fa-book",
+        link: "courses",
         name: "Courses",
     },
     {
         icon: "fal fa-calendar",
-        link: "/calendar",
+        link: "calendar",
         name: "Calendar",
     },
     {
         icon: "fal fa-cogs",
-        link: "/settings",
+        link: "settings",
         name: "Settings",
     },
 ];
