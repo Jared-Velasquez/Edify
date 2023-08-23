@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { navLinks, NavLinks } from 'src/constants';
 
 @Component({
   selector: 'app-navbar',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  
+  navElements: NavLinks[] = navLinks;
 }

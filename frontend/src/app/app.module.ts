@@ -16,6 +16,8 @@ import { FooterComponent } from './components/core/footer/footer.component';
 import { NavbarComponent } from './components/core/navbar/navbar.component';
 import { BodyComponent } from './components/core/body/body.component';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +37,7 @@ import { BodyComponent } from './components/core/body/body.component';
     StoreModule.forRoot({}, {}),
     BrowserAnimationsModule,
     HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
