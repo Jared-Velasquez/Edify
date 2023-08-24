@@ -1,4 +1,4 @@
-<div *ngIf="(expanded$ | async)" class="flex flex-col w-[18.125rem] h-[100vh] bg-richBlack z-1 absolute">
+<div *ngIf="expanded" class="flex flex-col w-[18.125rem] h-[100vh] bg-richBlack z-1 absolute">
     <!-- Logo -->
     <div class="flex flex-row m-[1rem] items-center">
         <div class="bg-white rounded-lg p-[0.75rem]" (click)="collapseNavbar()">
@@ -10,10 +10,10 @@
     </div>
     <!-- Menu -->
     <div class="mx-[0.5rem]">
-        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded$ | async"></app-nav-link>
+        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded"></app-nav-link>
     </div>
 </div>
-<div *ngIf="!(expanded$ | async)" class="flex flex-col w-[5rem] h-[100vh] bg-richBlack z-1 absolute">
+<div *ngIf="!expanded" class="flex flex-col w-[5rem] h-[100vh] bg-richBlack z-1 absolute">
     <!-- Logo -->
     <div class="flex flex-row m-[1rem] items-center" (click)="expandNavbar()">
         <div class="bg-white rounded-lg p-[0.75rem]">
@@ -22,6 +22,6 @@
     </div>
     <!-- Menu -->
     <div class="mx-[0.5rem]">
-        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded$ | async"></app-nav-link>
+        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded"></app-nav-link>
     </div>
 </div>

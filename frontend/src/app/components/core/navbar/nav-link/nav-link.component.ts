@@ -38,7 +38,7 @@ export class NavLinkComponent {
   @Input() navIcon: string;
   @Input() navLink: string | undefined;
   @Input() navName: string;
-  @Input() expanded: boolean | null;
+  @Input() expanded: boolean;
   isOver: boolean;
 
   constructor() {

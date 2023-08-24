@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './components/core/core.module';
 import { PagesModule } from './pages/pages.module';
 import { navbarReducer } from './store/reducers/navbar.reducers';
@@ -21,7 +21,7 @@ import { navbarReducer } from './store/reducers/navbar.reducers';
     RouterModule,
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({ navbar: navbarReducer }),
+    StoreModule.forRoot({ state: navbarReducer }),
     BrowserAnimationsModule,
     HttpClientModule,
     FontAwesomeModule,

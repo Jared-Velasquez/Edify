@@ -23,7 +23,6 @@ import { navbarReducer } from 'src/app/store/reducers/navbar.reducers';
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ navbar: navbarReducer }),
   ],
   exports: [
     FooterComponent,
