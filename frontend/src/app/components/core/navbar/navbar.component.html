@@ -1,7 +1,7 @@
-<div *ngIf="expanded" class="flex flex-col w-[18.125rem] h-[100vh] bg-richBlack z-1 absolute">
+<div *ngIf="(expanded$ | async)" class="flex flex-col w-[18.125rem] h-[100vh] bg-richBlack z-1 absolute">
     <!-- Logo -->
     <div class="flex flex-row m-[1rem] items-center">
-        <div class="bg-white rounded-lg p-[0.75rem]">
+        <div class="bg-white rounded-lg p-[0.75rem]" (click)="collapseNavbar()">
             <img src="assets/img/edify-icon-black.png" alt="icon" class="w-[30px] h-[30px]" />
         </div>
         <div class="ml-[1.5rem]">
@@ -10,18 +10,18 @@
     </div>
     <!-- Menu -->
     <div class="mx-[0.5rem]">
-        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded"></app-nav-link>
+        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded$ | async"></app-nav-link>
     </div>
 </div>
-<div *ngIf="!expanded" class="flex flex-col w-[5rem] h-[100vh] bg-richBlack z-1 absolute">
+<div *ngIf="!(expanded$ | async)" class="flex flex-col w-[5rem] h-[100vh] bg-richBlack z-1 absolute">
     <!-- Logo -->
-    <div class="flex flex-row m-[1rem] items-center">
+    <div class="flex flex-row m-[1rem] items-center" (click)="expandNavbar()">
         <div class="bg-white rounded-lg p-[0.75rem]">
             <img src="assets/img/edify-icon-black.png" alt="icon" class="w-[30px] h-[30px]" />
         </div>
     </div>
     <!-- Menu -->
     <div class="mx-[0.5rem]">
-        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded"></app-nav-link>
+        <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded$ | async"></app-nav-link>
     </div>
 </div>

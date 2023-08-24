@@ -8,17 +8,10 @@ import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AccountComponent } from './pages/account/account.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { CalendarComponent } from './pages/calendar/calendar.component';
-import { CourseComponent } from './pages/course/course.component';
-import { LoginComponent } from './pages/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
-import { SettingsComponent } from './pages/settings/settings.component';
 import { CoreModule } from './components/core/core.module';
 import { PagesModule } from './pages/pages.module';
-import { navbarReducer } from './ngrx/reducers/navbar.reducers';
+import { navbarReducer } from './store/reducers/navbar.reducers';
 
 @NgModule({
   declarations: [
