@@ -1,1 +1,7 @@
-<p>sub-nav-link works!</p>
+<!-- Sublink container -->
+<div *ngIf="subExpanded">
+    <!-- Sublink element -->
+    <div *ngFor="let sublink of items">
+        <span class="text-white">{{sublink.name}}</span>
+    </div>
+</div>

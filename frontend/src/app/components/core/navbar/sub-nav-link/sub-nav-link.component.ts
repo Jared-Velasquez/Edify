@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { NavLinksInterface } from 'src/constants';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-sub-nav-link',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./sub-nav-link.component.css']
 })
 export class SubNavLinkComponent {
+  @Input() items: NavLinksInterface[] | undefined;
+  @Input() subExpanded: boolean;
 
+  constructor() {
+    this.items = [];
+    this.subExpanded = false;
+  }
 }

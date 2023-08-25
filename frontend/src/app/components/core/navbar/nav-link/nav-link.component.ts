@@ -47,19 +47,26 @@ import { NavLinksInterface } from 'src/constants';
   ],
 })
 export class NavLinkComponent {
-  @Input() navIcon: string;
+  @Input() navIcon: string | undefined;
   @Input() navLink: string | undefined;
   @Input() navName: string;
   @Input() expanded: boolean;
-  @Input() subitems: NavLinksInterface[];
+  @Input() subitems: NavLinksInterface[] | undefined;
   isOver: boolean;
+  isSubLinksExpanded: boolean;
 
   constructor() {
     this.navIcon = "";
     this.navLink = "";
     this.navName = "";
     this.expanded = true;
-    this.isOver = false;
     this.subitems = [];
+    this.isOver = false;
+    this.isSubLinksExpanded = false;
+  }
+
+  toggleExpandSubLinks() {
+    this.isSubLinksExpanded = !this.isSubLinksExpanded;
+    console.log(this.isSubLinksExpanded);
   }
 }
