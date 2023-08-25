@@ -8,7 +8,8 @@
         </a>
         <!-- If sublink is not last sublink of element -->
         <div *ngIf="sublink.subitems && (sublink.subitems.length !== 0)">
-            <span class="text-dimWhite font-roboto text-lg">{{sublink.name}}</span>
+            <span class="text-dimWhite font-roboto text-lg cursor-pointer" (click)="toggleNestedSubLinksExpanded()">{{sublink.name}}</span>
+            <app-sub-nav-link [items]="sublink.subitems" [subExpanded]="isNestedSubLinksExpanded"></app-sub-nav-link>
         </div>
     </div>
 </div>

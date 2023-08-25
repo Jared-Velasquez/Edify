@@ -9,9 +9,15 @@ import { Component, Input } from '@angular/core';
 export class SubNavLinkComponent {
   @Input() items: NavLinksInterface[] | undefined;
   @Input() subExpanded: boolean;
+  isNestedSubLinksExpanded: boolean;
 
   constructor() {
     this.items = [];
     this.subExpanded = false;
+    this.isNestedSubLinksExpanded = false;
+  }
+
+  toggleNestedSubLinksExpanded() {
+    this.isNestedSubLinksExpanded = !this.isNestedSubLinksExpanded;
   }
 }
