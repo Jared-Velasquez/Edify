@@ -13,8 +13,8 @@ export interface LinksInterface {
 };
 
 export interface NavLinksInterface {
-    icon: string,
+    icon?: string,
     link?: string,
     name: string,
-    items?: NavLinksInterface[],
+    subitems?: NavLinksInterface[],
 };

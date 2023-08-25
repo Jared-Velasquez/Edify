@@ -10,6 +10,7 @@ import { BodyComponent } from './body/body.component';
 import { AppRoutingModule } from '../../app-routing.module';
 import { NavLinkComponent } from './navbar/nav-link/nav-link.component';
 import { navbarReducer } from 'src/app/store/reducers/navbar.reducers';
+import { SubNavLinkComponent } from './navbar/sub-nav-link/sub-nav-link.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { navbarReducer } from 'src/app/store/reducers/navbar.reducers';
     NavbarComponent,
     BodyComponent,
     NavLinkComponent,
+    SubNavLinkComponent,
   ],
   imports: [
     CommonModule,

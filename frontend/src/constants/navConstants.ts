@@ -13,8 +13,24 @@ export const navLinkOptions: NavLinksInterface[] = [
     },
     {
         icon: "fal fa-book",
-        link: "courses",
         name: "Courses",
+        subitems: [
+            {
+                icon: "fal fa-pencil",
+                link: "courses/1",
+                name: "Course 1"
+            },
+            {
+                icon: "fal fa-pencil",
+                link: "courses/2",
+                name: "Course 2"
+            },
+            {
+                icon: "fal fa-pencil",
+                link: "courses/3",
+                name: "Course 3"
+            }
+        ]
     },
     {
         icon: "fal fa-calendar",

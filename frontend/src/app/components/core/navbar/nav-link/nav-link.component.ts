@@ -1,5 +1,6 @@
 import { Component, Input, HostBinding } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { NavLinksInterface } from 'src/constants';
 
 @Component({
   selector: 'app-nav-link',
@@ -32,6 +33,17 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
         animate('0.1s')
       ]),
     ]),
+    trigger('fade', [
+      state('in', style({
+        opacity: 1,
+      })),
+      state('out', style({
+        opacity: 0,
+      })),
+      transition('on <=> off', [
+        animate('0.1s'),
+      ])
+    ])
   ],
 })
 export class NavLinkComponent {
@@ -39,6 +51,7 @@ export class NavLinkComponent {
   @Input() navLink: string | undefined;
   @Input() navName: string;
   @Input() expanded: boolean;
+  @Input() subitems: NavLinksInterface[];
   isOver: boolean;
 
   constructor() {
@@ -47,5 +60,6 @@ export class NavLinkComponent {
     this.navName = "";
     this.expanded = true;
     this.isOver = false;
+    this.subitems = [];
   }
 }

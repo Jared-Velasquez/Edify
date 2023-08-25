@@ -3,8 +3,19 @@
     [routerLinkActive]="'active'"
     (mouseover)="isOver=true" (mouseout)="isOver=false"
     [@hoverOnOff]="isOver ? 'on' : 'off'"
+    *ngIf="subitems.length === 0"
     class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg items-center"
 >
     <i [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="text-[25px] mx-0 my-[0.25rem] w-[2rem] min-w-[2rem] text-white text-center items-center navbar-item-active" [class]="navIcon"></i>
     <span *ngIf="expanded" [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
 </a>
+<!-- TODO: implement router link effect -->
+<div
+    (mouseover)="isOver=true" (mouseout)="isOver=false"
+    [@hoverOnOff]="isOver ? 'on' : 'off'"
+    *ngIf="subitems.length !== 0"
+    class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg items-center cursor-pointer"
+>
+    <i [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="text-[25px] mx-0 my-[0.25rem] w-[2rem] min-w-[2rem] text-white text-center items-center navbar-item-active" [class]="navIcon"></i>
+    <span *ngIf="expanded" [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
+</div>
