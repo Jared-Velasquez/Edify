@@ -17,17 +17,17 @@ export const navLinkOptions: NavLinksInterface[] = [
         subitems: [
             {
                 icon: "fal fa-pencil",
-                link: "courses/1",
+                link: "course/1",
                 name: "Course 1"
             },
             {
                 icon: "fal fa-pencil",
-                link: "courses/2",
+                link: "course/2",
                 name: "Course 2"
             },
             {
                 icon: "fal fa-pencil",
-                link: "courses/3",
+                link: "course/3",
                 name: "Course 3"
             }
         ]

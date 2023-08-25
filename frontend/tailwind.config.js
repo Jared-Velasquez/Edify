@@ -15,7 +15,8 @@ module.exports = {
       },
       fontFamily: {
         raleway: ["Raleway", "sans-serif"],
-        roboto: ["Roboto Condensed", "sans-serif"]
+        roboto: ["Roboto Condensed", "sans-serif"],
+        cabin: ["Cabin", "sans-serif"],
       },
     },
     screens: {

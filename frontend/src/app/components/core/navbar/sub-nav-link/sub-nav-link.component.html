@@ -1,7 +1,14 @@
 <!-- Sublink container -->
 <div *ngIf="subExpanded">
     <!-- Sublink element -->
-    <div *ngFor="let sublink of items">
-        <span class="text-white">{{sublink.name}}</span>
+    <div *ngFor="let sublink of items" class="ml-[2.25rem] my-[0.75rem]">
+        <!-- If sublink is last sublink of element-->
+        <a [routerLink]="sublink.link" *ngIf="!sublink.subitems || (sublink.subitems.length === 0)">
+            <span class="text-dimWhite font-roboto text-lg">{{sublink.name}}</span>
+        </a>
+        <!-- If sublink is not last sublink of element -->
+        <div *ngIf="sublink.subitems && (sublink.subitems.length !== 0)">
+            <span class="text-dimWhite font-roboto text-lg">{{sublink.name}}</span>
+        </div>
     </div>
 </div>

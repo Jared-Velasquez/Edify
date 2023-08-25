@@ -15,6 +15,7 @@ export interface LinksInterface {
 export interface NavLinksInterface {
     icon?: string,
     link?: string,
+    id?: string,
     name: string,
     subitems?: NavLinksInterface[],
 };
