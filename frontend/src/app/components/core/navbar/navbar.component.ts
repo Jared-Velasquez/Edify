@@ -5,12 +5,13 @@ import { navLinkOptions, NavLinksInterface } from 'src/constants';
 import { expand, collapse } from 'src/app/store/actions/navbar.actions';
 import { AppState } from 'src/app/store/models/edifyState'; 
 import { expandedSelector } from 'src/app/store/selectors/stateSelectors';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  animations: []
+  animations: [],
 })
 export class NavbarComponent implements OnInit {
   navElements: NavLinksInterface[] = navLinkOptions;
@@ -22,20 +23,15 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.subscribe(data => {
-      console.log(data.state.expanded);
       this.expanded = data.state.expanded;
     });
   }
 
   expandNavbar() {
-    console.log('expanding navbar');
     this.store.dispatch(expand());
-    console.log(this.expanded);
   }
 
   collapseNavbar() {
-    console.log('collapsing navbar');
     this.store.dispatch(collapse());
-    console.log(this.expanded);
   }
 }
