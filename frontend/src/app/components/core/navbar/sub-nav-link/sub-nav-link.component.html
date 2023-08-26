@@ -1,5 +1,5 @@
 <!-- Sublink container -->
-<div *ngIf="subExpanded">
+<div [@revealSubnav]="subExpanded ? 'show' : 'hide'">
     <!-- Sublink element -->
     <div *ngFor="let sublink of items" class="ml-[2.25rem] my-[0.75rem]">
         <!-- If sublink is last sublink of element-->

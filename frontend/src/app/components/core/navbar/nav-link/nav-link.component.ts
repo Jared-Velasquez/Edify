@@ -40,7 +40,7 @@ import { NavLinksInterface } from 'src/constants';
       state('out', style({
         opacity: 0,
       })),
-      transition('on <=> off', [
+      transition('in <=> out', [
         animate('0.1s'),
       ])
     ])

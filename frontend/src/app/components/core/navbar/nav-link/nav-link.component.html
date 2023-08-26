@@ -7,17 +7,20 @@
     class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg items-center"
 >
     <i [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="text-[25px] mx-0 my-[0.25rem] w-[2rem] min-w-[2rem] text-white text-center items-center navbar-item-active" [class]="navIcon"></i>
-    <span *ngIf="expanded" [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
+    <span *ngIf="expanded" [@hoverOnOffChild]="isOver ? 'on' : 'off'" [@fade]="expanded ? 'in' : 'out'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
 </a>
 <div *ngIf="subitems && subitems?.length !== 0">
-    <div
-    (mouseover)="isOver=true" (mouseout)="isOver=false"
-    [@hoverOnOff]="isOver ? 'on' : 'off'"
-    (click)="toggleExpandSubLinks()"
-    class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg items-center cursor-pointer"
-    >
-        <i [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="text-[25px] mx-0 my-[0.25rem] w-[2rem] min-w-[2rem] text-white text-center items-center navbar-item-active" [class]="navIcon"></i>
-        <span *ngIf="expanded" [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
+    <!-- Extra parent div to keep the margin between main nav links and include the subnav links -->
+    <div class="m-[0.5rem]">
+        <div
+        (mouseover)="isOver=true" (mouseout)="isOver=false"
+        [@hoverOnOff]="isOver ? 'on' : 'off'"
+        (click)="toggleExpandSubLinks()"
+        class="flex flex-row p-[0.5rem] rounded-lg items-center cursor-pointer"
+        >
+            <i [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="text-[25px] mx-0 my-[0.25rem] w-[2rem] min-w-[2rem] text-white text-center items-center navbar-item-active" [class]="navIcon"></i>
+            <span *ngIf="expanded" [@hoverOnOffChild]="isOver ? 'on' : 'off'" [@fade]="expanded ? 'in' : 'out'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
+        </div>
+        <app-sub-nav-link *ngIf="expanded" [subExpanded]="isSubLinksExpanded" [items]="subitems"></app-sub-nav-link>
     </div>
-    <app-sub-nav-link *ngIf="expanded" [subExpanded]="isSubLinksExpanded" [items]="subitems"></app-sub-nav-link>
 </div>
