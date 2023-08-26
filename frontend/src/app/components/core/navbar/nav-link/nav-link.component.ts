@@ -1,6 +1,7 @@
 import { Component, Input, HostBinding } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NavLinksInterface } from 'src/constants';
+import { fadeAnimation } from '../animations/shared_animations';
 
 @Component({
   selector: 'app-nav-link',
@@ -33,17 +34,7 @@ import { NavLinksInterface } from 'src/constants';
         animate('0.1s')
       ]),
     ]),
-    trigger('fade', [
-      state('in', style({
-        opacity: 1,
-      })),
-      state('out', style({
-        opacity: 0,
-      })),
-      transition('in <=> out', [
-        animate('0.1s'),
-      ])
-    ])
+    fadeAnimation,
   ],
 })
 export class NavLinkComponent {

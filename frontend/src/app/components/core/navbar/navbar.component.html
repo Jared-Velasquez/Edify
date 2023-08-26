@@ -1,11 +1,11 @@
-<div *ngIf="expanded" class="flex flex-col w-[18.125rem] h-[100vh] bg-richBlack z-1 absolute">
+<div *ngIf="false" class="flex flex-col w-[18.125rem] h-[100vh] bg-richBlack z-1 absolute">
     <!-- Logo -->
     <div class="flex flex-row m-[1rem] items-center">
         <div class="bg-white rounded-lg p-[0.75rem] cursor-pointer" (click)="collapseNavbar()">
             <img src="assets/img/edify-icon-black.png" alt="icon" class="w-[30px] h-[30px]" />
         </div>
         <div class="ml-[1.5rem]">
-            <p class="font-raleway font-semibold text-white text-4xl">Edify</p>
+            <p [@fade]="expanded ? 'in' : 'out'" class="font-raleway font-semibold text-white text-4xl">Edify</p>
         </div>
     </div>
     <!-- Menu -->
@@ -13,7 +13,7 @@
         <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded" [subitems]="navElement.subitems"></app-nav-link>
     </div>
 </div>
-<div *ngIf="!expanded" class="flex flex-col w-[5.5rem] h-[100vh] bg-richBlack z-1 absolute">
+<div *ngIf="true" class="flex flex-col w-[5.5rem] h-[100vh] bg-richBlack z-1 absolute">
     <!-- Logo -->
     <div class="flex flex-row m-[1rem] items-center" (click)="expandNavbar()">
         <div class="bg-white rounded-lg p-[0.75rem]">

@@ -5,13 +5,35 @@ import { navLinkOptions, NavLinksInterface } from 'src/constants';
 import { expand, collapse } from 'src/app/store/actions/navbar.actions';
 import { AppState } from 'src/app/store/models/edifyState'; 
 import { expandedSelector } from 'src/app/store/selectors/stateSelectors';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { trigger, transition, style, animate, state } from '@angular/animations';
+import { fadeAnimation } from './animations/shared_animations';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  animations: [],
+  animations: [
+    trigger('revealNavbar', [
+      state('show', style({
+        width: '*',
+      })),
+      state('hide', style({
+        width: '0',
+        overflow: 'hidden',
+      })),
+      transition('show => hide', [style({overflow: 'hidden'}), 
+        animate('200ms ease-in-out', style({
+          width: '0',
+        })),
+      ]),
+      transition('hide => show', [ 
+        animate('200ms ease-in-out', style({
+          width: '*',
+        })),
+      ]),
+    ]),
+    fadeAnimation,
+  ],
 })
 export class NavbarComponent implements OnInit {
   navElements: NavLinksInterface[] = navLinkOptions;
