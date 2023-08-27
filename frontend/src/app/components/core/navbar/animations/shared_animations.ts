@@ -3,9 +3,11 @@ import { AnimationTriggerMetadata, trigger, state, style, transition, animate } 
 export const fadeAnimation: AnimationTriggerMetadata = trigger('fade', [
     state('in', style({
         opacity: 1,
+        width: '*',
     })),
     state('out', style({
         opacity: 0,
+        width: 0,
     })),
     transition('in <=> out', [
         animate('0.1s'),

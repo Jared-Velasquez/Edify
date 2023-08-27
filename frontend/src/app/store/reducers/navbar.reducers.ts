@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { expand, collapse } from '../actions/navbar.actions';
+import { expand, collapse, toggle } from '../actions/navbar.actions';
 import { AppState } from '../models/edifyState';
 
 export const initialState = {
@@ -20,4 +20,10 @@ export const navbarReducer = createReducer(
             expanded: false,
         }
     }),
+    on(toggle, (state) => {
+        return {
+            ...state,
+            expanded: !state.expanded,
+        }
+    })
 );

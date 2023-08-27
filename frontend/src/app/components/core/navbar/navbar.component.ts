@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { navLinkOptions, NavLinksInterface } from 'src/constants';
-import { expand, collapse } from 'src/app/store/actions/navbar.actions';
+import { expand, collapse, toggle } from 'src/app/store/actions/navbar.actions';
 import { AppState } from 'src/app/store/models/edifyState'; 
 import { expandedSelector } from 'src/app/store/selectors/stateSelectors';
 import { trigger, transition, style, animate, state } from '@angular/animations';
@@ -55,5 +55,9 @@ export class NavbarComponent implements OnInit {
 
   collapseNavbar() {
     this.store.dispatch(collapse());
+  }
+
+  toggleNavbar() {
+    this.store.dispatch(toggle());
   }
 }

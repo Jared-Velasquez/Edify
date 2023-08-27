@@ -4,7 +4,7 @@
     (mouseover)="isOver=true" (mouseout)="isOver=false"
     [@hoverOnOff]="isOver ? 'on' : 'off'"
     *ngIf="!subitems || subitems?.length === 0"
-    class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg items-center"
+    class="flex flex-row p-[0.5rem] m-[0.5rem] rounded-lg text-center items-center"
 >
     <i [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="text-[25px] mx-0 my-[0.25rem] w-[2rem] min-w-[2rem] text-white text-center items-center navbar-item-active" [class]="navIcon"></i>
     <span [@hoverOnOffChild]="isOver ? 'on' : 'off'" [@fade]="expanded ? 'in' : 'out'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
@@ -21,6 +21,6 @@
             <i [@hoverOnOffChild]="isOver ? 'on' : 'off'" class="text-[25px] mx-0 my-[0.25rem] w-[2rem] min-w-[2rem] text-white text-center items-center navbar-item-active" [class]="navIcon"></i>
             <span [@hoverOnOffChild]="isOver ? 'on' : 'off'" [@fade]="expanded ? 'in' : 'out'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
         </div>
-        <app-sub-nav-link *ngIf="expanded" [subExpanded]="isSubLinksExpanded" [items]="subitems"></app-sub-nav-link>
+        <app-sub-nav-link *ngIf="expanded" [navbarExpanded]="expanded" [subExpanded]="isSubLinksExpanded" [items]="subitems"></app-sub-nav-link>
     </div>
 </div>

@@ -30,16 +30,20 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
 })
 export class SubNavLinkComponent {
   @Input() items: NavLinksInterface[] | undefined;
+  @Input() navbarExpanded: boolean;
   @Input() subExpanded: boolean;
   isNestedSubLinksExpanded: boolean;
 
   constructor() {
     this.items = [];
+    this.navbarExpanded = true;
     this.subExpanded = false;
     this.isNestedSubLinksExpanded = false;
   }
 
   toggleNestedSubLinksExpanded() {
-    this.isNestedSubLinksExpanded = !this.isNestedSubLinksExpanded;
+    if (this.navbarExpanded) {
+      this.isNestedSubLinksExpanded = !this.isNestedSubLinksExpanded;
+    }
   }
 }
