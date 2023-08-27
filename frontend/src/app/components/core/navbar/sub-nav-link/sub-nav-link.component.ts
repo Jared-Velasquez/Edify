@@ -10,21 +10,29 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
     trigger('revealSubnav', [
       state('show', style({
         height: '*',
+        overflow: 'hidden',
       })),
       state('hide', style({
         height: '0',
         overflow: 'hidden',
       })),
-      transition('show => hide', [style({overflow: 'hidden'}), 
-        animate('200ms ease-in-out', style({
+      transition('show => hide', [
+        style({
+          overflow: 'hidden',
+        }), 
+        animate('400ms ease-in-out', style({
           height: '0',
         })),
       ]),
       transition('hide => show', [ 
-        animate('200ms ease-in-out', style({
+        style({
+          overflow: 'hidden',
+        }),
+        animate('400ms ease-in-out', style({
           height: '*',
         })),
       ]),
+      transition('void <=> *', animate(0)),
     ])
   ],
 })
@@ -44,6 +52,8 @@ export class SubNavLinkComponent {
   toggleNestedSubLinksExpanded() {
     if (this.navbarExpanded) {
       this.isNestedSubLinksExpanded = !this.isNestedSubLinksExpanded;
+    } else {
+      this.isNestedSubLinksExpanded = false;
     }
   }
 }

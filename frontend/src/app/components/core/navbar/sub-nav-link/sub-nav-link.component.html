@@ -1,7 +1,7 @@
 <!-- Sublink container -->
-<div [@revealSubnav]="(navbarExpanded && subExpanded) ? 'show' : 'hide'">
+<div [@revealSubnav]="(subExpanded && navbarExpanded) ? 'show' : 'hide'">
     <!-- Sublink element -->
-    <div *ngFor="let sublink of items" class="ml-[2.25rem] my-[0.75rem]">
+    <div *ngFor="let sublink of items" class="ml-[2.25rem] py-[0.25rem]">
         <!-- If sublink is last sublink of element-->
         <a [routerLink]="sublink.link" *ngIf="!sublink.subitems || (sublink.subitems.length === 0)">
             <span class="text-dimWhite font-roboto text-lg">{{sublink.name}}</span>

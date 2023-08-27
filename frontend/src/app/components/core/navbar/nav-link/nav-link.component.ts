@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input, HostBinding, OnChanges, SimpleChanges } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NavLinksInterface } from 'src/constants';
 import { fadeAnimation } from '../animations/shared_animations';
@@ -37,7 +37,7 @@ import { fadeAnimation } from '../animations/shared_animations';
     fadeAnimation,
   ],
 })
-export class NavLinkComponent {
+export class NavLinkComponent implements OnChanges {
   @Input() navIcon: string | undefined;
   @Input() navLink: string | undefined;
   @Input() navName: string;
@@ -56,8 +56,16 @@ export class NavLinkComponent {
     this.isSubLinksExpanded = false;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    // If the navbar 'expanded' property changes, and the previous value was true,
+    // close the sublinks
+    if (changes['expanded'] && changes['expanded'].previousValue) {
+      this.isSubLinksExpanded = false;
+    }
+  }
+
   toggleExpandSubLinks() {
-    this.isSubLinksExpanded = !this.isSubLinksExpanded;
-    console.log(this.isSubLinksExpanded);
+    this.isSubLinksExpanded = this.expanded && !this.isSubLinksExpanded;
   }
 }
