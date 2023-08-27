@@ -1,6 +1,5 @@
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
-import styles from 'src/styles';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +14,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-  styles = styles;
 
   onLogin(username: string, password: string) {
     console.log('Logging in');

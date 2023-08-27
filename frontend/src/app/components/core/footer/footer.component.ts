@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import styles from 'src/styles';
 import { socialMedia, footerLinks, FooterInterface, LinksInterface } from 'src/constants';
 
 @Component({
@@ -8,7 +7,6 @@ import { socialMedia, footerLinks, FooterInterface, LinksInterface } from 'src/c
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
-  styles = styles;
   socialMediaList: LinksInterface[] = socialMedia;
   footerLinksList: FooterInterface[] = footerLinks;
 }
