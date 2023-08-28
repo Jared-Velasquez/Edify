@@ -18,9 +18,7 @@ export class AppComponent implements OnInit {
     router.events.pipe(filter(event => event instanceof NavigationEnd))
     .subscribe((event) => {
       const routerEvent: NavigationEnd = event as NavigationEnd;
-      console.log(routerEvent);
       this.showNavbar = ((routerEvent.url === '/login') ? false : true);
-      console.log("After subscribe: " + this.showNavbar);
     })
   }
 

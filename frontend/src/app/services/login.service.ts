@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,13 @@ export class LoginService {
 
   }
 
-  login(username: string, password: string): void {
-    console.log('Logging in 2');
-    this.http.post('https://edify.azurewebsites.net/api/auth/authenticate', {
+  login(username: string, password: string): Observable<HttpResponse<Object>> {
+    // Need observe: 'response' to return the full response instead of just the body
+    return this.http.post('https://edify.azurewebsites.net/api/auth/authenticate', {
       "emailAddress": username,
-      "password": password
-    }).subscribe((res) => {
-      console.log(res);
+      "password": password,
+    }, {
+      observe: 'response',
     });
   }
 }

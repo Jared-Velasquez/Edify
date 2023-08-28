@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'course/:id', component: CourseComponent },
   { path: 'login', component: LoginComponent },
   { path: 'settings', component: SettingsComponent },
-  { path: '', component: LandingPageComponent },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 ];
 
 @NgModule({

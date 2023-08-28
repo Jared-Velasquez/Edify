@@ -8,13 +8,18 @@
   </div>
   <!-- Login Form -->
   <div class="flex flex-col mt-[4rem] mx-auto mb-[15rem] w-[90%] sm:w-[45rem] mx-auto bg-dimWhite rounded-md px-[3.5%] py-[2.5%]">
-    <div class="">
+    <div>
       <!-- Header -->
       <div class="flex justify-center items-center w-full mb-[2rem]">
-        <h1 class="font-medium font-raleway text-2xl sm:text-3xl">Sign in with your Edify Email</h1>
+        <h1 class="font-md font-raleway text-2xl sm:text-3xl">Sign in with your Edify Email</h1>
+      </div>
+      <!-- Bad Credentials Error Message -->
+      <div *ngIf="badCredentials" class="font-roboto text-red-500">
+        <span class="text-2xl font-extrabold">Your Edify ID and/or password were incorrect. <br /></span>
+        <span class="text-md">Try again below, <a href="#" class="text-purple-600">obtain an Edify Logon</a> or <a href="#" class="text-purple-600">reset your password</a></span>
       </div>
       <!-- Input Space -->
-      <div class="flex flex-col">
+      <div class="flex flex-col mt-[2rem]">
         <input type="text" placeholder="Your Edify Email" class="rounded-md w-full p-[10px] pl-[7px]" #email />
         <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] w-full p-[10px] pl-[7px]" #password />
       </div>

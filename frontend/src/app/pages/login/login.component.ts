@@ -1,5 +1,6 @@
 import { LoginService } from './../../services/login.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  badCredentials: boolean;
+
   constructor(private loginService: LoginService) { 
+    this.badCredentials = false;
   }
 
   ngOnInit(): void {
@@ -15,7 +19,16 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(username: string, password: string) {
-    console.log('Logging in');
-    this.loginService.login(username, password);
+    this.loginService.login(username, password).subscribe({
+      next: (response) => {
+        this.badCredentials = false;
+        console.log(response);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === HttpStatusCode.Forbidden)
+          this.badCredentials = true;
+      }
+    });
   }
 }

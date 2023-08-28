@@ -24,7 +24,6 @@ export class BodyComponent implements OnInit {
   }
 
   bodyStyles(): string {
-    console.log("Body: " + this.showNavbar);
     if (!this.showNavbar)
       return 'app-body-navbar-hidden';
     else if (this.navbarExpanded)
