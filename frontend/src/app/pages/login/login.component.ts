@@ -2,8 +2,6 @@ import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpStatusCode } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { JwtService } from 'src/app/services/jwt.service';
-import { TokenResponse } from 'src/app/models/httpresponses';
 import { JWTInterface } from 'src/app/models/jwt';
 
 @Component({
@@ -16,8 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private loginService: LoginService, 
-    private jwtService: JwtService
+    private loginService: LoginService,
   ) { 
     this.badCredentials = false;
   }
@@ -27,21 +24,15 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(username: string, password: string) {
-    this.loginService.login(username, password).subscribe({
-      next: (response) => {
-        this.badCredentials = false;
-        if (!response.body)
-          return;
-        let decodedToken: JWTInterface | undefined = this.jwtService.getDecodedAccessToken(response.body.token);
-        if (!decodedToken)
-          return;
-        console.log(decodedToken);
-        this.router.navigate(['/dashboard']);
-      },
-      error: (error) => {
-        if (error.status === HttpStatusCode.Forbidden)
-          this.badCredentials = true;
+    this.loginService.login(username, password).subscribe((response) => {
+      console.log(response);
+      if (!response) {
+        this.badCredentials = true;
+        return;
       }
+
+      this.badCredentials = false;
+      this.router.navigate(['dashboard']);
     });
   }
 }
