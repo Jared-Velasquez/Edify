@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +8,23 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
+  title: string = 'frontend';
   urlPath: string;
+  showNavbar: boolean;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     this.urlPath = "";
+    this.showNavbar = true;
+    router.events.pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe((event) => {
+      const routerEvent: NavigationEnd = event as NavigationEnd;
+      console.log(routerEvent);
+      this.showNavbar = ((routerEvent.url === '/login') ? false : true);
+      console.log("After subscribe: " + this.showNavbar);
+    })
   }
 
   ngOnInit() {
-    this.activatedRoute.url.subscribe(data => {
-      this.urlPath = data[0].path;
-      console.log(this.urlPath);
-    });
+
   }
 }

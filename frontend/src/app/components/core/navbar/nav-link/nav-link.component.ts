@@ -57,7 +57,6 @@ export class NavLinkComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     // If the navbar 'expanded' property changes, and the previous value was true,
     // close the sublinks
     if (changes['expanded'] && changes['expanded'].previousValue) {

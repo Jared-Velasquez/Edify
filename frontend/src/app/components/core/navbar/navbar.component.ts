@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { navLinkOptions, NavLinksInterface } from 'src/constants';
@@ -36,11 +36,13 @@ import { fadeAnimation } from './animations/shared_animations';
   ],
 })
 export class NavbarComponent implements OnInit {
+  @Input() showNavbar: boolean;
   navElements: NavLinksInterface[] = navLinkOptions;
   expanded: boolean;
 
   constructor(private store: Store<{ state: { expanded: boolean } }>) {
     this.expanded = true;
+    this.showNavbar = true;
   }
 
   ngOnInit(): void {

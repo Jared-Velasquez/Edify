@@ -1,3 +1,3 @@
-<div [ngClass]="navbarExpanded ? 'app-body-navbar-expanded' : 'app-body-navbar-collapsed'" class="flex flex-col h-[100vh] p-[2rem] z-0 relative app-body">
+<div [ngClass]="bodyStyles()" class="flex flex-col h-[100vh] z-0 relative app-body">
     <router-outlet></router-outlet>
 </div>

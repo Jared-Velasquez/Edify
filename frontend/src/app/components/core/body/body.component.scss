@@ -2,10 +2,16 @@
     width: calc(100% - 5.5rem);
     margin-left: 5.5rem;
     transition: all 500ms ease;
+    padding: 2rem;
 }
 
 .app-body-navbar-expanded {
     width: calc(100% - 18.125rem);
     margin-left: 18.125rem;
     transition: all 500ms ease;
+    padding: 2rem;
+}
+
+.app-body-navbar-hidden {
+    width: 100%;
 }
