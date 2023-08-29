@@ -74,8 +74,9 @@ public class CourseController {
     }
 
     @PutMapping("/student")
-    public ResponseEntity<String> addStudent(@RequestBody CourseStudentRequest csRequest) {
-        courseService.addStudentToCourse(csRequest.getCourseId(), csRequest.getStudentId());
+    public ResponseEntity<String> addStudent(@RequestHeader("Authorization") String token, @RequestBody CourseRequest courseRequest) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.addStudentToCourse(courseRequest.getCourseId(), id);
         return new ResponseEntity<>(
                 "Student successfully added to course",
                 HttpStatus.OK
