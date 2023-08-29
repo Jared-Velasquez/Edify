@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './components/core/core.module';
 import { PagesModule } from './pages/pages.module';
 import { navbarReducer } from './store/reducers/navbar.reducers';
+import { AuthInterceptor } from 'src/app/auth/authentication/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,13 @@ import { navbarReducer } from './store/reducers/navbar.reducers';
     CoreModule,
     PagesModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

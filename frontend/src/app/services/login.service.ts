@@ -26,33 +26,14 @@ export class LoginService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    /*this.obtainToken(username, password).subscribe({
-      next: (response) => {
-        if (!response.body)
-          return;
-        const decodedToken: JWTInterface | undefined = this.getDecodedAccessToken(response.body.token);
-        if (!decodedToken)
-          return;
-        console.log("Decoded token: " + decodedToken);
-        this.setSession(decodedToken);
-        loginReturn = true;
-        console.log("loginReturn in subscribe: " + loginReturn);
-        return;
-      },
-      error: (error) => {
-        console.log(error);
-        return;
-      }
-    });
-    console.log("Login return out of subscribe: " + loginReturn);*/
     return this.obtainToken(username, password).pipe(
       map((response) => {
         if (!response.body)
           return false;
+        localStorage.setItem('token', response.body.token);
         const decodedToken: JWTInterface | undefined = this.getDecodedAccessToken(response.body.token);
         if (!decodedToken)
           return false;
-        console.log("Decoded token: " + decodedToken);
         this.setSession(decodedToken);
         return true;
       })
@@ -60,8 +41,13 @@ export class LoginService {
   }
 
   logout() {
+    localStorage.removeItem('token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('issued_at');
+    localStorage.removeItem('audience');
+    localStorage.removeItem('issuer');
+    localStorage.removeItem('subject');
   }
 
   private getDecodedAccessToken(token: string): JWTInterface | undefined {
@@ -77,13 +63,31 @@ export class LoginService {
   private setSession(jwt: JWTInterface) {
     localStorage.setItem('id_token', jwt.id.toString());
     localStorage.setItem('expires_at', jwt.exp.toString());
+    localStorage.setItem('issued_at', jwt.iat.toString());
+    localStorage.setItem('audience', jwt.aud);
+    localStorage.setItem('issuer', jwt.iss);
+    localStorage.setItem('subject', jwt.sub);
   }
 
   isLoggedIn(): boolean {
     const expiration_time: string | null = localStorage.getItem('expires_at');
-    console.log(expiration_time);
-    if (!expiration_time)
+    if (!expiration_time) {
+      this.logout();
       return false;
-    return (parseInt(expiration_time, 10) >= (Date.now() / 1000));
+    }
+    const notExpired = (parseInt(expiration_time, 10) >= (Date.now() / 1000));
+    if (!notExpired) {
+      this.logout();
+      return false;
+    }
+    return true;
+  }
+
+  getToken(): string {
+    const token: string | null = localStorage.getItem('token');
+    if (!token)
+      return "";
+    else
+      return token;
   }
 }
