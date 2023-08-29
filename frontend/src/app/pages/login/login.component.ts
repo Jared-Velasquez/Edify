@@ -1,8 +1,6 @@
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpStatusCode } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { JWTInterface } from 'src/app/models/jwt';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +23,6 @@ export class LoginComponent implements OnInit {
 
   onLogin(username: string, password: string) {
     this.loginService.login(username, password).subscribe((response) => {
-      console.log(response);
       if (!response) {
         this.badCredentials = true;
         return;

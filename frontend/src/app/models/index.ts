@@ -1,5 +1,5 @@
-import { TokenResponse } from "./httpresponses";
-import { JWTInterface } from "./jwt";
+import { TokenResponse } from "./httpResponseModels";
+import { JWTInterface } from "./jwtModels";
 
 export {
     TokenResponse,

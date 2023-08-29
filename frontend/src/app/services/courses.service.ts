@@ -7,4 +7,8 @@ import { Injectable } from '@angular/core';
 export class CoursesService {
 
   constructor(private http: HttpClient) { }
+
+  getCourses() {
+    
+  }
 }
