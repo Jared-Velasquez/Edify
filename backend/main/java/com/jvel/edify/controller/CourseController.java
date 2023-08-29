@@ -1,10 +1,7 @@
 package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
-import com.jvel.edify.controller.requests.CourseContentCreateRequest;
-import com.jvel.edify.controller.requests.CourseCreateRequest;
-import com.jvel.edify.controller.requests.CourseRequest;
-import com.jvel.edify.controller.requests.CourseStudentRequest;
+import com.jvel.edify.controller.requests.*;
 import com.jvel.edify.entity.Course;
 import com.jvel.edify.entity.CourseContent;
 import com.jvel.edify.entity.Student;
@@ -100,6 +97,16 @@ public class CourseController {
         return new ResponseEntity<>(
                 "Content successfully deleted from course",
                 HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/module")
+    public ResponseEntity<String> addModule(@RequestHeader("Authorization") String token, @RequestBody ModuleCreateRequest module) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.addModuleToCourse(id, module);
+        return new ResponseEntity<>(
+                "Module successfully added to course",
+                HttpStatus.CREATED
         );
     }
 }

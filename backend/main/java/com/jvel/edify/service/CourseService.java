@@ -1,9 +1,12 @@
 package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.*;
+import com.jvel.edify.controller.requests.ModuleCreateRequest;
 import com.jvel.edify.entity.*;
+import com.jvel.edify.entity.Module;
 import com.jvel.edify.entity.enums.Role;
 import com.jvel.edify.repository.CourseRepository;
+import com.jvel.edify.repository.ModuleRepository;
 import com.jvel.edify.repository.StudentRepository;
 import com.jvel.edify.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,8 @@ public class CourseService {
     private TeacherRepository teacherRepository;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private ModuleRepository moduleRepository;
 
     public void addCourse(String title, Integer units, Integer teacherId) {
         // Check if teacher is present
@@ -112,5 +118,32 @@ public class CourseService {
             throw new IllegalStateException("Student already added to course");
 
         course.addStudents(student);
+    }
+
+    @Transactional
+    public void addModuleToCourse(Integer teacherId, ModuleCreateRequest module) {
+        Long courseId = module.getCourseId();
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("Teacher not found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
+
+        Course course = courseOptional.get();
+        if (!course.getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + courseId);
+
+        List<Module> moduleList = course.getModules().stream().filter(element -> element.getTitle().equals(module.getTitle())).collect(Collectors.toList());
+        if (!moduleList.isEmpty())
+            throw new ModuleAlreadyExistsException("Module by name " + module.getTitle() + " already exists in course " + courseId);
+
+        Module newModule = Module.builder()
+                .title(module.getTitle())
+                .course(course).build();
+
+        moduleRepository.save(newModule);
     }
 }

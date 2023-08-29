@@ -18,7 +18,11 @@ import java.util.List;
                 @UniqueConstraint(
                         name="title_unique",
                         columnNames = "title"
-                )
+                ),
+                @UniqueConstraint(
+                        name="code_unique",
+                        columnNames = "code"
+                ),
         }
 )
 @ToString(exclude = "students")
@@ -35,7 +39,10 @@ public class Course {
     )
     private Long courseId;
     private String title;
+    private String code;
+    private boolean publiclyVisible;
     private Integer units;
+    private String syllabusBody;
 
     @OneToOne(
             mappedBy = "course"
@@ -72,4 +79,13 @@ public class Course {
     )
     @JsonIgnore
     private Teacher teacher;
+    @OneToMany(
+            mappedBy = "course"
+    )
+    private List<Module> modules;
+
+    public void addModule(Module module) {
+        if (modules == null) modules = new ArrayList<>();
+        modules.add(module);
+    }
 }

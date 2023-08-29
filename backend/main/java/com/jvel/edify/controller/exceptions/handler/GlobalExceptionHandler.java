@@ -125,6 +125,50 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(value = ModuleNotFoundException.class)
+    public ResponseEntity<Map<String, String>> moduleNotFound(ModuleNotFoundException mnfe) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "ModuleNotFoundException");
+        map.put("error", mnfe.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = ModuleAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> moduleAlreadyExists(ModuleAlreadyExistsException maee) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "ModuleAlreadyExistsException");
+        map.put("error", maee.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = AssignmentNotFoundException.class)
+    public ResponseEntity<Map<String, String>> assignmentNotFound(AssignmentNotFoundException mnfe) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "AssignmentNotFoundException");
+        map.put("error", mnfe.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = AssignmentAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> assignmentAlreadyExists(AssignmentAlreadyExistsException aaee) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "ContentAlreadyExistsException");
+        map.put("error", aaee.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
     @ExceptionHandler(value = DepartmentNotFoundException.class)
     public ResponseEntity<Map<String, String>> departmentNotFound(DepartmentNotFoundException dnfe) {
         HashMap<String, String> map = new HashMap<>();
