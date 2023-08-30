@@ -1,5 +1,6 @@
 package com.jvel.edify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,5 +51,6 @@ public class Module {
             name = "course_id",
             referencedColumnName = "courseId"
     )
+    @JsonIgnore
     private Course course;
 }

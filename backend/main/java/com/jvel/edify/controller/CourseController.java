@@ -109,4 +109,14 @@ public class CourseController {
                 HttpStatus.CREATED
         );
     }
+
+    @PutMapping("/assignment")
+    public ResponseEntity<String> addAssignment(@RequestHeader("Authorization") String token, @RequestBody AssignmentCreateRequest assignment) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.addAssignmentToModule(id, assignment);
+        return new ResponseEntity<>(
+                "Assignment successfully added to course",
+                HttpStatus.CREATED
+        );
+    }
 }

@@ -83,9 +83,4 @@ public class Course {
             mappedBy = "course"
     )
     private List<Module> modules;
-
-    public void addModule(Module module) {
-        if (modules == null) modules = new ArrayList<>();
-        modules.add(module);
-    }
 }

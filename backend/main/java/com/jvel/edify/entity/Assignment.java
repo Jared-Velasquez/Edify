@@ -1,5 +1,6 @@
 package com.jvel.edify.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,8 +44,11 @@ public class Assignment {
     @Column(
             nullable = false
     )
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date dueAt;
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date unlockAt;
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date lockAt;
     private Integer pointsPossible;
     @Column(
