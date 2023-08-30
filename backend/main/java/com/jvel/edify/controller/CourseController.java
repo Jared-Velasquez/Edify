@@ -2,6 +2,8 @@ package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.*;
+import com.jvel.edify.controller.responses.AssignmentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.ModuleQueryMultipleResponse;
 import com.jvel.edify.entity.Course;
 import com.jvel.edify.entity.CourseContent;
 import com.jvel.edify.entity.Student;
@@ -100,7 +102,7 @@ public class CourseController {
         );
     }
 
-    @PutMapping("/module")
+    @PostMapping("/module")
     public ResponseEntity<String> addModule(@RequestHeader("Authorization") String token, @RequestBody ModuleCreateRequest module) {
         Integer id = jwtService.resolveToken(token);
         courseService.addModuleToCourse(id, module);
@@ -110,13 +112,31 @@ public class CourseController {
         );
     }
 
-    @PutMapping("/assignment")
+    @PostMapping("/assignment")
     public ResponseEntity<String> addAssignment(@RequestHeader("Authorization") String token, @RequestBody AssignmentCreateRequest assignment) {
         Integer id = jwtService.resolveToken(token);
         courseService.addAssignmentToModule(id, assignment);
         return new ResponseEntity<>(
                 "Assignment successfully added to course",
                 HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/module/{courseId}")
+    public ResponseEntity<ModuleQueryMultipleResponse> getModules(@RequestHeader("Authorization") String token, @PathVariable Long courseId) {
+        Integer id = jwtService.resolveToken(token);
+        return new ResponseEntity<>(
+                courseService.getModules(id, courseId),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/assignment/{courseId}")
+    public ResponseEntity<AssignmentQueryMultipleResponse> getAssignments(@RequestHeader("Authorization") String token, @PathVariable Long courseId) {
+        Integer id = jwtService.resolveToken(token);
+        return new ResponseEntity<>(
+                courseService.getAssignments(id, courseId),
+                HttpStatus.OK
         );
     }
 

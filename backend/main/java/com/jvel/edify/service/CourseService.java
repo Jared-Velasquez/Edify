@@ -3,6 +3,8 @@ package com.jvel.edify.service;
 import com.jvel.edify.controller.exceptions.*;
 import com.jvel.edify.controller.requests.AssignmentCreateRequest;
 import com.jvel.edify.controller.requests.ModuleCreateRequest;
+import com.jvel.edify.controller.responses.AssignmentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.ModuleQueryMultipleResponse;
 import com.jvel.edify.entity.*;
 import com.jvel.edify.entity.Module;
 import com.jvel.edify.entity.enums.Role;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +26,8 @@ import java.util.stream.Collectors;
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private TeacherRepository teacherRepository;
     @Autowired
@@ -182,6 +187,90 @@ public class CourseService {
                 .module(module).build();
 
         assignmentRepository.save(newAssignment);
+    }
+
+    public Assignment getAssignment(Integer userId, Integer assignmentId) {
+        Optional<Assignment> assignmentOptional = assignmentRepository.findById(assignmentId);
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (assignmentOptional.isEmpty())
+            throw new AssignmentNotFoundException("Assignment not found by id " + assignmentId);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+
+        // Check if user is teacher or student of this assignment
+        User user = userOptional.get();
+        Assignment assignment = assignmentOptional.get();
+        Course course = assignment.getModule().getCourse();
+        if (user.getRole().equals(Role.TEACHER) && !course.getTeacher().getId().equals(userId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+        else if (user.getRole().equals(Role.STUDENT) && !course.getStudents().stream().anyMatch(student -> student.getId().equals(userId)))
+            throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
+        return assignment;
+    }
+
+    public Module getModule(Integer userId, Integer moduleId) {
+        Optional<Module> moduleOptional = moduleRepository.findById(moduleId);
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (moduleOptional.isEmpty())
+            throw new ModuleNotFoundException("Module not found by id " + moduleId);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+
+        // Check if user is teacher or student of this module
+        User user = userOptional.get();
+        Module module = moduleOptional.get();
+        Course course = module.getCourse();
+        if (user.getRole().equals(Role.TEACHER) && !course.getTeacher().getId().equals(userId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+        else if (user.getRole().equals(Role.STUDENT) && !course.getStudents().stream().anyMatch(student -> student.getId().equals(userId)))
+            throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
+        return module;
+    }
+
+    public AssignmentQueryMultipleResponse getAssignments(Integer userId, Long courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+
+        // Check if user is teacher or student of this assignment
+        User user = userOptional.get();
+        Course course = courseOptional.get();
+        if (user.getRole().equals(Role.TEACHER) && !course.getTeacher().getId().equals(userId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+        else if (user.getRole().equals(Role.STUDENT) && !course.getStudents().stream().anyMatch(student -> student.getId().equals(userId)))
+            throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
+        List<Assignment> assignments = new ArrayList<>();
+        course.getModules().forEach(module -> {
+           List<Assignment> assignmentsOfModule = module.getAssignments();
+           assignments.addAll(assignmentsOfModule);
+        });
+        AssignmentQueryMultipleResponse response = AssignmentQueryMultipleResponse.builder()
+                .assignments(assignments).build();
+        return response;
+    }
+
+    public ModuleQueryMultipleResponse getModules(Integer userId, Long courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+
+        // Check if user is teacher or student of this assignment
+        User user = userOptional.get();
+        Course course = courseOptional.get();
+        if (user.getRole().equals(Role.TEACHER) && !course.getTeacher().getId().equals(userId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+        else if (user.getRole().equals(Role.STUDENT) && !course.getStudents().stream().anyMatch(student -> student.getId().equals(userId)))
+            throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
+        List<Module> modules = course.getModules();
+        ModuleQueryMultipleResponse response = ModuleQueryMultipleResponse.builder()
+                .modules(modules).build();
+        return response;
     }
 
     public void deleteAssignment(Integer teacherId, Integer assignmentId) {
