@@ -45,6 +45,16 @@ public class CourseController {
         );
     }
 
+    @PutMapping()
+    public ResponseEntity<String> updateCourse(@RequestHeader("Authorization") String token, @RequestBody UpdateCourse course) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.updateCourse(id, course);
+        return new ResponseEntity<>(
+                "Course successfully updated",
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/content")
     public ResponseEntity<CourseContent> getCourseContent(@RequestBody CourseRequest courseRequest) {
         CourseContent courseContent = courseContentService.getCourseContent(courseRequest.getCourseId());

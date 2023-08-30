@@ -11,6 +11,8 @@ import java.util.Optional;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
     boolean existsByTitle(String title);
+    boolean existsByCode(String code);
     List<Course> findByTeacher(Teacher teacher);
     Optional<Course> findByCode(String code);
+    Optional<Course> findByTitle(String title);
 }

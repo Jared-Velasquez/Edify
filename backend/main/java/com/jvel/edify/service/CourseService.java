@@ -3,6 +3,7 @@ package com.jvel.edify.service;
 import com.jvel.edify.controller.exceptions.*;
 import com.jvel.edify.controller.requests.course_requests.AssignmentCreateRequest;
 import com.jvel.edify.controller.requests.course_requests.ModuleCreateRequest;
+import com.jvel.edify.controller.requests.course_requests.UpdateCourse;
 import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
 import com.jvel.edify.entity.*;
@@ -141,6 +142,58 @@ public class CourseService {
 
         course.setSyllabusBody(syllabus);
         courseRepository.save(course);
+    }
+
+    @Transactional
+    public void updateCourse(Integer teacherId, UpdateCourse courseParams) {
+        Optional<Course> courseOptional = courseRepository.findById(courseParams.getCourseId());
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseParams.getCourseId());
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("Teacher not found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
+
+        Course course = courseOptional.get();
+        if (!course.getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+
+        if (courseParams.getTitle() != null && (courseParams.getTitle().length() == 0))
+            throw new IllegalArgumentException("Title cannot be empty");
+        if (courseParams.getCode() != null && (courseParams.getCode().length() == 0))
+            throw new IllegalArgumentException("Code cannot be empty");
+        if (courseParams.getSyllabusBody() != null && (courseParams.getSyllabusBody().length() == 0))
+            throw new IllegalArgumentException("Syllabus cannot be empty");
+
+        // If requested to change title
+        if (courseParams.getTitle() != null) {
+            if (courseRepository.existsByTitle(courseParams.getTitle()))
+                throw new CourseAlreadyExistsException("Course with title " + courseParams.getTitle() + " already exists");
+            course.setTitle(courseParams.getTitle());
+        }
+
+        // If requested to change code
+        if (courseParams.getCode() != null) {
+            if (courseRepository.existsByCode(courseParams.getCode()))
+                throw new CourseAlreadyExistsException("Course with code " + courseParams.getCode() + " already exists");
+            course.setCode(courseParams.getCode());
+        }
+
+        // If requested to change visibility
+        if (courseParams.getPubliclyVisible() != null) {
+            course.setPubliclyVisible(courseParams.getPubliclyVisible());
+        }
+
+        // If requested to change units
+        if (courseParams.getUnits() != null) {
+            course.setUnits(courseParams.getUnits());
+        }
+
+        // If requested to change syllabus
+        if (courseParams.getSyllabusBody() != null) {
+            course.setSyllabusBody(courseParams.getSyllabusBody());
+        }
     }
 
     @Transactional
