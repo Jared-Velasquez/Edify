@@ -1,4 +1,4 @@
-package com.jvel.edify.controller.requests;
+package com.jvel.edify.controller.requests.user_requests;
 
 import com.jvel.edify.entity.enums.Gender;
 import lombok.AllArgsConstructor;

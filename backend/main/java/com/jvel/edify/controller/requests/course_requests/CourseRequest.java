@@ -1,4 +1,4 @@
-package com.jvel.edify.controller.requests;
+package com.jvel.edify.controller.requests.course_requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseCreateRequest {
-    private String title;
-    private Integer units;
+public class CourseRequest {
+    private Long courseId;
 }

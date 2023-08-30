@@ -1,10 +1,10 @@
 package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
-import com.jvel.edify.controller.requests.EmailRequest;
-import com.jvel.edify.controller.requests.NameRequest;
-import com.jvel.edify.controller.responses.UserQueryMultipleResponse;
-import com.jvel.edify.controller.responses.UserQueryResponse;
+import com.jvel.edify.controller.requests.user_requests.EmailRequest;
+import com.jvel.edify.controller.requests.user_requests.NameRequest;
+import com.jvel.edify.controller.responses.user_responses.UserQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.UserQueryResponse;
 import com.jvel.edify.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

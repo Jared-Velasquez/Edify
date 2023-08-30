@@ -1,4 +1,4 @@
-package com.jvel.edify.controller.responses;
+package com.jvel.edify.controller.responses.user_responses.student_responses;
 
 import com.jvel.edify.entity.User;
 import lombok.AllArgsConstructor;

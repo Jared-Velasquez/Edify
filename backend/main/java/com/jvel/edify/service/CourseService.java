@@ -1,10 +1,10 @@
 package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.*;
-import com.jvel.edify.controller.requests.AssignmentCreateRequest;
-import com.jvel.edify.controller.requests.ModuleCreateRequest;
-import com.jvel.edify.controller.responses.AssignmentQueryMultipleResponse;
-import com.jvel.edify.controller.responses.ModuleQueryMultipleResponse;
+import com.jvel.edify.controller.requests.course_requests.AssignmentCreateRequest;
+import com.jvel.edify.controller.requests.course_requests.ModuleCreateRequest;
+import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
 import com.jvel.edify.entity.*;
 import com.jvel.edify.entity.Module;
 import com.jvel.edify.entity.enums.Role;
@@ -98,6 +98,49 @@ public class CourseService {
         if (courseOptional.isEmpty())
             throw new CourseNotFoundException("Course not found by id " + courseId);
         return courseOptional.get().getStudents();
+    }
+
+    @Transactional
+    public void updateCode(Integer teacherId, Long courseId, String code) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("Teacher not found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
+
+        Course course = courseOptional.get();
+        if (!course.getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + courseId);
+
+        // Check if this code already exists in the database
+        Optional<Course> courseCodeOptional = courseRepository.findByCode(code);
+        if (courseCodeOptional.isPresent())
+            throw new CourseAlreadyExistsException("Course with code " + code + " already exists");
+
+        course.setCode(code);
+        courseRepository.save(course);
+    }
+
+    @Transactional
+    public void updateSyllabus(Integer teacherId, Long courseId, String syllabus) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("Teacher not found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
+
+        Course course = courseOptional.get();
+        if (!course.getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + courseId);
+
+        course.setSyllabusBody(syllabus);
+        courseRepository.save(course);
     }
 
     @Transactional

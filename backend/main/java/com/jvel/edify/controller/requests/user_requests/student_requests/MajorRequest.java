@@ -1,4 +1,4 @@
-package com.jvel.edify.controller.requests;
+package com.jvel.edify.controller.requests.user_requests.student_requests;
 
 import com.jvel.edify.entity.enums.Major;
 import lombok.AllArgsConstructor;

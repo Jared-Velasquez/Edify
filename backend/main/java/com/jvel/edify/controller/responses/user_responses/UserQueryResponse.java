@@ -1,5 +1,6 @@
-package com.jvel.edify.controller.responses;
+package com.jvel.edify.controller.responses.user_responses;
 
+import com.jvel.edify.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private String token;
+public class UserQueryResponse {
+    private User user;
 }
+

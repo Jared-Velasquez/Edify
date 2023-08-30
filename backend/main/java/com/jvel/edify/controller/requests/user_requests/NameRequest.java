@@ -1,4 +1,4 @@
-package com.jvel.edify.controller.requests;
+package com.jvel.edify.controller.requests.user_requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentEmailRequest {
-    private String oldEmail;
-    private String newEmail;
+public class NameRequest {
+    private String firstName;
+    private String lastName;
 }

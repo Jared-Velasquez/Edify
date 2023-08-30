@@ -1,10 +1,10 @@
 package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
-import com.jvel.edify.controller.requests.MajorRequest;
-import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
-import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
-import com.jvel.edify.controller.responses.StudentQueryResponse;
+import com.jvel.edify.controller.requests.user_requests.student_requests.MajorRequest;
+import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
 import com.jvel.edify.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;

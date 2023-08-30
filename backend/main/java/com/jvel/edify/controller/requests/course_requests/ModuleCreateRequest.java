@@ -1,6 +1,5 @@
-package com.jvel.edify.controller.requests;
+package com.jvel.edify.controller.requests.course_requests;
 
-import com.jvel.edify.entity.enums.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentRequest {
-    private String department;
+public class ModuleCreateRequest {
+    private String title;
+    private Long courseId;
 }

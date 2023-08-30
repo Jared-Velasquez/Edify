@@ -1,14 +1,12 @@
 package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.*;
-import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
-import com.jvel.edify.controller.responses.StudentQueryMultipleResponse;
-import com.jvel.edify.controller.responses.StudentQueryResponse;
+import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
-import com.jvel.edify.entity.Teacher;
 import com.jvel.edify.entity.User;
 import com.jvel.edify.entity.enums.Major;
-import com.jvel.edify.entity.enums.Position;
 import com.jvel.edify.entity.enums.Role;
 import com.jvel.edify.repository.CourseRepository;
 import com.jvel.edify.repository.StudentRepository;

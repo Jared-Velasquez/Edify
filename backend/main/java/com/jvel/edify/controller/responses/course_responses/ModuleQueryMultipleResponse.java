@@ -1,6 +1,6 @@
-package com.jvel.edify.controller.responses;
+package com.jvel.edify.controller.responses.course_responses;
 
-import com.jvel.edify.entity.Course;
+import com.jvel.edify.entity.Module;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +12,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseQueryMultipleResponse {
-    private List<Course> courses;
+public class ModuleQueryMultipleResponse {
+    private List<Module> modules;
 }

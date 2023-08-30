@@ -1,19 +1,16 @@
 package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
-import com.jvel.edify.controller.requests.DepartmentRequest;
-import com.jvel.edify.controller.requests.PositionRequest;
-import com.jvel.edify.controller.responses.CourseQueryMultipleResponse;
-import com.jvel.edify.controller.responses.TeacherQueryMultipleResponse;
-import com.jvel.edify.controller.responses.TeacherQueryResponse;
-import com.jvel.edify.entity.Course;
+import com.jvel.edify.controller.requests.user_requests.teacher_requests.DepartmentRequest;
+import com.jvel.edify.controller.requests.user_requests.teacher_requests.PositionRequest;
+import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.teacher_responses.TeacherQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.teacher_responses.TeacherQueryResponse;
 import com.jvel.edify.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/teacher")

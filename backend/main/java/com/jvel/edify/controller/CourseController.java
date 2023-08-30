@@ -1,9 +1,9 @@
 package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
-import com.jvel.edify.controller.requests.*;
-import com.jvel.edify.controller.responses.AssignmentQueryMultipleResponse;
-import com.jvel.edify.controller.responses.ModuleQueryMultipleResponse;
+import com.jvel.edify.controller.requests.course_requests.*;
+import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
 import com.jvel.edify.entity.Course;
 import com.jvel.edify.entity.CourseContent;
 import com.jvel.edify.entity.Student;

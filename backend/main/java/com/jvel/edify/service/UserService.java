@@ -2,8 +2,8 @@ package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.UserAlreadyExistsException;
 import com.jvel.edify.controller.exceptions.UserNotFoundException;
-import com.jvel.edify.controller.responses.UserQueryMultipleResponse;
-import com.jvel.edify.controller.responses.UserQueryResponse;
+import com.jvel.edify.controller.responses.user_responses.UserQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.UserQueryResponse;
 import com.jvel.edify.entity.User;
 import com.jvel.edify.entity.enums.Gender;
 import com.jvel.edify.repository.UserRepository;
@@ -91,11 +91,14 @@ public class UserService {
     }
 
     @Transactional
-    public void updateName(Integer studentId, String firstName, String lastName) {
-        if (studentId == null)
+    public void updateName(Integer id, String firstName, String lastName) {
+        if (id == null)
             throw new IllegalStateException("Student ID not specified");
 
-        Optional<User> user = userRepository.findById(studentId);
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + id);
 
         // If first name is specified but is an empty string
         if (firstName != null && firstName.length() == 0)
@@ -105,10 +108,10 @@ public class UserService {
         if (lastName != null && lastName.length() == 0)
             throw new IllegalStateException("Last name cannot be empty");
 
-        if (firstName != null && firstName.length() > 0)
+        if (firstName != null)
             user.get().setFirstName(firstName);
 
-        if (lastName != null && lastName.length() > 0)
+        if (lastName != null)
             user.get().setLastName(lastName);
     }
 
