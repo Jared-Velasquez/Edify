@@ -168,7 +168,7 @@ public class CourseService {
         List<Assignment> assignmentList = module.getAssignments().stream().filter(element -> element.getTitle().equals(assignment.getTitle())).collect(Collectors.toList());
 
         if (!assignmentList.isEmpty())
-            throw new AssignmentAlreadyExistsException("Assignment by name " + assignment.getTitle() + " already exists in course " + module.getCourse().getCourseId());
+            throw new AssignmentAlreadyExistsException("Assignment by name " + assignment.getTitle() + " already exists in module " + module.getModuleId() + " of course " + module.getCourse().getCourseId());
 
         Assignment newAssignment = Assignment.builder()
                 .title(assignment.getTitle())
@@ -182,5 +182,41 @@ public class CourseService {
                 .module(module).build();
 
         assignmentRepository.save(newAssignment);
+    }
+
+    public void deleteAssignment(Integer teacherId, Integer assignmentId) {
+        Optional<Assignment> assignmentOptional = assignmentRepository.findById(assignmentId);
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+        if (assignmentOptional.isEmpty())
+            throw new AssignmentNotFoundException("Assignment not found by id " + assignmentId);
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("Teacher not found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
+
+        Assignment assignment = assignmentOptional.get();
+
+        if (!assignment.getModule().getCourse().getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + assignment.getModule().getCourse().getCourseId());
+
+        assignmentRepository.delete(assignment);
+    }
+
+    public void deleteModule(Integer teacherId, Integer moduleId) {
+        Optional<Module> moduleOptional = moduleRepository.findById(moduleId);
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+        if (moduleOptional.isEmpty())
+            throw new ModuleNotFoundException("Module not found by id " + moduleId);
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("Teacher not found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
+
+        Module module = moduleOptional.get();
+
+        if (!module.getCourse().getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + module.getCourse().getCourseId());
+
+        moduleRepository.delete(module);
     }
 }

@@ -119,4 +119,24 @@ public class CourseController {
                 HttpStatus.CREATED
         );
     }
+
+    @DeleteMapping("/module")
+    public ResponseEntity<String> deleteModule(@RequestHeader("Authorization") String token, @RequestBody ModuleRequest module) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.deleteModule(id, module.getModuleId());
+        return new ResponseEntity<>(
+                "Module successfully deleted from course",
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping("/assignment")
+    public ResponseEntity<String> deleteAssignment(@RequestHeader("Authorization") String token, @RequestBody AssignmentRequest assignment) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.deleteAssignment(id, assignment.getAssignmentId());
+        return new ResponseEntity<>(
+                "Assignment successfully deleted from course",
+                HttpStatus.OK
+        );
+    }
 }

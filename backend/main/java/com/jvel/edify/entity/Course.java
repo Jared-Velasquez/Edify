@@ -80,7 +80,8 @@ public class Course {
     @JsonIgnore
     private Teacher teacher;
     @OneToMany(
-            mappedBy = "course"
+            mappedBy = "course",
+            cascade = CascadeType.REMOVE
     )
     private List<Module> modules;
 }

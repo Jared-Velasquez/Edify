@@ -41,7 +41,8 @@ public class Module {
     )
     private String title;
     @OneToMany(
-            mappedBy = "module"
+            mappedBy = "module",
+            cascade = CascadeType.REMOVE
     )
     private List<Assignment> assignments;
     @ManyToOne(
