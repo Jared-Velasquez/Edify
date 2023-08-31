@@ -2,6 +2,8 @@ package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.*;
 import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
@@ -103,6 +105,24 @@ public class StudentService {
         return CourseQueryMultipleResponse.builder()
                 .courses(student.getCourses())
                 .build();
+    }
+
+    public SimpleCourseQueryMultipleResponse getCoursesSimple(Integer studentId) {
+        Optional<User> user = studentRepository.findById(studentId);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + studentId);
+        if (user.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by id " + studentId);
+
+        Student student = (Student) user.get();
+
+        List<SimpleCourseQueryResponse> response = student.getCourses().stream().map(element -> SimpleCourseQueryResponse.builder()
+                .courseId(element.getCourseId())
+                .title(element.getTitle()).build()).toList();
+
+        return SimpleCourseQueryMultipleResponse.builder()
+                .courses(response).build();
     }
 
     public CourseQueryMultipleResponse getCourses(String emailAddress) {

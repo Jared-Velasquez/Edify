@@ -3,6 +3,7 @@ package com.jvel.edify.controller;
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.user_requests.student_requests.MajorRequest;
 import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
@@ -71,6 +72,15 @@ public class StudentController {
         CourseQueryMultipleResponse response = studentService.getCourses(id);
         return new ResponseEntity<>(
                 response,
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/courses-basic")
+    public ResponseEntity<SimpleCourseQueryMultipleResponse> getCoursesSimple(@RequestHeader("Authorization") String token) {
+        Integer id = jwtService.resolveToken(token);
+        return new ResponseEntity<>(
+                studentService.getCoursesSimple(id),
                 HttpStatus.OK
         );
     }
