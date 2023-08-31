@@ -43,16 +43,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
   expanded: boolean;
   navbarSubscription: Subscription;
 
-  constructor(private store: Store<{ state: AppState }>, private courseService: CoursesService) {
+  constructor(private store: Store<AppState>, private courseService: CoursesService) {
     this.expanded = true;
     this.showNavbar = true;
     this.navbarSubscription = Subscription.EMPTY;
   }
 
   ngOnInit(): void {
-    this.navbarSubscription = this.store.select('state').subscribe((data) => {
+    /*this.navbarSubscription = this.store.select('state').subscribe((data) => {
       this.expanded = data.navbar.expanded;
-    })
+    })*/
+    this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
+      this.expanded = data.expanded;
+    });
   }
 
   ngOnDestroy(): void {
@@ -61,17 +64,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   expandNavbar() {
-    console.log("expanding");
     this.store.dispatch(expand());
   }
 
   collapseNavbar() {
-    console.log("collapsing");
     this.store.dispatch(collapse());
   }
 
   toggleNavbar() {
-    console.log("toggling");
     this.store.dispatch(toggle());
   }
 }

@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './components/core/core.module';
 import { PagesModule } from './pages/pages.module';
-import { navbarReducer } from './store/reducers/navbar.reducers';
+import { appReducer } from 'src/app/store/reducers/app.reducers';
 import { AuthInterceptor } from 'src/app/auth/authentication/auth.interceptor';
 
 @NgModule({
@@ -24,7 +24,7 @@ import { AuthInterceptor } from 'src/app/auth/authentication/auth.interceptor';
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({ state: navbarReducer }),
+    StoreModule.forRoot(appReducer),
     BrowserAnimationsModule,
     HttpClientModule,
     FontAwesomeModule,

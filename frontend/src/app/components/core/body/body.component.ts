@@ -14,15 +14,15 @@ export class BodyComponent implements OnInit {
   navbarExpanded: boolean;
   navbarSubscription: Subscription;
 
-  constructor(private store: Store<{ state: AppState }>) {
+  constructor(private store: Store<AppState>) {
     this.navbarExpanded = true;
     this.showNavbar = true;
     this.navbarSubscription = Subscription.EMPTY;
   }
 
   ngOnInit(): void {
-    this.store.select('state').subscribe((data) => {
-      this.navbarExpanded = data.navbar.expanded;
+    this.store.select('navbar').subscribe((data) => {
+      this.navbarExpanded = data.expanded;
     })
   }
 

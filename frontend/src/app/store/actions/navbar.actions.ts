@@ -1,6 +1,6 @@
 import { createAction } from '@ngrx/store';
-import { ActionTypes } from '../models/actionTypes';
+import { NavbarActionTypes } from '../models/actionTypes';
 
-export const expand = createAction(ActionTypes.ExpandNavbar);
-export const collapse = createAction(ActionTypes.CollapseNavbar);
-export const toggle = createAction(ActionTypes.ToggleNavbar);
+export const expand = createAction(NavbarActionTypes.ExpandNavbar);
+export const collapse = createAction(NavbarActionTypes.CollapseNavbar);
+export const toggle = createAction(NavbarActionTypes.ToggleNavbar);
