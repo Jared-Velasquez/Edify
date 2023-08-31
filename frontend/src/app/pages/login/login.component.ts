@@ -1,6 +1,7 @@
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(username: string, password: string) {
-    this.loginService.login(username, password).subscribe((response) => {
+    /*this.loginService.login(username, password).subscribe((response) => {
       if (!response) {
         this.badCredentials = true;
         return;
@@ -30,6 +31,22 @@ export class LoginComponent implements OnInit {
 
       this.badCredentials = false;
       this.router.navigate(['dashboard']);
-    });
+    });*/
+    this.loginService.login(username, password).subscribe({
+      next: (response) => {
+        if (!response) {
+          this.badCredentials = true;
+          return;
+        }
+  
+        this.badCredentials = false;
+        this.router.navigate(['dashboard']);
+      },
+      error: (error) => {
+        console.log(error.status);
+        if (error.status === HttpStatusCode.Forbidden || error.status === HttpStatusCode.Unauthorized)
+          this.badCredentials = true;
+      }
+    })
   }
 }

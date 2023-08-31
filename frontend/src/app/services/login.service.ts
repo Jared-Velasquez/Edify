@@ -1,8 +1,8 @@
 import { TokenResponse, JWTInterface } from 'src/app/models';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
-import { catchError, map, Observable, switchMap } from 'rxjs';
+import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
 import jwtDecode from 'jwt-decode';
 
 @Injectable({
@@ -36,7 +36,8 @@ export class LoginService {
           return false;
         this.setSession(decodedToken);
         return true;
-      })
+      }),
+      catchError(this.handleLoginError),
     );
   }
 
@@ -67,6 +68,19 @@ export class LoginService {
     localStorage.setItem('audience', jwt.aud);
     localStorage.setItem('issuer', jwt.iss);
     localStorage.setItem('subject', jwt.sub);
+  }
+
+  private handleLoginError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(`Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => error);
   }
 
   isLoggedIn(): boolean {
