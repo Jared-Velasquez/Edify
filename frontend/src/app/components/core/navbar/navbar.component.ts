@@ -7,6 +7,8 @@ import { AppState } from 'src/app/store/models/edifyState';
 import { expandedSelector } from 'src/app/store/selectors/stateSelectors';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { fadeAnimation } from './animations/shared_animations';
+import { CoursesService } from 'src/app/services/courses.service';
+import { CourseBasicResponse } from 'src/app/models/httpResponseModels';
 
 @Component({
   selector: 'app-navbar',
@@ -40,7 +42,7 @@ export class NavbarComponent implements OnInit {
   navElements: NavLinksInterface[] = navLinkOptions;
   expanded: boolean;
 
-  constructor(private store: Store<{ state: { expanded: boolean } }>) {
+  constructor(private store: Store<{ state: { expanded: boolean } }>, private courseService: CoursesService) {
     this.expanded = true;
     this.showNavbar = true;
   }
