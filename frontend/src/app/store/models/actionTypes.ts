@@ -1,4 +1,5 @@
 export enum ActionTypes {
-    Expand = 'expand',
-    Collapse = 'collapse',
+    ExpandNavbar = 'expand',
+    CollapseNavbar = 'collapse',
+    ToggleNavbar = 'toggle',
 }

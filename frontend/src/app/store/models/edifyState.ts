@@ -1,3 +1,5 @@
 export interface AppState {
-    expanded: boolean;
+    navbar: {
+        expanded: boolean;
+    }
 };

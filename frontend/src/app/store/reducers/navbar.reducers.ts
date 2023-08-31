@@ -2,8 +2,10 @@ import { createReducer, on } from '@ngrx/store';
 import { expand, collapse, toggle } from '../actions/navbar.actions';
 import { AppState } from '../models/edifyState';
 
-export const initialState = {
-    expanded: true,
+export const initialState: AppState = {
+    navbar: {
+        expanded: true,
+    }
 }
 
 export const navbarReducer = createReducer(
@@ -11,19 +13,25 @@ export const navbarReducer = createReducer(
     on(expand, (state) => {
         return {
             ...state,
-            expanded: true,
+            navbar: {
+                expanded: true
+            }
         }
     }),
     on(collapse, (state) => {
         return {
             ...state,
-            expanded: false,
+            navbar: {
+                expanded: true
+            }
         }
     }),
     on(toggle, (state) => {
         return {
             ...state,
-            expanded: !state.expanded,
+            navbar: {
+                expanded: !state.navbar.expanded,
+            }
         }
     })
 );
