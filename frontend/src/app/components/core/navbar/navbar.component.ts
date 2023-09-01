@@ -1,14 +1,16 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { navLinkOptions, NavLinksInterface } from 'src/constants';
+import { NavLinksInterface } from 'src/constants';
 import { expand, collapse, toggle } from 'src/app/store/actions/navbar.actions';
 import { AppState } from 'src/app/store/models/edifyState'; 
 import { expandedSelector } from 'src/app/store/selectors/stateSelectors';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { fadeAnimation } from './animations/shared_animations';
 import { CoursesService } from 'src/app/services/courses.service';
-import { CourseBasicResponse } from 'src/app/models/httpResponseModels';
+import { CourseBasicResponse, CourseBasicUnitResponse } from 'src/app/models/httpResponseModels';
+import { NavbarActionTypes } from 'src/app/store/models/actionTypes';
+import { navLinkOptions } from './navlinkOptions';
 
 @Component({
   selector: 'app-navbar',
@@ -39,22 +41,27 @@ import { CourseBasicResponse } from 'src/app/models/httpResponseModels';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   @Input() showNavbar: boolean;
-  navElements: NavLinksInterface[] = navLinkOptions;
+  navElements: NavLinksInterface[];
   expanded: boolean;
   navbarSubscription: Subscription;
 
   constructor(private store: Store<AppState>, private courseService: CoursesService) {
     this.expanded = true;
     this.showNavbar = true;
+    this.navElements = [];
     this.navbarSubscription = Subscription.EMPTY;
+    //this.store.dispatch({ type: NavbarActionTypes.SetCourses });
   }
 
   ngOnInit(): void {
-    /*this.navbarSubscription = this.store.select('state').subscribe((data) => {
-      this.expanded = data.navbar.expanded;
-    })*/
     this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
       this.expanded = data.expanded;
+      //console.log(data.courses);
+    });
+
+    this.courseService.getCourses().subscribe((response) => {
+      console.log(response);
+      this.navElements = navLinkOptions(response);
     });
   }
 

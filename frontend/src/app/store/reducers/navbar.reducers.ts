@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { expand, collapse, toggle } from '../actions/navbar.actions';
+import { expand, collapse, toggle, loadCourses, loadCoursesError } from '../actions/navbar.actions';
 import { AppState, NavbarState } from '../models/edifyState';
 
 export const initialNavbarState: NavbarState = {
@@ -26,5 +26,13 @@ export const navbarReducer = createReducer(
             ...state,
             expanded: !state.expanded,
         }
-    })
+    }),
+    on(loadCourses, (state, { courses }) => {
+        console.log('Loading courses');
+        console.log(courses);
+        return {
+            ...state,
+            courses: courses
+        }
+    }),
 );

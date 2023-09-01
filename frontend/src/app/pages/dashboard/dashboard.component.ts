@@ -10,15 +10,11 @@ import { CoursesService } from 'src/app/services/courses.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  courses: CourseBasicUnitResponse[];
   constructor(private courseService: CoursesService) {
-    this.courses = [];
+
   }
 
   ngOnInit() {
-    this.courseService.getCourses().subscribe((response) => {
-      this.courses = response;
-      console.log(response);
-    });
+
   }
 }

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { CoreModule } from './components/core/core.module';
 import { PagesModule } from './pages/pages.module';
 import { appReducer } from 'src/app/store/reducers/app.reducers';
 import { AuthInterceptor } from 'src/app/auth/authentication/auth.interceptor';
+import { CoursesEffects } from './store/effects/courses.effects';
 
 @NgModule({
   declarations: [
@@ -25,11 +27,12 @@ import { AuthInterceptor } from 'src/app/auth/authentication/auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot(CoursesEffects),
     BrowserAnimationsModule,
     HttpClientModule,
     FontAwesomeModule,
     CoreModule,
-    PagesModule
+    PagesModule,
   ],
   providers: [
     {
