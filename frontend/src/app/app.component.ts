@@ -14,11 +14,12 @@ export class AppComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     this.urlPath = "";
-    this.showNavbar = true;
+    this.showNavbar = false;
     router.events.pipe(filter(event => event instanceof NavigationEnd))
     .subscribe((event) => {
       const routerEvent: NavigationEnd = event as NavigationEnd;
-      this.showNavbar = ((routerEvent.url === '/login') ? false : true);
+      console.log("AppComponent: " + ((routerEvent.url === "/login") ? false : true))
+      this.showNavbar = ((routerEvent.url === "/login") ? false : true);
     })
   }
 

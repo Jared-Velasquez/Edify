@@ -15,6 +15,8 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private loginService: LoginService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    console.log(request);
+    console.log("Interceptor: " + this.loginService.getToken());
     request = request.clone({
       setHeaders: {
         'Content-Type': 'application/json',

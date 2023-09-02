@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { NavLinksInterface } from 'src/constants';
@@ -17,24 +17,12 @@ import { navLinkOptions } from './navlinkOptions';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   animations: [
-    trigger('revealNavbar', [
-      state('show', style({
-        width: '*',
-      })),
-      state('hide', style({
-        width: '0',
-        overflow: 'hidden',
-      })),
-      transition('show => hide', [style({overflow: 'hidden'}), 
+    trigger('renderNavbar', [
+      transition(':enter', [
         animate('200ms ease-in-out', style({
-          width: '0',
-        })),
-      ]),
-      transition('hide => show', [ 
-        animate('200ms ease-in-out', style({
-          width: '*',
-        })),
-      ]),
+          opacity: 1
+        }))
+      ])
     ]),
     fadeAnimation,
   ],
@@ -47,22 +35,27 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<AppState>, private courseService: CoursesService) {
     this.expanded = true;
-    this.showNavbar = true;
+    this.showNavbar = false;
     this.navElements = [];
     this.navbarSubscription = Subscription.EMPTY;
     //this.store.dispatch({ type: NavbarActionTypes.SetCourses });
+    console.log("Navbar Constructor ran");
   }
 
   ngOnInit(): void {
-    this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
-      this.expanded = data.expanded;
-      //console.log(data.courses);
-    });
+    console.log(this.showNavbar);
+    if (this.showNavbar) {
+      console.log("navbar ngOnInit ran");
+      this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
+        this.expanded = data.expanded;
+        //console.log(data.courses);
+      });
 
-    this.courseService.getCourses().subscribe((response) => {
-      console.log(response);
-      this.navElements = navLinkOptions(response);
-    });
+      this.courseService.getCourses().subscribe((response) => {
+        console.log(response);
+        this.navElements = navLinkOptions(response);
+      });
+    }
   }
 
   ngOnDestroy(): void {

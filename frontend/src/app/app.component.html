@@ -1,5 +1,7 @@
 <div>
-    <app-navbar [showNavbar]="showNavbar"></app-navbar>
+    <ng-container *ngIf="showNavbar">
+        <app-navbar [showNavbar]="showNavbar"></app-navbar>
+    </ng-container>
     <app-body [showNavbar]="showNavbar"></app-body>
 </div>
 <app-footer>

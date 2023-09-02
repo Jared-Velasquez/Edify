@@ -1,4 +1,4 @@
-<div *ngIf="showNavbar" [ngClass]="expanded ? 'navbar-expanded' : 'navbar-collapsed'" class="flex flex-col h-[100vh] bg-richBlack z-1 absolute">
+<div [ngClass]="expanded ? 'navbar-expanded' : 'navbar-collapsed'" class="flex flex-col h-[100vh] bg-richBlack z-1 absolute">
     <!-- Logo -->
     <div class="flex items-center m-[1rem] items-center">
         <div class="bg-white rounded-lg p-[0.75rem] cursor-pointer" (click)="toggleNavbar()">
