@@ -17,13 +17,6 @@ import { navLinkOptions } from './navlinkOptions';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   animations: [
-    trigger('renderNavbar', [
-      transition(':enter', [
-        animate('200ms ease-in-out', style({
-          opacity: 1
-        }))
-      ])
-    ]),
     fadeAnimation,
   ],
 })
@@ -32,28 +25,33 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navElements: NavLinksInterface[];
   expanded: boolean;
   navbarSubscription: Subscription;
+  isNavbarLoading: boolean;
 
   constructor(private store: Store<AppState>, private courseService: CoursesService) {
     this.expanded = true;
     this.showNavbar = false;
-    this.navElements = [];
+    this.navElements = navLinkOptions([]);
     this.navbarSubscription = Subscription.EMPTY;
-    //this.store.dispatch({ type: NavbarActionTypes.SetCourses });
-    console.log("Navbar Constructor ran");
+    this.isNavbarLoading = false;
   }
 
   ngOnInit(): void {
-    console.log(this.showNavbar);
     if (this.showNavbar) {
-      console.log("navbar ngOnInit ran");
       this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
         this.expanded = data.expanded;
-        //console.log(data.courses);
       });
-
-      this.courseService.getCourses().subscribe((response) => {
-        console.log(response);
-        this.navElements = navLinkOptions(response);
+      
+      this.courseService.getCourses().subscribe({
+        next: (response) => {
+          this.navElements = navLinkOptions(response);
+        },
+        error: (error) => {
+          console.log(error);
+          this.navElements = navLinkOptions([]);
+        },
+        complete: () => {
+          const endTime = new Date().getTime();
+        }
       });
     }
   }

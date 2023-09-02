@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
     router.events.pipe(filter(event => event instanceof NavigationEnd))
     .subscribe((event) => {
       const routerEvent: NavigationEnd = event as NavigationEnd;
-      console.log("AppComponent: " + ((routerEvent.url === "/login") ? false : true))
       this.showNavbar = ((routerEvent.url === "/login") ? false : true);
     })
   }
