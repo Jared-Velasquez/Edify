@@ -11,6 +11,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
 import { SettingsComponent } from './settings/settings.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ModulesComponent } from './course/modules/modules.component';
+import { AssignmentsComponent } from './course/assignments/assignments.component';
+import { AnnouncementsComponent } from './course/announcements/announcements.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import { SettingsComponent } from './settings/settings.component';
     LandingPageComponent,
     LoginComponent,
     SettingsComponent,
+    PageNotFoundComponent,
+    ModulesComponent,
+    AssignmentsComponent,
+    AnnouncementsComponent,
   ],
   imports: [
     CommonModule,

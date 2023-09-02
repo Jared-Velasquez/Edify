@@ -23,16 +23,20 @@ export class CoursesService {
             icon: 'fal fa-pencil',
             subitems: [
               {
-                link: `course/${course.courseId}/home`,
-                name: "Home"
+                link: `courses/${course.courseId}/home`,
+                name: "Home",
               },
               {
-                link: `course/${course.courseId}/modules`,
-                name: "Modules"
+                link: `courses/${course.courseId}/announcements`,
+                name: "Announcements",
               },
               {
-                link: `course/${course.courseId}/assignments`,
-                name: "Assignments"
+                link: `courses/${course.courseId}/modules`,
+                name: "Modules",
+              },
+              {
+                link: `courses/${course.courseId}/assignments`,
+                name: "Assignments",
               },
             ]
           })

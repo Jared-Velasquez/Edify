@@ -50,7 +50,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.navElements = navLinkOptions([]);
         },
         complete: () => {
-          const endTime = new Date().getTime();
         }
       });
     }
