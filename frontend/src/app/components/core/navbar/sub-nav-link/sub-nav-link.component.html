@@ -1,15 +1,27 @@
 <!-- Sublink container -->
-<div [@revealSubnav]="(subExpanded && navbarExpanded) ? 'show' : 'hide'">
-    <!-- Sublink element -->
-    <div *ngFor="let sublink of items" class="ml-[2.25rem] py-[0.25rem]">
-        <!-- If sublink is last sublink of element-->
-        <a [routerLink]="sublink.link" *ngIf="!sublink.subitems || (sublink.subitems.length === 0)">
-            <span class="text-dimWhite font-roboto text-lg">{{sublink.name}}</span>
-        </a>
-        <!-- If sublink is not last sublink of element -->
-        <div *ngIf="sublink.subitems && (sublink.subitems.length !== 0)">
-            <span class="text-dimWhite font-roboto text-lg cursor-pointer" (click)="toggleNestedSubLinksExpanded()">{{sublink.name}}</span>
-            <app-sub-nav-link [items]="sublink.subitems" [subExpanded]="isNestedSubLinksExpanded"></app-sub-nav-link>
+<div [@revealSubnav]="(subExpanded && navbarExpanded) ? 'show' : 'hide'" class="ml-[2.25rem]">
+    <!-- If sublink is the final sublink of element -->
+    <a 
+        *ngIf="!subnav.subitems || (subnav.subitems.length === 0)" 
+        [routerLink]="subnav.link" 
+        class="inline-block my-[0.35rem]" 
+        [@hoverOnOffChild]="isOver ? 'on' : 'off'" 
+        (mouseover)="isOver=true" 
+        (mouseout)="isOver=false"
+    >
+        <span class="text-dimWhite font-roboto text-lg">{{subnav.name}}</span>
+    </a>
+    <!-- If sublink is not the final sublink of element -->
+    <div 
+        *ngIf="subnav.subitems && (subnav.subitems.length !== 0)" 
+        class="py-[0.35rem]" 
+        [@hoverOnOffChild]="isOver ? 'on' : 'off'" 
+        (mouseover)="isOver=true" 
+        (mouseout)="isOver=false"
+    >
+        <span class="text-dimWhite font-roboto text-lg cursor-pointer" (click)="toggleNestedSubLinksExpanded()">{{subnav.name}}</span>
+        <div *ngFor="let nestedSubnav of subnav.subitems">
+            <app-sub-nav-link [subnav]="nestedSubnav" [subExpanded]="isNestedSubLinksExpanded"></app-sub-nav-link>
         </div>
     </div>
 </div>

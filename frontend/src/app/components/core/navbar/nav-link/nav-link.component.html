@@ -22,6 +22,6 @@
             <span [@hoverOnOffChild]="isOver ? 'on' : 'off'" [@fade]="expanded ? 'in' : 'out'" class="font-raleway text-xl text-white navbar-item-active ml-[1.75rem]">{{navName}}</span>
         </div>
         <!-- If the navbar is collapsed, don't render/expand the subnavs -->
-        <app-sub-nav-link [navbarExpanded]="expanded" [subExpanded]="(isSubLinksExpanded && expanded)" [items]="subitems"></app-sub-nav-link>
+        <app-sub-nav-link *ngFor="let subnav of subitems" [navbarExpanded]="expanded" [subExpanded]="(isSubLinksExpanded && expanded)" [subnav]="subnav"></app-sub-nav-link>
     </div>
 </div>

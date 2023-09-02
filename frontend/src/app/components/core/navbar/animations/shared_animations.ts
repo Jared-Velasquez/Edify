@@ -13,3 +13,31 @@ export const fadeAnimation: AnimationTriggerMetadata = trigger('fade', [
         animate('0.1s'),
     ])
 ]);
+
+export const hoverAnimation: AnimationTriggerMetadata = trigger('hoverOnOff', [
+    state('on', style({
+      backgroundColor: '#fff',
+    })),
+    state('off', style({
+    })),
+    transition('on => off', [
+      animate('0.05s')
+    ]),
+    transition('off => on', [
+      animate('0.1s')
+    ]),
+  ]);
+
+export const hoverChildAnimation: AnimationTriggerMetadata = trigger('hoverOnOffChild', [
+    state('on', style({
+      color: 'black',
+    })),
+    state('off', style({
+    })),
+    transition('on => off', [
+      animate('0.05s')
+    ]),
+    transition('off => on', [
+      animate('0.1s')
+    ]),
+  ]);

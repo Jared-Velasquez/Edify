@@ -1,12 +1,15 @@
 import { NavLinksInterface } from 'src/constants';
 import { Component, Input } from '@angular/core';
 import { trigger, state, transition, animate, style } from '@angular/animations';
+import { hoverAnimation, hoverChildAnimation } from '../animations/shared_animations';
 
 @Component({
   selector: 'app-sub-nav-link',
   templateUrl: './sub-nav-link.component.html',
   styleUrls: ['./sub-nav-link.component.scss'],
   animations: [
+    hoverAnimation,
+    hoverChildAnimation,
     trigger('revealSubnav', [
       state('show', style({
         height: '*',
@@ -37,16 +40,20 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
   ],
 })
 export class SubNavLinkComponent {
-  @Input() items: NavLinksInterface[] | undefined;
+  @Input() subnav: NavLinksInterface;
   @Input() navbarExpanded: boolean;
   @Input() subExpanded: boolean;
   isNestedSubLinksExpanded: boolean;
+  isOver: boolean;
 
   constructor() {
-    this.items = [];
+    this.subnav = {
+      name: "",
+    };
     this.navbarExpanded = true;
     this.subExpanded = false;
     this.isNestedSubLinksExpanded = false;
+    this.isOver = false;
   }
 
   toggleNestedSubLinksExpanded() {

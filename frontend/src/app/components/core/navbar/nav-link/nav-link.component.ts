@@ -1,50 +1,26 @@
 import { Component, Input, HostBinding, OnChanges, SimpleChanges } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NavLinksInterface } from 'src/constants';
-import { fadeAnimation } from '../animations/shared_animations';
+import { fadeAnimation, hoverAnimation, hoverChildAnimation } from '../animations/shared_animations';
 
 @Component({
   selector: 'app-nav-link',
   templateUrl: './nav-link.component.html',
   styleUrls: ['./nav-link.component.scss'],
   animations: [
-    trigger('hoverOnOff', [
-      state('on', style({
-        backgroundColor: '#fff',
-      })),
-      state('off', style({
-      })),
-      transition('on => off', [
-        animate('0.05s')
-      ]),
-      transition('off => on', [
-        animate('0.1s')
-      ]),
-    ]),
-    trigger('hoverOnOffChild', [
-      state('on', style({
-        color: 'black',
-      })),
-      state('off', style({
-      })),
-      transition('on => off', [
-        animate('0.05s')
-      ]),
-      transition('off => on', [
-        animate('0.1s')
-      ]),
-    ]),
+    hoverAnimation,
     fadeAnimation,
+    hoverChildAnimation,
   ],
 })
 export class NavLinkComponent implements OnChanges {
   @Input() navIcon: string | undefined;
   @Input() navLink: string | undefined;
   @Input() navName: string;
-  @Input() expanded: boolean;
-  @Input() subitems: NavLinksInterface[] | undefined;
-  isOver: boolean;
-  isSubLinksExpanded: boolean;
+  @Input() expanded: boolean; // Is navbar expanded
+  @Input() subitems: NavLinksInterface[] | undefined; // Sublinks for this parent
+  isOver: boolean; // Is cursor hovering over element
+  isSubLinksExpanded: boolean; // Are the sublinks shown?
 
   constructor() {
     this.navIcon = "";
