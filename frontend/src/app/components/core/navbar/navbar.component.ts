@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navElements: NavLinksInterface[];
   expanded: boolean;
   navbarSubscription: Subscription;
+  coursesSubscription: Subscription;
   isNavbarLoading: boolean;
 
   constructor(private store: Store<AppState>, private courseService: CoursesService) {
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.showNavbar = false;
     this.navElements = navLinkOptions([]);
     this.navbarSubscription = Subscription.EMPTY;
+    this.coursesSubscription = Subscription.EMPTY;
     this.isNavbarLoading = false;
   }
 
@@ -41,7 +43,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.expanded = data.expanded;
       });
       
-      this.courseService.getCourses().subscribe({
+      this.coursesSubscription = this.courseService.getCourses().subscribe({
         next: (response) => {
           this.navElements = navLinkOptions(response);
         },
@@ -58,6 +60,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.navbarSubscription)
       this.navbarSubscription.unsubscribe();
+    if (this.coursesSubscription)
+      this.coursesSubscription.unsubscribe();
   }
 
   expandNavbar() {

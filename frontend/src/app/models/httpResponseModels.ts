@@ -10,3 +10,14 @@ export interface CourseBasicUnitResponse {
 export interface CourseBasicResponse {
     courses: CourseBasicUnitResponse[],
 };
+
+export interface AnnouncementUnitResponse {
+    announcementId: number,
+    title: string,
+    description: string,
+    createdAt: string,
+};
+
+export interface AnnouncementResponse {
+    announcements: AnnouncementUnitResponse[],
+};
