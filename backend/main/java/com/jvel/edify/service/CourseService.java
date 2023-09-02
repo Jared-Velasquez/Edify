@@ -312,6 +312,7 @@ public class CourseService {
         Announcement newAnnouncement = Announcement.builder()
                 .title(announcement.getTitle())
                 .description(announcement.getDescription())
+                .createdAt(java.sql.Date.valueOf(LocalDate.now()))
                 .course(course).build();
 
         announcementRepository.save(newAnnouncement);

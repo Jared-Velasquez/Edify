@@ -130,6 +130,16 @@ public class CourseController {
         );
     }
 
+    @PostMapping("/announcement")
+    public ResponseEntity<String> addAnnouncement(@RequestHeader("Authorization") String token, @RequestBody AnnouncementCreateRequest announcement) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.addAnnouncementToCourse(id, announcement);
+        return new ResponseEntity<>(
+                "Assignment successfully added to course",
+                HttpStatus.CREATED
+        );
+    }
+
     @GetMapping("/module/{courseId}")
     public ResponseEntity<ModuleQueryMultipleResponse> getModules(@RequestHeader("Authorization") String token, @PathVariable Long courseId) {
         Integer id = jwtService.resolveToken(token);

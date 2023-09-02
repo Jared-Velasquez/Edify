@@ -1,11 +1,14 @@
 package com.jvel.edify.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
 
 @Data
 @Builder
@@ -41,6 +44,12 @@ public class Announcement {
             nullable = false
     )
     private String description;
+    @Column(
+            nullable = false,
+            columnDefinition="DATETIME"
+    )
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    private java.sql.Date createdAt;
     @ManyToOne(
             optional = false
     )
