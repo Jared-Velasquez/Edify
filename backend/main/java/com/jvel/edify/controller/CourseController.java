@@ -2,12 +2,10 @@ package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.course_requests.*;
+import com.jvel.edify.controller.responses.course_responses.AnnouncementQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
-import com.jvel.edify.entity.Course;
-import com.jvel.edify.entity.CourseContent;
-import com.jvel.edify.entity.Student;
-import com.jvel.edify.entity.Teacher;
+import com.jvel.edify.entity.*;
 import com.jvel.edify.service.CourseContentService;
 import com.jvel.edify.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,6 +144,15 @@ public class CourseController {
         Integer id = jwtService.resolveToken(token);
         return new ResponseEntity<>(
                 courseService.getAssignments(id, courseId),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/announcement/{courseId}")
+    public ResponseEntity<AnnouncementQueryMultipleResponse> getAnnouncements(@RequestHeader("Authorization") String token, @PathVariable Long courseId) {
+        Integer id = jwtService.resolveToken(token);
+        return new ResponseEntity<>(
+                courseService.getAnnouncements(id, courseId),
                 HttpStatus.OK
         );
     }

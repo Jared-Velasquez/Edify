@@ -84,4 +84,9 @@ public class Course {
             cascade = CascadeType.REMOVE
     )
     private List<Module> modules;
+    @OneToMany(
+            mappedBy = "course",
+            cascade = CascadeType.REMOVE
+    )
+    private List<Announcement> announcements;
 }

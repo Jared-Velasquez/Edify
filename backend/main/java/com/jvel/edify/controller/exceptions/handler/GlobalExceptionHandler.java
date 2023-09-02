@@ -161,7 +161,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AssignmentAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> assignmentAlreadyExists(AssignmentAlreadyExistsException aaee) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("exception", "ContentAlreadyExistsException");
+        map.put("exception", "AssignmentAlreadyExistsException");
+        map.put("error", aaee.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = AnnouncementAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> announcementAlreadyExists(AnnouncementAlreadyExistsException aaee) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "AnnouncementAlreadyExistsException");
         map.put("error", aaee.getMessage());
         return new ResponseEntity<>(
                 map,

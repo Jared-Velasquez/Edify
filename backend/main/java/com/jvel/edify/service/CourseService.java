@@ -1,9 +1,11 @@
 package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.*;
+import com.jvel.edify.controller.requests.course_requests.AnnouncementCreateRequest;
 import com.jvel.edify.controller.requests.course_requests.AssignmentCreateRequest;
 import com.jvel.edify.controller.requests.course_requests.ModuleCreateRequest;
 import com.jvel.edify.controller.requests.course_requests.UpdateCourse;
+import com.jvel.edify.controller.responses.course_responses.AnnouncementQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
 import com.jvel.edify.entity.*;
@@ -37,6 +39,8 @@ public class CourseService {
     private ModuleRepository moduleRepository;
     @Autowired
     private AssignmentRepository assignmentRepository;
+    @Autowired
+    private AnnouncementRepository announcementRepository;
 
     public void addCourse(String title, Integer units, Integer teacherId) {
         // Check if teacher is present
@@ -266,7 +270,7 @@ public class CourseService {
         if (!module.getCourse().getTeacher().getId().equals(teacherId))
             throw new UnauthorizedAccessException("User is not teacher of course " + module.getCourse().getCourseId());
 
-        List<Assignment> assignmentList = module.getAssignments().stream().filter(element -> element.getTitle().equals(assignment.getTitle())).collect(Collectors.toList());
+        List<Assignment> assignmentList = module.getAssignments().stream().filter(element -> element.getTitle().equals(assignment.getTitle())).toList();
 
         if (!assignmentList.isEmpty())
             throw new AssignmentAlreadyExistsException("Assignment by name " + assignment.getTitle() + " already exists in module " + module.getModuleId() + " of course " + module.getCourse().getCourseId());
@@ -283,6 +287,34 @@ public class CourseService {
                 .module(module).build();
 
         assignmentRepository.save(newAssignment);
+    }
+
+    @Transactional
+    public void addAnnouncementToCourse(Integer teacherId, AnnouncementCreateRequest announcement) {
+        Long courseId = announcement.getCourseId();
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> teacherOptional = teacherRepository.findById(teacherId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (teacherOptional.isEmpty())
+            throw new UserNotFoundException("Teacher not found by id " + teacherId);
+        if (teacherOptional.get().getRole() != Role.TEACHER)
+            throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
+
+        Course course = courseOptional.get();
+        if (!course.getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+
+        List<Announcement> announcementList = course.getAnnouncements().stream().filter(element -> element.getTitle().equals(announcement.getTitle())).toList();
+        if (!announcementList.isEmpty())
+            throw new AnnouncementAlreadyExistsException("Announcement by name " + announcement.getTitle() + " already exists in course " + course.getCourseId());
+
+        Announcement newAnnouncement = Announcement.builder()
+                .title(announcement.getTitle())
+                .description(announcement.getDescription())
+                .course(course).build();
+
+        announcementRepository.save(newAnnouncement);
     }
 
     public Assignment getAssignment(Integer userId, Integer assignmentId) {
@@ -367,6 +399,26 @@ public class CourseService {
         ModuleQueryMultipleResponse response = ModuleQueryMultipleResponse.builder()
                 .modules(modules).build();
         return response;
+    }
+
+    public AnnouncementQueryMultipleResponse getAnnouncements(Integer userId, Long courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+
+        // Check if user is teacher or student of this assignment
+        User user = userOptional.get();
+        Course course = courseOptional.get();
+        if (user.getRole().equals(Role.TEACHER) && !course.getTeacher().getId().equals(userId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+        else if (user.getRole().equals(Role.STUDENT) && course.getStudents().stream().noneMatch(student -> student.getId().equals(userId)))
+            throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
+
+        return AnnouncementQueryMultipleResponse.builder()
+                .announcements(course.getAnnouncements()).build();
     }
 
     public void deleteAssignment(Integer teacherId, Integer assignmentId) {
