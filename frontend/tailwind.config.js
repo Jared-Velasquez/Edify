@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         primary: "rgb(0, 12, 40)",
         dimWhite: "rgba(255, 255, 255, 0.7)",
+        offWhite: "rgb(238, 238, 238)",
         richBlack: "#0D1821",
         indigoDye: "#344966",
         powderBlue: "#B4CDED",
