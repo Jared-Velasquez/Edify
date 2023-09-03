@@ -53,27 +53,20 @@ public class CourseController {
         );
     }
 
-    @GetMapping("/content")
-    public ResponseEntity<CourseContent> getCourseContent(@RequestBody CourseRequest courseRequest) {
-        CourseContent courseContent = courseContentService.getCourseContent(courseRequest.getCourseId());
-        return new ResponseEntity<>(
-                courseContent,
-                HttpStatus.OK
-        );
-    }
-
-    @GetMapping("/teacher")
-    public ResponseEntity<Teacher> getTeacher(@RequestBody CourseRequest courseRequest) {
-        Teacher teacher = courseService.getTeacher(courseRequest.getCourseId());
+    @GetMapping("/teacher/{courseId}")
+    public ResponseEntity<Teacher> getTeacher(@RequestHeader("Authorization") String token, @PathVariable Long courseId) {
+        Integer id = jwtService.resolveToken(token);
+        Teacher teacher = courseService.getTeacher(id, courseId);
         return new ResponseEntity<>(
                 teacher,
                 HttpStatus.OK
         );
     }
 
-    @GetMapping("/students")
-    public ResponseEntity<List<Student>> getStudents(@RequestBody CourseRequest courseRequest) {
-        List<Student> students = courseService.getStudents(courseRequest.getCourseId());
+    @GetMapping("/students/{courseId}")
+    public ResponseEntity<List<Student>> getStudents(@RequestHeader("Authorization") String token, @PathVariable Long courseId) {
+        Integer id = jwtService.resolveToken(token);
+        List<Student> students = courseService.getStudents(id, courseId);
         return new ResponseEntity<>(
                 students,
                 HttpStatus.OK

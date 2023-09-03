@@ -91,18 +91,42 @@ public class CourseService {
         return courseOptional.get();
     }
 
-    public Teacher getTeacher(Long courseId) {
+    public Teacher getTeacher(Integer userId, Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> userOptional = userRepository.findById(userId);
         if (courseOptional.isEmpty())
             throw new CourseNotFoundException("Course not found by id " + courseId);
-        return courseOptional.get().getTeacher();
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+
+        // Check if user is teacher or student of this course
+        User user = userOptional.get();
+        Course course = courseOptional.get();
+        if (user.getRole().equals(Role.TEACHER) && !course.getTeacher().getId().equals(userId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+        else if (user.getRole().equals(Role.STUDENT) && course.getStudents().stream().noneMatch(student -> student.getId().equals(userId)))
+            throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
+
+        return course.getTeacher();
     }
 
-    public List<Student> getStudents(Long courseId) {
+    public List<Student> getStudents(Integer userId, Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> userOptional = userRepository.findById(userId);
         if (courseOptional.isEmpty())
             throw new CourseNotFoundException("Course not found by id " + courseId);
-        return courseOptional.get().getStudents();
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+
+        // Check if user is teacher or student of this course
+        User user = userOptional.get();
+        Course course = courseOptional.get();
+        if (user.getRole().equals(Role.TEACHER) && !course.getTeacher().getId().equals(userId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+        else if (user.getRole().equals(Role.STUDENT) && course.getStudents().stream().noneMatch(student -> student.getId().equals(userId)))
+            throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
+
+        return course.getStudents();
     }
 
     @Transactional

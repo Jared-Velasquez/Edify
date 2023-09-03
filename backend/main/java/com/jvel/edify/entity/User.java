@@ -1,5 +1,6 @@
 package com.jvel.edify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jvel.edify.entity.enums.Gender;
 import com.jvel.edify.entity.enums.Role;
 import jakarta.persistence.*;
@@ -48,10 +49,12 @@ public abstract class User implements UserDetails {
     @Column(
             nullable = false
     )
+    @JsonIgnore
     private Integer ssn;
     @Column(
             nullable = false
     )
+    @JsonIgnore
     private String password;
     private Date dob;
     @Enumerated(EnumType.STRING)

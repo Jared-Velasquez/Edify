@@ -44,10 +44,11 @@ public class CourseContentService {
         courseContentRepository.save(newCourseContent);
     }
 
-    public CourseContent getCourseContent(Long courseId) {
+    public CourseContent getCourseContent(Integer id, Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (courseOptional.isEmpty())
             throw new CourseNotFoundException("Course not found by id " + courseId);
+
         return courseOptional.get().getCourseContent();
     }
 
