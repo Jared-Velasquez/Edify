@@ -1,7 +1,7 @@
 import { Component, Input, HostBinding, OnChanges, SimpleChanges } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NavLinksInterface } from 'src/constants';
-import { fadeAnimation, hoverAnimation, hoverChildAnimation } from '../animations/shared_animations';
+import { fadeAnimation, hoverAnimation, hoverChildAnimation } from 'src/app/animations/shared_animations';
 
 @Component({
   selector: 'app-nav-link',

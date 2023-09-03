@@ -6,11 +6,11 @@ import { expand, collapse, toggle } from 'src/app/store/actions/navbar.actions';
 import { AppState } from 'src/app/store/models/edifyState'; 
 import { expandedSelector } from 'src/app/store/selectors/stateSelectors';
 import { trigger, transition, style, animate, state } from '@angular/animations';
-import { fadeAnimation } from './animations/shared_animations';
+import { fadeAnimation } from '../../../animations/shared_animations';
 import { CoursesService } from 'src/app/services/courses.service';
 import { CourseBasicResponse, CourseBasicUnitResponse } from 'src/app/models/httpResponseModels';
 import { NavbarActionTypes } from 'src/app/store/models/actionTypes';
-import { navLinkOptions } from './navlinkOptions';
+import { navLinkOptions } from './navLinkOptions';
 
 @Component({
   selector: 'app-navbar',

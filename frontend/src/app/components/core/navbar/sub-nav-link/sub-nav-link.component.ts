@@ -1,7 +1,7 @@
 import { NavLinksInterface } from 'src/constants';
 import { Component, Input } from '@angular/core';
 import { trigger, state, transition, animate, style } from '@angular/animations';
-import { hoverAnimation, hoverChildAnimation } from '../animations/shared_animations';
+import { hoverAnimation, hoverChildAnimation } from 'src/app/animations/shared_animations';
 
 @Component({
   selector: 'app-sub-nav-link',

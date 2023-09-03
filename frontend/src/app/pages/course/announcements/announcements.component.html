@@ -5,13 +5,13 @@
         <span class="ml-[1.5rem] font-cabin font-bold text-4xl">Announcements</span>
     </div>
     <!-- If no announcements have been fetched -->
-    <div *ngIf="announcements.length === 0">
-        <span>No announcements found!</span>
+    <div *ngIf="announcements.length === 0" class="text-center mt-[1rem]">
+        <span class="font-raleway text-2xl">No announcements found!</span>
     </div>
     <!-- If announcements have been fetched -->
     <!-- Announcements Container -->
-    <div *ngIf="announcements.length !== 0" class="px-[2rem]">
-        <div *ngFor="let announcement of announcements; let i=index" class="px-[0.5rem] py-[0.75rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-xl">
+    <div class="px-[2rem]" [@announcementsAnimation]="announcements.length">
+        <div *ngFor="let announcement of announcements; let i=index" class="px-[0.5rem] py-[0.75rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-sm hover:shadow-xl">
             <span class="font-semibold font-cabin">{{announcement.createdAt}}: {{announcement.title}}</span>
             <p class="font-raleway pl-[0.5rem]">{{announcement.description}}</p>
         </div>
