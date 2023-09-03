@@ -34,9 +34,10 @@ public class CourseController {
         );
     }
 
-    @GetMapping()
-    public ResponseEntity<Course> getCourse(@RequestBody CourseRequest courseRequest) {
-        Course course = courseService.getCourse(courseRequest.getCourseId());
+    @GetMapping("/{courseId}")
+    public ResponseEntity<Course> getCourse(@RequestHeader("Authorization") String token, @PathVariable Long courseId) {
+        Integer id = jwtService.resolveToken(token);
+        Course course = courseService.getCourse(id, courseId);
         return new ResponseEntity<>(
                 course,
                 HttpStatus.OK
