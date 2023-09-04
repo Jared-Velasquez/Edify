@@ -27,7 +27,7 @@ import { CoursesEffects } from './store/effects/courses.effects';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot(CoursesEffects),
+    EffectsModule.forRoot([CoursesEffects]),
     BrowserAnimationsModule,
     HttpClientModule,
     FontAwesomeModule,

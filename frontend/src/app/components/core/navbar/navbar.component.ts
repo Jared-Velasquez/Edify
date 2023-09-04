@@ -1,14 +1,11 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { NavLinksInterface } from 'src/constants';
 import { expand, collapse, toggle } from 'src/app/store/actions/navbar.actions';
 import { AppState } from 'src/app/store/models/edifyState'; 
-import { expandedSelector } from 'src/app/store/selectors/stateSelectors';
-import { trigger, transition, style, animate, state } from '@angular/animations';
 import { fadeAnimation } from '../../../animations/shared_animations';
 import { CoursesService } from 'src/app/services/courses.service';
-import { CourseBasicResponse, CourseBasicUnitResponse } from 'src/app/models/httpResponseModels';
 import { NavbarActionTypes } from 'src/app/store/models/actionTypes';
 import { navLinkOptions } from './navLinkOptions';
 
@@ -38,7 +35,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.showNavbar) {
+    /*if (this.showNavbar) {
       this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
         this.expanded = data.expanded;
       });
@@ -53,6 +50,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
         },
         complete: () => {
         }
+      });
+    }*/
+
+    if (this.showNavbar) {
+      this.store.dispatch({ type: NavbarActionTypes.SetCourses });
+
+      this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
+        this.expanded = data.expanded;
+        this.navElements = navLinkOptions(data.courses);
       });
     }
   }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { AnnouncementResponse, AnnouncementUnitResponse, CourseBasicResponse, CourseBasicUnitResponse } from 'src/app/models/httpResponseModels';
+import { AnnouncementResponse, Announcement, CourseResponse } from 'src/app/models/httpResponseModels';
 import { NavLinksInterface } from 'src/constants';
 
 @Injectable({
@@ -11,10 +11,10 @@ export class CoursesService {
 
   constructor(private http: HttpClient) { }
 
-  public getCourses(): Observable<NavLinksInterface[]> {
-    return this.http.get<CourseBasicResponse>('https://edify.azurewebsites.net/api/student/courses-basic')
+  /*public getCourses(): Observable<NavLinksInterface[]> {
+    return this.http.get<CourseResponse>('https://edify.azurewebsites.net/api/student/courses')
     .pipe(
-      map((res: CourseBasicResponse) => {
+      map((res: CourseResponse) => {
         const coursesNavlinks: NavLinksInterface[] = [];
         res.courses.forEach((course) => {
           coursesNavlinks.push({
@@ -45,9 +45,13 @@ export class CoursesService {
       }),
       catchError(this.handleGetError),
     );
+  }*/
+
+  public getCourses(): Observable<CourseResponse> {
+    return this.http.get<CourseResponse>('https://edify.azurewebsites.net/api/student/courses');
   }
 
-  public getAnnouncements(courseId: number): Observable<AnnouncementUnitResponse[]> {
+  public getAnnouncements(courseId: number): Observable<Announcement[]> {
     return this.http.get<AnnouncementResponse>(`https://edify.azurewebsites.net/api/course/announcement/${courseId}`)
     .pipe(
       map((res: AnnouncementResponse) => {

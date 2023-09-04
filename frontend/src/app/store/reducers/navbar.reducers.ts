@@ -13,26 +13,31 @@ export const navbarReducer = createReducer(
         return {
             ...state,
             expanded: true,
-        }
+        };
     }),
     on(collapse, (state) => {
         return {
             ...state,
             expanded: false,
-        }
+        };
     }),
     on(toggle, (state) => {
         return {
             ...state,
             expanded: !state.expanded,
-        }
+        };
     }),
-    on(loadCourses, (state, { courses }) => {
-        console.log('Loading courses');
-        console.log(courses);
+    on(loadCourses, (state, { courseResponse }) => {
         return {
             ...state,
-            courses: courses
-        }
+            courses: courseResponse.courses,
+        };
     }),
+    on(loadCoursesError, (state) => {
+        console.log('Loading courses error');
+        return {
+            ...state,
+            courses: [],
+        };
+    })
 );

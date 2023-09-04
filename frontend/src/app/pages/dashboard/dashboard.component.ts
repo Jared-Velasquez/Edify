@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { map, of } from 'rxjs';
-import { CourseBasicResponse, CourseBasicUnitResponse } from 'src/app/models/httpResponseModels';
 import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({

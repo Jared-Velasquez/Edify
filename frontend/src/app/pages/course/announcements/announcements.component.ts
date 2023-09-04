@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { fadeAnimation, listAnimation } from 'src/app/animations/shared_animations';
-import { AnnouncementUnitResponse } from 'src/app/models/httpResponseModels';
+import { Announcement } from 'src/app/models';
 import { CoursesService } from 'src/app/services/courses.service';
-import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-announcements',
@@ -16,7 +15,7 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
   ],
 })
 export class AnnouncementsComponent implements OnInit, OnDestroy {
-  announcements: AnnouncementUnitResponse[];
+  announcements: Announcement[];
   announcementsSubscription: Subscription;
   routeSubscription: Subscription;
   courseId: number;

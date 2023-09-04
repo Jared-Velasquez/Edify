@@ -1,9 +1,10 @@
 import { NavbarActionTypes } from './../models/actionTypes';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { EMPTY, of } from 'rxjs';
+import { map, mergeMap, exhaustMap, catchError, switchMap } from 'rxjs/operators';
 import { CoursesService } from 'src/app/services/courses.service';
+import { loadCourses } from '../actions/navbar.actions';
 
 @Injectable()
 export class CoursesEffects {
@@ -11,11 +12,21 @@ export class CoursesEffects {
 
     }
 
-    loadCourses$ = createEffect(() => this.actions$.pipe(
+    /*loadCourses$ = createEffect(() => this.actions$.pipe(
         ofType(NavbarActionTypes.SetCourses),
         mergeMap(() => this.courseService.getCourses()
             .pipe(
                 map(courses => ({ type: NavbarActionTypes.LoadCoursesSuccess, payload: courses })),
+                catchError(() => of({ type: NavbarActionTypes.LoadCoursesError }))
+            ))
+        )
+    );*/
+
+    loadCourses$ = createEffect(() => this.actions$.pipe(
+        ofType(NavbarActionTypes.SetCourses),
+        switchMap(() => this.courseService.getCourses()
+            .pipe(
+                map((courses) => loadCourses({courseResponse: courses})),
                 catchError(() => of({ type: NavbarActionTypes.LoadCoursesError }))
             ))
         )

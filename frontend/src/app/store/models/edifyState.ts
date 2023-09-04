@@ -1,4 +1,4 @@
-import { CourseBasicUnitResponse } from "src/app/models/httpResponseModels"
+import { Course } from "src/app/models/httpResponseModels"
 
 export interface AppState {
     navbar: NavbarState
@@ -6,5 +6,5 @@ export interface AppState {
 
 export interface NavbarState {
     expanded: boolean,
-    courses: CourseBasicUnitResponse[],
+    courses: Course[],
 }

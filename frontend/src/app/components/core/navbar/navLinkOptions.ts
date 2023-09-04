@@ -1,6 +1,35 @@
+import { Course } from "src/app/models";
 import { NavLinksInterface } from "src/constants/interfaceConstants";
 
-export const navLinkOptions = (courses: NavLinksInterface[]): NavLinksInterface[] => {
+export const navLinkOptions = (courses: Course[]): NavLinksInterface[] => {
+    let coursesOptions: NavLinksInterface[] = [];
+
+    courses.forEach((course) => {
+        coursesOptions.push({
+            name: course.title,
+            link: `course/${course.courseId}`,
+            icon: 'fal fa-pencil',
+            subitems: [
+            {
+                link: `courses/${course.courseId}/home`,
+                name: "Home",
+            },
+            {
+                link: `courses/${course.courseId}/announcements`,
+                name: "Announcements",
+            },
+            {
+                link: `courses/${course.courseId}/modules`,
+                name: "Modules",
+            },
+            {
+                link: `courses/${course.courseId}/assignments`,
+                name: "Assignments",
+            },
+            ]
+        })
+    })
+
     const options: NavLinksInterface[] = [
         {
             icon: "fal fa-user",
@@ -15,7 +44,7 @@ export const navLinkOptions = (courses: NavLinksInterface[]): NavLinksInterface[
         {
             icon: "fal fa-book",
             name: "Courses",
-            subitems: courses,
+            subitems: coursesOptions,
         },
         {
             icon: "fal fa-calendar",
