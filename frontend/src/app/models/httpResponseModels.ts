@@ -36,9 +36,59 @@ export interface Course {
     announcements?: Announcement[],
 };
 
+export const CourseEmpty: Course = {
+    courseId: 0,
+    title: "",
+    code: "",
+    publiclyVisible: false,
+    units: 0,
+  };
+
 export interface CourseResponse {
     courses: Course[],
 };
+
+export interface Teacher {
+    id: number,
+    firstName: string,
+    lastName: string,
+    emailAddress: string,
+    dob: string,
+    role: string,
+    gender: string,
+    address: string,
+    phoneNumber: string,
+    department: string,
+    position: string,
+    enabled: boolean,
+    authorities: {
+        authority: string,
+    }[],
+    username: string,
+    accountNonExpired: boolean,
+    accountNonLocked: boolean,
+    credentialsNonExpired: boolean,
+}
+
+export const TeacherEmpty: Teacher = {
+    id: 0,
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    dob: "",
+    role: "",
+    gender: "",
+    address: "",
+    phoneNumber: "",
+    department: "",
+    position: "",
+    enabled: false,
+    authorities: [],
+    username: "",
+    accountNonExpired: false,
+    accountNonLocked: false,
+    credentialsNonExpired: false,
+}
 
 export interface Announcement {
     announcementId: number,

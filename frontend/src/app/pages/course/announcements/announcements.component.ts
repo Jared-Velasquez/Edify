@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, Subscription, switchMap } from 'rxjs';
+import { forkJoin, map, Subscription, switchMap } from 'rxjs';
 import { fadeDelayedAnimation, listAnimation } from 'src/app/animations/shared_animations';
 import { Announcement, Course } from 'src/app/models';
+import { CourseEmpty, Teacher, TeacherEmpty } from 'src/app/models/httpResponseModels';
 import { CoursesService } from 'src/app/services/courses.service';
 import { AppState } from 'src/app/store/models/edifyState';
 
@@ -22,47 +23,18 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
   courseId: number;
   isLoading: boolean;
   course: Course;
+  teacher: Teacher;
 
   constructor(private courseService: CoursesService, private route: ActivatedRoute, private store: Store<AppState>) {
     this.announcements = [];
     this.routeSubscription = Subscription.EMPTY;
     this.courseId = 0;
     this.isLoading = true;
-    this.course = {
-      courseId: this.courseId,
-      title: "",
-      code: "",
-      publiclyVisible: false,
-      units: 0,
-    };
+    this.course = CourseEmpty;
+    this.teacher = TeacherEmpty;
   }
 
   ngOnInit() {
-    /*this.routeSubscription = this.route.paramMap.subscribe((response) => {
-      this.announcements = [];
-      const id: string | null = response.get('id');
-      this.courseId = id ? parseInt(id) : 0;
-
-      this.announcementsSubscription = this.courseService.getAnnouncements(this.courseId).subscribe({
-        next: (response) => {
-          this.announcements = response;
-        },
-        error: (error) => {
-          console.log(error);
-          this.announcements = [];
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      });
-
-      this.courseSubscription = this.store.select('navbar').subscribe((data) => {
-        const courseOptional: Course | undefined = data.courses.find(course => course.courseId === this.courseId);
-        if (courseOptional)
-          this.course = courseOptional;
-      });
-    })*/
-
     this.routeSubscription = this.route.paramMap.pipe(
       switchMap(response => {
         const id: string | null = response.get('id');
@@ -85,13 +57,7 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
                 ...response,
               }
             } else {
-              const course: Course = {
-                courseId: this.courseId,
-                title: "",
-                code: "",
-                publiclyVisible: false,
-                units: 0,
-              };
+              const course: Course = CourseEmpty;
               return {
                 course,
                 ...response,
@@ -99,11 +65,20 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
             }
           })
         );
+      }),
+      switchMap(response => {
+        return this.courseService.getTeacherOfCourse(response.courseId).pipe(
+          map(teacher => ({
+            teacher,
+            ...response,
+          }))
+        );
       })
     ).subscribe((response) => {
       this.courseId = response.courseId;
       this.announcements = response.announcements;
       this.course = response.course;
+      this.teacher = response.teacher;
     });
   }
 
