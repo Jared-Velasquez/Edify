@@ -14,6 +14,20 @@ export const fadeAnimation: AnimationTriggerMetadata = trigger('fade', [
     ])
 ]);
 
+export const fadeDelayedAnimation: AnimationTriggerMetadata = trigger('fade', [
+  state('in', style({
+      opacity: 1,
+      width: '*',
+  })),
+  state('out', style({
+      opacity: 0,
+      width: 0,
+  })),
+  transition('in <=> out', [
+      animate('0.5s'),
+  ])
+]);
+
 export const hoverAnimation: AnimationTriggerMetadata = trigger('hoverOnOff', [
     state('on', style({
       backgroundColor: '#fff',

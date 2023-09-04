@@ -2,7 +2,7 @@
     <!-- Announcements Logo -->
     <div class="flex flex-row items-center mb-[2rem]">
         <i class="fal fa-bullhorn text-4xl" aria-hidden="true"></i>
-        <span class="ml-[1.5rem] font-cabin font-bold text-4xl">Announcements</span>
+        <span class="ml-[1.5rem] font-cabin text-4xl">Announcements <span [@fade]="course.code ? 'in' : 'out'">for {{course.code}}</span></span>
     </div>
     <!-- If no announcements have been fetched -->
     <div *ngIf="(announcements.length === 0) && (!isLoading)" class="text-center mt-[1rem]">
