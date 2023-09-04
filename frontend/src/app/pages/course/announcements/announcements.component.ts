@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { forkJoin, map, Subscription, switchMap } from 'rxjs';
+import { map, Subscription, switchMap } from 'rxjs';
 import { fadeDelayedAnimation, listAnimation } from 'src/app/animations/shared_animations';
 import { Announcement, Course } from 'src/app/models';
 import { CourseEmpty, Teacher, TeacherEmpty } from 'src/app/models/httpResponseModels';

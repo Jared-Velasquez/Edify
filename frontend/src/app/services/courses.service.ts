@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { AnnouncementResponse, Announcement, CourseResponse, Teacher } from 'src/app/models/httpResponseModels';
+import { AnnouncementResponse, Announcement, CourseResponse, Teacher, Assignment, AssignmentResponse } from 'src/app/models/httpResponseModels';
 import { NavLinksInterface } from 'src/constants';
 
 @Injectable({
@@ -60,6 +60,16 @@ export class CoursesService {
     .pipe(
       map((res: AnnouncementResponse) => {
         return res.announcements;
+      }),
+      catchError(this.handleGetError),
+    );
+  }
+
+  public getAssignments(courseId: number): Observable<Assignment[]> {
+    return this.http.get<AssignmentResponse>(`https://edify.azurewebsites.net/api/course/assignment/${courseId}`)
+    .pipe(
+      map((res: AssignmentResponse) => {
+        return res.assignments;
       }),
       catchError(this.handleGetError),
     );

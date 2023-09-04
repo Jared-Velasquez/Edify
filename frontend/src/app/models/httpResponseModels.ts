@@ -19,6 +19,10 @@ export interface Assignment {
     visible: boolean,
 };
 
+export interface AssignmentResponse {
+    assignments: Assignment[],
+};
+
 export interface Module {
     moduleId: number,
     title: string,
