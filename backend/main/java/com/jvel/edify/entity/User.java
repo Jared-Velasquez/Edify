@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Collection;
 import java.util.List;
 
@@ -56,6 +56,7 @@ public abstract class User implements UserDetails {
     )
     @JsonIgnore
     private String password;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dob;
     @Enumerated(EnumType.STRING)
     @Column(

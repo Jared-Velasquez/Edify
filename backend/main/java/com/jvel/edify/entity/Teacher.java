@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @Entity

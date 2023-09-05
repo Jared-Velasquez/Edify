@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -318,7 +318,7 @@ public class CourseService {
                 .unlockAt(assignment.getUnlockAt())
                 .lockAt(assignment.getLockAt())
                 .pointsPossible(assignment.getPointsPossible())
-                .createdAt(Date.valueOf(LocalDate.now()))
+                .createdAt(new Date())
                 .visible(assignment.isVisible())
                 .module(module).build();
 
@@ -348,7 +348,7 @@ public class CourseService {
         Announcement newAnnouncement = Announcement.builder()
                 .title(announcement.getTitle())
                 .description(announcement.getDescription())
-                .createdAt(java.sql.Date.valueOf(LocalDate.now()))
+                .createdAt(new Date())
                 .course(course).build();
 
         announcementRepository.save(newAnnouncement);

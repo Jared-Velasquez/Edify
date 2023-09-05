@@ -129,7 +129,7 @@ public class CourseController {
         Integer id = jwtService.resolveToken(token);
         courseService.addAnnouncementToCourse(id, announcement);
         return new ResponseEntity<>(
-                "Assignment successfully added to course",
+                "Announcement successfully added to course",
                 HttpStatus.CREATED
         );
     }

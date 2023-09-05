@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @Builder
@@ -45,15 +45,20 @@ public class Assignment {
             nullable = false
     )
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dueAt;
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date unlockAt;
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lockAt;
     private Integer pointsPossible;
     @Column(
             nullable = false
     )
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Column(
             nullable = false
