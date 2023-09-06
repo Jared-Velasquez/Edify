@@ -1,5 +1,5 @@
 <!-- Sublink container -->
-<div [@revealSubnav]="(subExpanded && navbarExpanded) ? 'show' : 'hide'" class="ml-[2.25rem]">
+<div [@revealOptions]="(subExpanded && navbarExpanded) ? 'show' : 'hide'" class="ml-[2.25rem]">
     <!-- If sublink is the final sublink of element -->
     <a 
         *ngIf="!subnav.subitems || (subnav.subitems.length === 0)" 

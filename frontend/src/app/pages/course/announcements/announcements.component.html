@@ -14,7 +14,7 @@
     </div>
     <!-- If announcements have been fetched -->
     <!-- Announcements Container -->
-    <div class="px-[2rem]" [@listAnimation]="announcements.length">
+    <div class="px-[2rem] mt-[2rem]" [@listAnimation]="announcements.length">
         <div *ngFor="let announcement of announcements; let i=index" class="flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-sm hover:shadow-xl">
             <p class="ml-[2rem] mr-[1.5rem] rounded-full border-2 border-powderBlue p-[0.5rem] font-raleway font-semibold text-xl">{{teacher.firstName[0]}}{{teacher.lastName[0]}}</p>
             <div class="flex flex-col">

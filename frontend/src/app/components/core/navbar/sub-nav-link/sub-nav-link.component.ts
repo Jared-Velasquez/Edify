@@ -1,7 +1,7 @@
 import { NavLinksInterface } from 'src/constants';
 import { Component, Input } from '@angular/core';
 import { trigger, state, transition, animate, style } from '@angular/animations';
-import { hoverAnimation, hoverChildAnimation } from 'src/app/animations/shared_animations';
+import { hoverAnimation, hoverChildAnimation, revealOptions } from 'src/app/animations/shared_animations';
 
 @Component({
   selector: 'app-sub-nav-link',
@@ -10,33 +10,7 @@ import { hoverAnimation, hoverChildAnimation } from 'src/app/animations/shared_a
   animations: [
     hoverAnimation,
     hoverChildAnimation,
-    trigger('revealSubnav', [
-      state('show', style({
-        height: '*',
-        overflow: 'hidden',
-      })),
-      state('hide', style({
-        height: '0',
-        overflow: 'hidden',
-      })),
-      transition('show => hide', [
-        style({
-          overflow: 'hidden',
-        }), 
-        animate('400ms ease-in-out', style({
-          height: '0',
-        })),
-      ]),
-      transition('hide => show', [ 
-        style({
-          overflow: 'hidden',
-        }),
-        animate('400ms ease-in-out', style({
-          height: '*',
-        })),
-      ]),
-      transition('void <=> *', animate(0)),
-    ])
+    revealOptions,
   ],
 })
 export class SubNavLinkComponent {

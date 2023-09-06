@@ -1,11 +1,23 @@
 <!-- Drop Down Component -->
 <div>
     <!-- Title -->
-    <div>
-        <span (click)="toggleExpanded()">{{menu.title}}</span>
+    <div class="mb-[0.5rem] w-[12rem]">
+        <span 
+            (click)="toggleExpanded()" 
+            class="rounded-md border-2 bg-richBlack border-richBlack text-dimWhite px-[1rem] py-[0.5rem] cursor-pointer"
+        >
+            {{menu.title}}
+        </span>
     </div>
     <!-- Menu -->
-    <div *ngIf="dropDownExpanded">
-        <p *ngFor="let option of menu.options" (click)="onChooseOption(option)">{{option}}</p>
+    <div 
+        [@revealOptions]="dropDownExpanded ? 'show' : 'hide'"
+        class="w-[12rem] shadow-sm hover:shadow-xl"
+    >
+        <app-drop-down-option
+            *ngFor="let option of menu.options"
+            [option]="option"
+            (click)="onChooseOption(option)"
+        ></app-drop-down-option>
     </div>
 </div>

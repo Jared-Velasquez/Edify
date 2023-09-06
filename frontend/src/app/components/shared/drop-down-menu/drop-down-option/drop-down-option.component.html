@@ -1,0 +1,12 @@
+<div
+    (mouseover)="isOver=true" (mouseout)="isOver=false"
+    [@hoverOnOff]="isOver ? 'on' : 'off'"
+    class="rounded-md"
+>
+    <p 
+        [@hoverOnOffChild]="isOver ? 'on' : 'off'"
+        class="pl-[1rem] py-[0.25rem] pr-[5rem]"
+    >
+        {{option}}
+    </p>
+</div>
