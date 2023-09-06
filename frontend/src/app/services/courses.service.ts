@@ -11,42 +11,6 @@ export class CoursesService {
 
   constructor(private http: HttpClient) { }
 
-  /*public getCourses(): Observable<NavLinksInterface[]> {
-    return this.http.get<CourseResponse>('https://edify.azurewebsites.net/api/student/courses')
-    .pipe(
-      map((res: CourseResponse) => {
-        const coursesNavlinks: NavLinksInterface[] = [];
-        res.courses.forEach((course) => {
-          coursesNavlinks.push({
-            name: course.title,
-            link: `course/${course.courseId}`,
-            icon: 'fal fa-pencil',
-            subitems: [
-              {
-                link: `courses/${course.courseId}/home`,
-                name: "Home",
-              },
-              {
-                link: `courses/${course.courseId}/announcements`,
-                name: "Announcements",
-              },
-              {
-                link: `courses/${course.courseId}/modules`,
-                name: "Modules",
-              },
-              {
-                link: `courses/${course.courseId}/assignments`,
-                name: "Assignments",
-              },
-            ]
-          })
-        })
-        return coursesNavlinks;
-      }),
-      catchError(this.handleGetError),
-    );
-  }*/
-
   public getCourses(): Observable<CourseResponse> {
     return this.http.get<CourseResponse>('https://edify.azurewebsites.net/api/student/courses');
   }

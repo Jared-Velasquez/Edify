@@ -35,24 +35,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    /*if (this.showNavbar) {
-      this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
-        this.expanded = data.expanded;
-      });
-      
-      this.coursesSubscription = this.courseService.getCourses().subscribe({
-        next: (response) => {
-          this.navElements = navLinkOptions(response);
-        },
-        error: (error) => {
-          console.log(error);
-          this.navElements = navLinkOptions([]);
-        },
-        complete: () => {
-        }
-      });
-    }*/
-
     if (this.showNavbar) {
       this.store.dispatch({ type: NavbarActionTypes.SetCourses });
 

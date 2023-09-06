@@ -84,9 +84,6 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
       })
     ).subscribe((response) => {
       this.courseId = response.courseId;
-      /*this.announcements = response.announcements.sort((x, y) => {
-        return x.createdAt.getTime() 
-      });*/
       this.announcements = response.announcements.sort((x, y) => y.createdAt.getTime() - x.createdAt.getTime());
       this.course = response.course;
       this.teacher = response.teacher;
@@ -94,7 +91,14 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
   }
 
   onChosenSort(sortChosen: string) {
-    console.log(sortChosen);
+    if (sortChosen === "Least recent")
+      this.announcements = this.announcements.sort((x, y) => x.createdAt.getTime() - y.createdAt.getTime());
+    else
+      this.announcements = this.announcements.sort((x, y) => y.createdAt.getTime() - x.createdAt.getTime());
+  }
+
+  convertDateToString(date: Date): string {
+    return date.toDateString();
   }
 
   ngOnDestroy() {

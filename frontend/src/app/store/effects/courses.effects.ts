@@ -12,16 +12,6 @@ export class CoursesEffects {
 
     }
 
-    /*loadCourses$ = createEffect(() => this.actions$.pipe(
-        ofType(NavbarActionTypes.SetCourses),
-        mergeMap(() => this.courseService.getCourses()
-            .pipe(
-                map(courses => ({ type: NavbarActionTypes.LoadCoursesSuccess, payload: courses })),
-                catchError(() => of({ type: NavbarActionTypes.LoadCoursesError }))
-            ))
-        )
-    );*/
-
     loadCourses$ = createEffect(() => this.actions$.pipe(
         ofType(NavbarActionTypes.SetCourses),
         switchMap(() => this.courseService.getCourses()

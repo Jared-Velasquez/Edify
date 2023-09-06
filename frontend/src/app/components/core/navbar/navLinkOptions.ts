@@ -26,6 +26,10 @@ export const navLinkOptions = (courses: Course[]): NavLinksInterface[] => {
                 link: `courses/${course.courseId}/assignments`,
                 name: "Assignments",
             },
+            {
+                link: `courses/${course.courseId}/people`,
+                name: "People"
+            }
             ]
         })
     })
