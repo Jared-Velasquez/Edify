@@ -87,6 +87,7 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
       this.announcements = response.announcements.sort((x, y) => y.createdAt.getTime() - x.createdAt.getTime());
       this.course = response.course;
       this.teacher = response.teacher;
+      this.isLoading = false;
     });
   }
 

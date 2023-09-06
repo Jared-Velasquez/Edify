@@ -15,6 +15,7 @@ import { ModulesComponent } from './course/modules/modules.component';
 import { AssignmentsComponent } from './course/assignments/assignments.component';
 import { AnnouncementsComponent } from './course/announcements/announcements.component';
 import { SharedModule } from 'src/app/components/shared/shared.module';
+import { AssignmentComponent } from './course/assignments/assignment/assignment.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SharedModule } from 'src/app/components/shared/shared.module';
     ModulesComponent,
     AssignmentsComponent,
     AnnouncementsComponent,
+    AssignmentComponent,
   ],
   imports: [
     CommonModule,

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Subscription, switchMap } from 'rxjs';
 import { fadeDelayedAnimation, listAnimation } from 'src/app/animations/shared_animations';
-import { Assignment, Course } from 'src/app/models';
+import { Assignment, Course, DropDownMenuInterface } from 'src/app/models';
 import { CourseEmpty } from 'src/app/models/httpResponseModels';
 import { CoursesService } from 'src/app/services/courses.service';
 import { AppState } from 'src/app/store/models/edifyState';
@@ -23,6 +23,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   courseId: number;
   isLoading: boolean;
   course: Course;
+  dropDownMenuOptions: DropDownMenuInterface;
 
   constructor(private courseService: CoursesService, private route: ActivatedRoute, private store: Store<AppState>) {
     this.assignments = [];
@@ -30,6 +31,13 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
     this.courseId = 0;
     this.isLoading = true;
     this.course = CourseEmpty;
+    this.dropDownMenuOptions = {
+      title: "Sort By",
+      options: [
+        "Closest due",
+        "Farthest due",
+      ],
+    };
   }
 
   ngOnInit() {
@@ -68,7 +76,19 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
       this.courseId = response.courseId;
       this.assignments = response.assignments.sort((x, y) => x.dueAt.getTime() - y.dueAt.getTime());
       this.course = response.course;
+      this.isLoading = false;
     });
+  }
+
+  onChosenSort(sortChosen: string) {
+    if (sortChosen === "Farthest due")
+      this.assignments = this.assignments.sort((x, y) => x.dueAt.getTime() - y.dueAt.getTime());
+    else
+      this.assignments = this.assignments.sort((x, y) => y.dueAt.getTime() - x.dueAt.getTime());
+  }
+
+  convertDateToString(date: Date): string {
+    return date.toLocaleString();
   }
 
   ngOnDestroy() {

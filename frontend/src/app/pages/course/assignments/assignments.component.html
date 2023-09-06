@@ -4,17 +4,25 @@
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         <span class="ml-[1.5rem] font-cabin text-4xl">Assignments <span [@fade]="course.code ? 'in' : 'out'">for {{course.code}}</span></span>
     </div>
+    <!-- Sort Bar -->
+    <div>
+        <app-drop-down-menu [menu]="dropDownMenuOptions" (optionChosen)="onChosenSort($event)"></app-drop-down-menu>
+    </div>
     <!-- If no assignments have been fetched -->
     <div *ngIf="(assignments.length === 0) && (!isLoading)" class="text-center mt-[1rem]">
         <span class="font-raleway text-2xl">No assignments found!</span>
     </div>
     <!-- If assignments have been fetched -->
     <!-- Assignments Container -->
-    <div class="px-[2rem]" [@listAnimation]="assignments.length">
-        <div *ngFor="let assignment of assignments; let i=index" class="flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-sm hover:shadow-xl">
+    <div class="px-[2rem] mt-[2rem]" [@listAnimation]="assignments.length">
+        <div 
+            *ngFor="let assignment of assignments; let i=index" 
+            class="flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-sm hover:shadow-xl"
+        >
+            <i class="fal fa-pencil text-2xl mx-[0.75rem]" aria-hidden="true"></i>
             <div class="flex flex-col">
-                <span class="font-semibold font-cabin">{{assignment.title}}</span>
-                <p class="font-raleway pl-[0.5rem]">{{assignment.description}}</p>
+                <div class="font-cabin font-semibold">{{assignment.title}}: <span class="font-light">{{assignment.pointsPossible}} pts</span></div>
+                <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm"><span class="text-gray-600 font-semibold">Due at:</span> {{convertDateToString(assignment.dueAt)}}</div>
             </div>
         </div>
     </div>

@@ -23,15 +23,6 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(username: string, password: string) {
-    /*this.loginService.login(username, password).subscribe((response) => {
-      if (!response) {
-        this.badCredentials = true;
-        return;
-      }
-
-      this.badCredentials = false;
-      this.router.navigate(['dashboard']);
-    });*/
     this.loginService.login(username, password).subscribe({
       next: (response) => {
         if (!response) {
