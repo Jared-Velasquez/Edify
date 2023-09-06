@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Subscription, switchMap } from 'rxjs';
 import { fadeDelayedAnimation, listAnimation } from 'src/app/animations/shared_animations';
@@ -25,7 +25,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   course: Course;
   dropDownMenuOptions: DropDownMenuInterface;
 
-  constructor(private courseService: CoursesService, private route: ActivatedRoute, private store: Store<AppState>) {
+  constructor(private courseService: CoursesService, private route: ActivatedRoute, private router: Router, private store: Store<AppState>) {
     this.assignments = [];
     this.routeSubscription = Subscription.EMPTY;
     this.courseId = 0;
@@ -78,6 +78,10 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
       this.course = response.course;
       this.isLoading = false;
     });
+  }
+
+  onAssignmentClick(assignmentId: number) {
+    this.router.navigateByUrl(`/courses/${this.courseId}/assignments/${assignmentId}`)
   }
 
   onChosenSort(sortChosen: string) {
