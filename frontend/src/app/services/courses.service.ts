@@ -59,7 +59,10 @@ export class CoursesService {
     return this.http.get<AnnouncementResponse>(`https://edify.azurewebsites.net/api/course/announcement/${courseId}`)
     .pipe(
       map((res: AnnouncementResponse) => {
-        return res.announcements;
+        return res.announcements.map((announcement) => ({
+          ...announcement,
+          createdAt: new Date(announcement.createdAt),
+        }));
       }),
       catchError(this.handleGetError),
     );
@@ -69,7 +72,13 @@ export class CoursesService {
     return this.http.get<AssignmentResponse>(`https://edify.azurewebsites.net/api/course/assignment/${courseId}`)
     .pipe(
       map((res: AssignmentResponse) => {
-        return res.assignments;
+        return res.assignments.map((assignment) => ({
+          ...assignment,
+          dueAt: new Date(assignment.dueAt),
+          unlockAt: new Date(assignment.unlockAt),
+          lockAt: new Date(assignment.lockAt),
+          createdAt: new Date(assignment.createdAt),
+        }));
       }),
       catchError(this.handleGetError),
     );

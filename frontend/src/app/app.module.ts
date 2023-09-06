@@ -16,10 +16,12 @@ import { PagesModule } from './pages/pages.module';
 import { appReducer } from 'src/app/store/reducers/app.reducers';
 import { AuthInterceptor } from 'src/app/auth/authentication/auth.interceptor';
 import { CoursesEffects } from './store/effects/courses.effects';
+import { DropDownMenuComponent } from './components/shared/drop-down-menu/drop-down-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DropDownMenuComponent,
   ],
   imports: [
     RouterModule,

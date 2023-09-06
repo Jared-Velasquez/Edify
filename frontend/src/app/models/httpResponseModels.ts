@@ -11,11 +11,11 @@ export interface Assignment {
     assignmentId: number,
     title: string,
     description: string,
-    dueAt: string,
-    unlockAt: string,
-    lockAt: string,
+    dueAt: Date,
+    unlockAt: Date,
+    lockAt: Date,
     pointsPossible: number,
-    createdAt: string,
+    createdAt: Date,
     visible: boolean,
 };
 
@@ -98,7 +98,7 @@ export interface Announcement {
     announcementId: number,
     title: string,
     description: string,
-    createdAt: string,
+    createdAt: Date,
 };
 
 export interface AnnouncementResponse {

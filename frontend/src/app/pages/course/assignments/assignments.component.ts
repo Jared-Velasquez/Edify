@@ -66,7 +66,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
       }),
     ).subscribe((response) => {
       this.courseId = response.courseId;
-      this.assignments = response.assignments;
+      this.assignments = response.assignments.sort((x, y) => x.dueAt.getTime() - y.dueAt.getTime());
       this.course = response.course;
     });
   }
