@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { AccountComponent } from './account/account.component';
 import { CalendarComponent } from './calendar/calendar.component';
-import { CourseComponent } from './course/course.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
@@ -15,12 +14,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ModulesComponent } from './course/modules/modules.component';
 import { AssignmentsComponent } from './course/assignments/assignments.component';
 import { AnnouncementsComponent } from './course/announcements/announcements.component';
+import { SharedModule } from 'src/app/components/shared/shared.module';
 
 @NgModule({
   declarations: [
     AccountComponent,
     CalendarComponent,
-    CourseComponent,
     DashboardComponent,
     LandingPageComponent,
     LoginComponent,
@@ -35,11 +34,11 @@ import { AnnouncementsComponent } from './course/announcements/announcements.com
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    SharedModule
   ],
   exports: [
     AccountComponent,
     CalendarComponent,
-    CourseComponent,
     DashboardComponent,
     LandingPageComponent,
     LoginComponent,

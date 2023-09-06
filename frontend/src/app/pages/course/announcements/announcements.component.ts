@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Subscription, switchMap } from 'rxjs';
 import { fadeDelayedAnimation, listAnimation } from 'src/app/animations/shared_animations';
-import { Announcement, Course } from 'src/app/models';
+import { Announcement, Course, DropDownMenuInterface } from 'src/app/models';
 import { CourseEmpty, Teacher, TeacherEmpty } from 'src/app/models/httpResponseModels';
 import { CoursesService } from 'src/app/services/courses.service';
 import { AppState } from 'src/app/store/models/edifyState';
@@ -24,6 +24,7 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   course: Course;
   teacher: Teacher;
+  dropDownMenuOptions: DropDownMenuInterface;
 
   constructor(private courseService: CoursesService, private route: ActivatedRoute, private store: Store<AppState>) {
     this.announcements = [];
@@ -32,6 +33,13 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.course = CourseEmpty;
     this.teacher = TeacherEmpty;
+    this.dropDownMenuOptions = {
+      title: "Sort By",
+      options: [
+        "Most recent",
+        "Least recent",
+      ],
+    };
   }
 
   ngOnInit() {
@@ -83,6 +91,10 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
       this.course = response.course;
       this.teacher = response.teacher;
     });
+  }
+
+  onChosenSort(sortChosen: string) {
+    console.log(sortChosen);
   }
 
   ngOnDestroy() {

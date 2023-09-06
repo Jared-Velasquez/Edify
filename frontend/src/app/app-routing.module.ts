@@ -1,5 +1,4 @@
 import { LoginComponent } from './pages/login/login.component';
-import { CourseComponent } from './pages/course/course.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from './pages/account/account.component';
@@ -16,7 +15,6 @@ const routes: Routes = [
   { path: 'account', component: AccountComponent, canActivate: [authenticationGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authenticationGuard] },
   { path: 'calendar', component: CalendarComponent, canActivate: [authenticationGuard] },
-  { path: 'courses/:id/home', component: CourseComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/announcements', component: AnnouncementsComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/modules', component: ModulesComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/assignments', component: AssignmentsComponent, canActivate: [authenticationGuard] },

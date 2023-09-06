@@ -1,1 +1,11 @@
-<p>drop-down-menu works!</p>
+<!-- Drop Down Component -->
+<div>
+    <!-- Title -->
+    <div>
+        <span (click)="toggleExpanded()">{{menu.title}}</span>
+    </div>
+    <!-- Menu -->
+    <div *ngIf="dropDownExpanded">
+        <p *ngFor="let option of menu.options" (click)="onChooseOption(option)">{{option}}</p>
+    </div>
+</div>
