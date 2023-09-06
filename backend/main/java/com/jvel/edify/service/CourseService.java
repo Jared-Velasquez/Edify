@@ -7,6 +7,7 @@ import com.jvel.edify.controller.requests.course_requests.ModuleCreateRequest;
 import com.jvel.edify.controller.requests.course_requests.UpdateCourse;
 import com.jvel.edify.controller.responses.course_responses.AnnouncementQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.AssignmentQueryResponse;
 import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
 import com.jvel.edify.entity.*;
 import com.jvel.edify.entity.Module;
@@ -354,7 +355,7 @@ public class CourseService {
         announcementRepository.save(newAnnouncement);
     }
 
-    public Assignment getAssignment(Integer userId, Integer assignmentId) {
+    public AssignmentQueryResponse getAssignment(Integer userId, Integer assignmentId) {
         Optional<Assignment> assignmentOptional = assignmentRepository.findById(assignmentId);
         Optional<User> userOptional = userRepository.findById(userId);
         if (assignmentOptional.isEmpty())
@@ -370,7 +371,10 @@ public class CourseService {
             throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
         else if (user.getRole().equals(Role.STUDENT) && !course.getStudents().stream().anyMatch(student -> student.getId().equals(userId)))
             throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
-        return assignment;
+
+        AssignmentQueryResponse response = AssignmentQueryResponse.builder()
+                .assignment(assignment).build();
+        return response;
     }
 
     public Module getModule(Integer userId, Integer moduleId) {

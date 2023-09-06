@@ -4,6 +4,7 @@ import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.course_requests.*;
 import com.jvel.edify.controller.responses.course_responses.AnnouncementQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.AssignmentQueryResponse;
 import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
 import com.jvel.edify.entity.*;
 import com.jvel.edify.service.CourseContentService;
@@ -143,11 +144,20 @@ public class CourseController {
         );
     }
 
-    @GetMapping("/assignment/{courseId}")
+    @GetMapping("/assignments/{courseId}")
     public ResponseEntity<AssignmentQueryMultipleResponse> getAssignments(@RequestHeader("Authorization") String token, @PathVariable Long courseId) {
         Integer id = jwtService.resolveToken(token);
         return new ResponseEntity<>(
                 courseService.getAssignments(id, courseId),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/assignment/{assignmentId}")
+    public ResponseEntity<AssignmentQueryResponse> getASsignment(@RequestHeader("Authorization") String token, @PathVariable Integer assignmentId) {
+        Integer id = jwtService.resolveToken(token);
+        return new ResponseEntity<>(
+                courseService.getAssignment(id, assignmentId),
                 HttpStatus.OK
         );
     }

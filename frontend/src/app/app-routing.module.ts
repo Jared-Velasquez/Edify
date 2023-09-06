@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { AnnouncementsComponent } from './pages/course/announcements/announcements.component';
 import { ModulesComponent } from './pages/course/modules/modules.component';
 import { AssignmentsComponent } from './pages/course/assignments/assignments.component';
+import { AssignmentComponent } from './pages/course/assignments/assignment/assignment.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent, canActivate: [authenticationGuard] },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'courses/:id/announcements', component: AnnouncementsComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/modules', component: ModulesComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/assignments', component: AssignmentsComponent, canActivate: [authenticationGuard] },
+  { path: 'courses/:id/assignments/:assignmentId', component: AssignmentComponent, canActivate: [authenticationGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [authenticationGuard] },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

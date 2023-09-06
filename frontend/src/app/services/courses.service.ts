@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { AnnouncementResponse, Announcement, CourseResponse, Teacher, Assignment, AssignmentResponse } from 'src/app/models/httpResponseModels';
+import { AnnouncementResponse, Announcement, CourseResponse, Teacher, Assignment, AssignmentResponse, AssignmentMultipleResponse } from 'src/app/models/httpResponseModels';
 import { NavLinksInterface } from 'src/constants';
 
 @Injectable({
@@ -33,9 +33,9 @@ export class CoursesService {
   }
 
   public getAssignments(courseId: number): Observable<Assignment[]> {
-    return this.http.get<AssignmentResponse>(`https://edify.azurewebsites.net/api/course/assignment/${courseId}`)
+    return this.http.get<AssignmentMultipleResponse>(`https://edify.azurewebsites.net/api/course/assignments/${courseId}`)
     .pipe(
-      map((res: AssignmentResponse) => {
+      map((res: AssignmentMultipleResponse) => {
         return res.assignments.map((assignment) => ({
           ...assignment,
           dueAt: new Date(assignment.dueAt),
@@ -44,6 +44,14 @@ export class CoursesService {
           createdAt: new Date(assignment.createdAt),
         }));
       }),
+      catchError(this.handleGetError),
+    );
+  }
+
+  public getAssignment(assignmentId: number): Observable<Assignment> {
+    return this.http.get<AssignmentResponse>(`https://edify.azurewebsites.net/api/course/assignment/${assignmentId}`)
+    .pipe(
+      map((res: AssignmentResponse) => res.assignment),
       catchError(this.handleGetError),
     );
   }

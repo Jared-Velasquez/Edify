@@ -19,7 +19,23 @@ export interface Assignment {
     visible: boolean,
 };
 
+export const AssignmentEmpty: Assignment = {
+    assignmentId: 0,
+    title: "",
+    description: "",
+    dueAt: new Date(),
+    unlockAt: new Date(),
+    lockAt: new Date(),
+    pointsPossible: 0,
+    createdAt: new Date(),
+    visible: false,
+};
+
 export interface AssignmentResponse {
+    assignment: Assignment,
+};
+
+export interface AssignmentMultipleResponse {
     assignments: Assignment[],
 };
 

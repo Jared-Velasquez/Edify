@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Assignment, AssignmentEmpty } from 'src/app/models';
 
 @Component({
   selector: 'app-assignment',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./assignment.component.css']
 })
 export class AssignmentComponent {
+  @Input() assignment: Assignment;
 
+  constructor() {
+    this.assignment = AssignmentEmpty;
+  }
 }
