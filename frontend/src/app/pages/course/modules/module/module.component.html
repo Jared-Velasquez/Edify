@@ -1,12 +1,19 @@
-<div class="flex flex-col items-center px-[0.5rem] py-[0.5rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-sm hover:shadow-xl">
-    <div (click)="onClick()" class="text-dimWhite text-xl font-semibold rounded-md border-2 bg-richBlack border-richBlack w-full p-[0.75rem] cursor-pointer">
-        {{module.title}}
-        <!-- TODO: Fix Chevron -->
-        <div class="chevron" [@rotate]="moduleExpanded ? 'rotated' : 'default'"></div>
+<div class="flex flex-col px-[0.5rem] py-[0.5rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-sm hover:shadow-xl">
+    <div (click)="onClick()" class="flex flex-row items-center justify-between rounded-md border-2 bg-richBlack border-richBlack w-full p-[0.75rem] cursor-pointer">
+        <p class="text-dimWhite text-xl font-semibold inline-block">{{module.title}}</p>
+        <i *ngIf="module.assignments.length" class="fas fa-chevron-left justify-end inline-block text-dimWhite mr-[1rem]" [@rotate]="moduleExpanded ? 'rotated' : 'default'"></i>
     </div>
-    <ng-container *ngIf="moduleExpanded">
-        <div *ngFor="let assignment of module.assignments">
-            {{assignment.title}}
+    <div *ngIf="moduleExpanded && module.assignments.length" [@moduleAnimation] class="mt-[0.5rem]">
+        <div 
+            *ngFor="let assignment of module.assignments; let i=index" 
+            class="assignment flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.5rem] rounded-lg bg-offWhite border-offWhite shadow-sm hover:shadow-xl cursor-pointer"
+            (click)="onAssignmentClick(assignment.assignmentId)"
+        >
+            <i class="fal fa-pencil text-2xl mx-[0.75rem]" aria-hidden="true"></i>
+            <div class="flex flex-col">
+                <div class="font-cabin font-semibold">{{assignment.title}}: <span class="font-light">{{assignment.pointsPossible}} pts</span></div>
+                <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm"><span class="text-gray-600 font-semibold">Due at:</span> {{convertDateToString(assignment.dueAt)}}</div>
+            </div>
         </div>
-    </ng-container>
+    </div>
 </div>
