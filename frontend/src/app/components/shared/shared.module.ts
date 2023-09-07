@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownOptionComponent } from './drop-down-menu/drop-down-option/drop-down-option.component';
+import { CustomButtonComponent } from './custom-button/custom-button.component';
 
 @NgModule({
   declarations: [
     DropDownMenuComponent,
     DropDownOptionComponent,
+    CustomButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -15,6 +17,7 @@ import { DropDownOptionComponent } from './drop-down-menu/drop-down-option/drop-
   ],
   exports: [
     DropDownMenuComponent,
+    CustomButtonComponent,
   ]
 })
 export class SharedModule { }

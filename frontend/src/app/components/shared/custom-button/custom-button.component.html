@@ -1,0 +1,7 @@
+<div 
+    class="bg-richBlack rounded-full border-2 border-richBlack w-fit min-h-fit cursor-pointer px-[1.25rem] py-[0.50rem]"
+    (mouseenter)="isOver=true" (mouseleave)="isOver=false"
+    [@hoverOnOff]="isOver ? 'on' : 'off'"
+>
+    <span class="text-dimWhite" [@hoverOnOffChild]="isOver ? 'on' : 'off'">{{title}}</span>
+</div>

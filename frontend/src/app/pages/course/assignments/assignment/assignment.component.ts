@@ -13,11 +13,13 @@ export class AssignmentComponent implements OnInit, OnDestroy {
   @Input() assignment: Assignment;
   routeSubscription: Subscription;
   @Input() assignmentId: number;
+  submitTitle: string = "";
 
   constructor(private courseService: CoursesService, private route: ActivatedRoute) {
     this.assignment = AssignmentEmpty;
     this.routeSubscription = Subscription.EMPTY;
     this.assignmentId = 0;
+    this.submitTitle = "Submit";
   }
 
   ngOnInit() {
@@ -39,6 +41,10 @@ export class AssignmentComponent implements OnInit, OnDestroy {
       this.assignment = response.assignment;
       this.assignmentId = response.assignmentId;
     });
+  }
+
+  convertDateToString(date: Date): string {
+    return date.toLocaleString();
   }
 
   ngOnDestroy() {
