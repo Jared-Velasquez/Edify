@@ -1,1 +1,16 @@
-<p>modules works!</p>
+<div class="flex flex-col w-full h-screen">
+    <!-- Modules Logo -->
+    <div class="flex flex-row items-center mb-[2rem]">
+        <i class="fas fa-th-list text-4xl" aria-hidden="true"></i>
+        <span class="ml-[1.5rem] font-cabin text-4xl">Modules <span [@fade]="course.code ? 'in' : 'out'">for {{course.code}}</span></span>
+    </div>
+    <!-- If no modules have been fetched -->
+    <div *ngIf="(modules.length === 0) && (!isLoading)" class="text-center mt-[1rem]">
+        <span class="font-raleway text-2xl">No modules found!</span>
+    </div>
+    <!-- If modules have been fetched -->
+    <!-- Modules Container -->
+    <div class="px-[2rem] mt-[2rem]" [@listAnimation]="modules.length">
+        <app-module *ngFor="let module of modules; let i=index" [module]="module"></app-module>
+    </div>
+</div>

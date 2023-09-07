@@ -45,6 +45,16 @@ export interface Module {
     assignments: Assignment[],
 };
 
+export const ModuleEmpty = {
+    moduleId: 0,
+    title: "",
+    assignments: [],
+};
+
+export interface ModuleResponse {
+    modules: Module[],
+};
+
 export interface Course {
     courseId: number,
     title: string,

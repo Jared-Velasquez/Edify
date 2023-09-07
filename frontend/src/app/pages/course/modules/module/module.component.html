@@ -1,0 +1,12 @@
+<div class="flex flex-col items-center px-[0.5rem] py-[0.5rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-sm hover:shadow-xl">
+    <div (click)="onClick()" class="text-dimWhite text-xl font-semibold rounded-md border-2 bg-richBlack border-richBlack w-full p-[0.75rem] cursor-pointer">
+        {{module.title}}
+        <!-- TODO: Fix Chevron -->
+        <div class="chevron" [@rotate]="moduleExpanded ? 'rotated' : 'default'"></div>
+    </div>
+    <ng-container *ngIf="moduleExpanded">
+        <div *ngFor="let assignment of module.assignments">
+            {{assignment.title}}
+        </div>
+    </ng-container>
+</div>
