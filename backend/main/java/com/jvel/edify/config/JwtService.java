@@ -83,7 +83,7 @@ public class JwtService {
                 .setIssuer(ISSUER)
                 .setAudience(AUDIENCE)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 240))) // Expires in 240 minutes
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

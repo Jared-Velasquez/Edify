@@ -42,6 +42,8 @@ public class CourseService {
     private AssignmentRepository assignmentRepository;
     @Autowired
     private AnnouncementRepository announcementRepository;
+    @Autowired
+    private StudentAssignmentRepository studentAssignmentRepository;
 
     public void addCourse(String title, Integer units, Integer teacherId) {
         // Check if teacher is present
@@ -304,8 +306,9 @@ public class CourseService {
             throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
 
         Module module = moduleOptional.get();
-        if (!module.getCourse().getTeacher().getId().equals(teacherId))
-            throw new UnauthorizedAccessException("User is not teacher of course " + module.getCourse().getCourseId());
+        Course course = module.getCourse();
+        if (!course.getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
 
         List<Assignment> assignmentList = module.getAssignments().stream().filter(element -> element.getTitle().equals(assignment.getTitle())).toList();
 
@@ -324,6 +327,24 @@ public class CourseService {
                 .module(module).build();
 
         assignmentRepository.save(newAssignment);
+
+        //System.out.println(course.getStudents());
+
+        course.getStudents().forEach((student) -> {
+            if (student.getId() != null) {
+                System.out.println(student.getId());
+                StudentAssignment sa = new StudentAssignment();
+                sa.setAssignment(newAssignment);
+                sa.setStudent(student);
+                newAssignment.addStudent(sa);
+                student.addAssignment(sa);
+
+                studentAssignmentRepository.save(sa);
+            } else {
+                //System.out.println("student = " + student);
+            }
+            //System.out.println("student = " + student);
+        });
     }
 
     @Transactional

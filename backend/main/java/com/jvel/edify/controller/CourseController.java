@@ -154,7 +154,7 @@ public class CourseController {
     }
 
     @GetMapping("/assignment/{assignmentId}")
-    public ResponseEntity<AssignmentQueryResponse> getASsignment(@RequestHeader("Authorization") String token, @PathVariable Integer assignmentId) {
+    public ResponseEntity<AssignmentQueryResponse> getAssignment(@RequestHeader("Authorization") String token, @PathVariable Integer assignmentId) {
         Integer id = jwtService.resolveToken(token);
         return new ResponseEntity<>(
                 courseService.getAssignment(id, assignmentId),

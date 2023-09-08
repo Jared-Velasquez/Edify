@@ -30,9 +30,17 @@ public class Student extends User {
         super(firstName, lastName, emailAddress, ssn, password, dob, Role.STUDENT, gender, address, phoneNumber);
         this.courses = new ArrayList<>();
     }
-
     @Builder
     public Student() {
         super();
+    }
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<StudentAssignment> studentAssignments;
+    @Transient
+    public void addAssignment(StudentAssignment sa) {
+        if (studentAssignments == null)
+            studentAssignments = new ArrayList<>();
+        studentAssignments.add(sa);
     }
 }

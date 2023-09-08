@@ -12,7 +12,8 @@ import { ModuleEmpty } from 'src/app/models/httpResponseModels';
     trigger('rotate', [
       state('default', style({ transform: 'rotate(0)' })),
       state('rotated', style({ transform: 'rotate(-90deg)' })),
-      transition('rotated <=> default', animate('250ms ease-in-out'))
+      transition('default => rotated', animate('250ms ease-in-out')),
+      transition('rotated => default', animate('400ms ease-in-out')),
     ]),
     // Drop-down menu animation by Nichola Alkhouri
     // https://stackblitz.com/edit/drop-down-menu-animation

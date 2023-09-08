@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -73,4 +75,13 @@ public class Assignment {
     )
     @JsonIgnore
     private Module module;
+    @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<StudentAssignment> studentAssignments;
+    @Transient
+    public void addStudent(StudentAssignment sa) {
+        if (studentAssignments == null)
+            studentAssignments = new ArrayList<>();
+        studentAssignments.add(sa);
+    }
 }
