@@ -34,7 +34,7 @@ public class Student extends User {
     public Student() {
         super();
     }
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<StudentAssignment> studentAssignments;
     @Transient

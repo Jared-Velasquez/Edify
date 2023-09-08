@@ -75,7 +75,7 @@ public class Assignment {
     )
     @JsonIgnore
     private Module module;
-    @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<StudentAssignment> studentAssignments;
     @Transient

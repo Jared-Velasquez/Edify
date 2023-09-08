@@ -517,9 +517,15 @@ public class CourseService {
         // Remove assignment mappings
         List<StudentAssignment> studentAssignments = student.getStudentAssignments().stream().filter(sa -> sa.getAssignment().getModule().getCourse().equals(course)).toList();
         studentAssignments.forEach((sa) -> {
-            Assignment assignment = sa.getAssignment();
-            assignment.getStudentAssignments().remove(student);
-            student.getStudentAssignments().remove(assignment);
+            if (sa.getStudent() != null && sa.getAssignment() != null) {
+                Assignment assignment = sa.getAssignment();
+                assignment.getStudentAssignments().removeIf((sa_assignment) -> sa_assignment.getStudent().equals(student));
+                student.getStudentAssignments().removeIf((sa_student) -> sa_student.getAssignment().equals(assignment));
+                studentRepository.save(student);
+                assignmentRepository.save(assignment);
+                sa.setStudent(null);
+                sa.setAssignment(null);
+            }
         });
         studentAssignmentRepository.deleteAll(studentAssignments);
         // Remove from lists

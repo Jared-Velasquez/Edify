@@ -25,17 +25,13 @@ public class StudentAssignment {
     )
     private Integer studentAssignmentId;
 
-    @ManyToOne(
-            optional = false
-    )
-    @JoinColumn(name = "studentId")
+    @ManyToOne
+    @JoinColumn(name = "studentId", nullable = true)
     @JsonIgnore
     private Student student;
 
-    @ManyToOne(
-            optional = false
-    )
-    @JoinColumn(name = "assignmentId")
+    @ManyToOne
+    @JoinColumn(name = "assignmentId", nullable = true)
     @JsonIgnore
     private Assignment assignment;
 
