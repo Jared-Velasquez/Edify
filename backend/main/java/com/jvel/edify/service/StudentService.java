@@ -4,22 +4,21 @@ import com.jvel.edify.controller.exceptions.*;
 import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryResponse;
+import com.jvel.edify.controller.responses.user_responses.student_responses.ScoreQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.student_responses.ScoreQueryResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryResponse;
-import com.jvel.edify.entity.Student;
-import com.jvel.edify.entity.User;
+import com.jvel.edify.entity.*;
 import com.jvel.edify.entity.enums.Major;
 import com.jvel.edify.entity.enums.Role;
-import com.jvel.edify.repository.CourseRepository;
-import com.jvel.edify.repository.StudentRepository;
-import com.jvel.edify.repository.TeacherRepository;
-import com.jvel.edify.repository.UserRepository;
+import com.jvel.edify.repository.*;
 import com.jvel.edify.util.StreamFilters;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,6 +34,8 @@ public class StudentService {
     private TeacherRepository teacherRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private AssignmentRepository assignmentRepository;
 
     public void addStudent(Student student) {
         //System.out.println("student = " + student);
@@ -138,6 +139,46 @@ public class StudentService {
         return CourseQueryMultipleResponse.builder()
                 .courses(student.getCourses())
                 .build();
+    }
+
+    public ScoreQueryMultipleResponse getAssignments(Integer studentId) {
+        Optional<User> user = studentRepository.findById(studentId);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + studentId);
+        if (user.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by id " + studentId);
+
+        Student student = (Student) user.get();
+
+        List<ScoreQueryResponse> assignments = new ArrayList<>();
+        student.getStudentAssignments().forEach((sa) -> {
+            assignments.add(ScoreQueryResponse.builder()
+                    .assignment(sa.getAssignment())
+                    .score(sa.getPoints()).build());
+        });
+        return ScoreQueryMultipleResponse.builder()
+                .assignments(assignments).build();
+    }
+
+    @Transactional
+    public void updateScore(Integer studentId, Integer score, Integer assignmentId) {
+        Optional<User> user = studentRepository.findById(studentId);
+        Optional<Assignment> assignmentOptional = assignmentRepository.findById(assignmentId);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + studentId);
+        if (assignmentOptional.isEmpty())
+            throw new AssignmentNotFoundException("Assignment not found by id " + assignmentId);
+        if (user.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by id " + studentId);
+
+        Student student = (Student) user.get();
+        Assignment assignment = assignmentOptional.get();
+        StudentAssignment sa = assignment.getStudentAssignments().stream().filter(element -> element.getStudent().equals(student)).findAny().orElse(null);
+        if (sa == null)
+            throw new StudentNotFoundException("Student not found by id " + studentId + " in assignment " + assignmentId);
+        sa.setPoints(score);
     }
 
     @Transactional

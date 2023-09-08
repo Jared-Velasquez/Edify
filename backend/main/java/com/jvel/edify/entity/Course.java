@@ -84,6 +84,15 @@ public class Course {
             cascade = CascadeType.REMOVE
     )
     private List<Module> modules;
+
+    public List<Assignment> getAssignments() {
+        List<Assignment> response = new ArrayList<>();
+        this.getModules().forEach((module) -> {
+            response.addAll(module.getAssignments());
+        });
+        return response;
+    }
+
     @OneToMany(
             mappedBy = "course",
             cascade = CascadeType.REMOVE

@@ -264,6 +264,15 @@ public class CourseService {
             throw new IllegalStateException("Student already added to course");
 
         course.addStudents(student);
+        course.getAssignments().forEach((assignment) -> {
+            StudentAssignment sa = new StudentAssignment();
+            sa.setAssignment(assignment);
+            sa.setStudent(student);
+            assignment.addStudent(sa);
+            student.addAssignment(sa);
+
+            studentAssignmentRepository.save(sa);
+        });
     }
 
     @Transactional
@@ -332,7 +341,6 @@ public class CourseService {
 
         course.getStudents().forEach((student) -> {
             if (student.getId() != null) {
-                System.out.println(student.getId());
                 StudentAssignment sa = new StudentAssignment();
                 sa.setAssignment(newAssignment);
                 sa.setStudent(student);
@@ -483,6 +491,12 @@ public class CourseService {
                 .announcements(course.getAnnouncements()).build();
     }
 
+    @Transactional
+    public void deleteStudent(Integer studentId, Integer courseId) {
+        // TODO: Implement delete student along with its reference in the course and the student_assignment rows
+    }
+
+    @Transactional
     public void deleteAssignment(Integer teacherId, Integer assignmentId) {
         Optional<Assignment> assignmentOptional = assignmentRepository.findById(assignmentId);
         Optional<User> teacherOptional = teacherRepository.findById(teacherId);
@@ -501,6 +515,7 @@ public class CourseService {
         assignmentRepository.delete(assignment);
     }
 
+    @Transactional
     public void deleteModule(Integer teacherId, Integer moduleId) {
         Optional<Module> moduleOptional = moduleRepository.findById(moduleId);
         Optional<User> teacherOptional = teacherRepository.findById(teacherId);

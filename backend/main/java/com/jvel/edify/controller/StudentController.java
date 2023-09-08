@@ -2,8 +2,10 @@ package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.user_requests.student_requests.MajorRequest;
+import com.jvel.edify.controller.requests.user_requests.student_requests.ScoreRequest;
 import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.user_responses.student_responses.ScoreQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryResponse;
 import com.jvel.edify.entity.Student;
@@ -99,6 +101,25 @@ public class StudentController {
         CourseQueryMultipleResponse response = studentService.getCourses(emailAddress);
         return new ResponseEntity<>(
                 response,
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/assignments")
+    public ResponseEntity<ScoreQueryMultipleResponse> getAssignments(@RequestHeader("Authorization") String token) {
+        Integer id = jwtService.resolveToken(token);
+        return new ResponseEntity<>(
+                studentService.getAssignments(id),
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/assignments")
+    public ResponseEntity<String> updateScore(@RequestHeader("Authorization") String token, @RequestBody ScoreRequest sr) {
+        Integer id = jwtService.resolveToken(token);
+        studentService.updateScore(id, sr.getScore(), sr.getAssignmentId());
+        return new ResponseEntity<>(
+                "Score successfully updated",
                 HttpStatus.OK
         );
     }
