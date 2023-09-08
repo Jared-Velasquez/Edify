@@ -190,4 +190,14 @@ public class CourseController {
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping("/student")
+    public ResponseEntity<String> deleteStudent(@RequestHeader("Authorization") String token, @RequestBody CourseStudentRequest cr) {
+        Integer id = jwtService.resolveToken(token);
+        courseService.deleteStudent(id, cr.getStudentId(), cr.getCourseId());
+        return new ResponseEntity<>(
+                "Student successfully deleted from course",
+                HttpStatus.OK
+        );
+    }
 }

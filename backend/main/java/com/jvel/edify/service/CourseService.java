@@ -492,8 +492,39 @@ public class CourseService {
     }
 
     @Transactional
-    public void deleteStudent(Integer studentId, Integer courseId) {
+    public void deleteStudent(Integer teacherId, Integer studentId, Long courseId) {
         // TODO: Implement delete student along with its reference in the course and the student_assignment rows
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        Optional<User> userOptional = userRepository.findById(teacherId);
+        Optional<User> studentOptional = userRepository.findById(studentId);
+        if (courseOptional.isEmpty())
+            throw new CourseNotFoundException("Course not found by id " + courseId);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + teacherId);
+        if (studentOptional.isEmpty())
+            throw new UserNotFoundException("Student not found by id " + studentId);
+
+        // Check if user is teacher or student of this assignment
+        User user = userOptional.get();
+        Course course = courseOptional.get();
+        User userStudent = studentOptional.get();
+        if (user.getRole().equals(Role.TEACHER) && !course.getTeacher().getId().equals(teacherId))
+            throw new UnauthorizedAccessException("User is not teacher of course " + course.getCourseId());
+        if (userStudent.getRole().equals(Role.STUDENT) && course.getStudents().stream().noneMatch(student -> student.getId().equals(studentId)))
+            throw new UnauthorizedAccessException("User is not student of course " + course.getCourseId());
+
+        Student student = (Student) userStudent;
+        // Remove assignment mappings
+        List<StudentAssignment> studentAssignments = student.getStudentAssignments().stream().filter(sa -> sa.getAssignment().getModule().getCourse().equals(course)).toList();
+        studentAssignments.forEach((sa) -> {
+            Assignment assignment = sa.getAssignment();
+            assignment.getStudentAssignments().remove(student);
+            student.getStudentAssignments().remove(assignment);
+        });
+        studentAssignmentRepository.deleteAll(studentAssignments);
+        // Remove from lists
+        student.getCourses().remove(course);
+        course.getStudents().remove(student);
     }
 
     @Transactional
