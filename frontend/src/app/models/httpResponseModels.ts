@@ -39,6 +39,15 @@ export interface AssignmentMultipleResponse {
     assignments: Assignment[],
 };
 
+export interface Score {
+    assignmentId: number,
+    score: number | null;
+};
+
+export interface ScoreResponse {
+    assignments: Score[],
+};
+
 export interface Module {
     moduleId: number,
     title: string,

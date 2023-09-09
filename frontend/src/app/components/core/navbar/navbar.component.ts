@@ -6,7 +6,7 @@ import { expand, collapse, toggle } from 'src/app/store/actions/navbar.actions';
 import { AppState } from 'src/app/store/models/edifyState'; 
 import { fadeAnimation } from '../../../animations/shared_animations';
 import { CoursesService } from 'src/app/services/courses.service';
-import { NavbarActionTypes } from 'src/app/store/models/actionTypes';
+import { CourseActionTypes, NavbarActionTypes } from 'src/app/store/models/actionTypes';
 import { navLinkOptions } from './navLinkOptions';
 
 @Component({
@@ -36,12 +36,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.showNavbar) {
-      this.store.dispatch({ type: NavbarActionTypes.SetCourses });
+      this.store.dispatch({ type: NavbarActionTypes.GetCourses });
+      this.store.dispatch({ type: CourseActionTypes.GetScores });
 
       this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
         this.expanded = data.expanded;
         this.navElements = navLinkOptions(data.courses);
       });
+
+      this.coursesSubscription = this.store.select('course').subscribe((data) => {
+        console.log(data.scores);
+      })
     }
   }
 
