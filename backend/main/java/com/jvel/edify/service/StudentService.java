@@ -154,7 +154,7 @@ public class StudentService {
         List<ScoreQueryResponse> assignments = new ArrayList<>();
         student.getStudentAssignments().forEach((sa) -> {
             assignments.add(ScoreQueryResponse.builder()
-                    .assignment(sa.getAssignment())
+                    .assignmentId(sa.getAssignment().getAssignmentId())
                     .score(sa.getPoints()).build());
         });
         return ScoreQueryMultipleResponse.builder()

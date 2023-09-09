@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScoreQueryResponse {
-    private Assignment assignment;
+    private Integer assignmentId;
     private Integer score;
 }
