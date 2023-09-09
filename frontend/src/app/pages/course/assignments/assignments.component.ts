@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { map, Subscription, switchMap } from 'rxjs';
 import { fadeDelayedAnimation, listAnimation } from 'src/app/animations/shared_animations';
 import { Assignment, Course, DropDownMenuInterface } from 'src/app/models';
-import { CourseEmpty } from 'src/app/models/httpResponseModels';
+import { CourseEmpty, Score } from 'src/app/models/httpResponseModels';
 import { CoursesService } from 'src/app/services/courses.service';
 import { AppState } from 'src/app/store/models/edifyState';
 
@@ -24,6 +24,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   course: Course;
   dropDownMenuOptions: DropDownMenuInterface;
+  scores: Score[];
 
   constructor(private courseService: CoursesService, private route: ActivatedRoute, private router: Router, private store: Store<AppState>) {
     this.assignments = [];
@@ -38,6 +39,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
         "Farthest due",
       ],
     };
+    this.scores = [];
   }
 
   ngOnInit() {
@@ -72,10 +74,19 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
           })
         );
       }),
+      switchMap(response => {
+        return this.store.select('course').pipe(
+          map((course) => ({
+            scores: course.scores,
+            ...response,
+          }))
+        );
+      }),
     ).subscribe((response) => {
       this.courseId = response.courseId;
       this.assignments = response.assignments.sort((x, y) => x.dueAt.getTime() - y.dueAt.getTime());
       this.course = response.course;
+      this.scores = response.scores;
       this.isLoading = false;
     });
   }
@@ -93,6 +104,15 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
 
   convertDateToString(date: Date): string {
     return date.toLocaleString();
+  }
+
+  getScoreOfAssignment(assignmentId: number): number | null {
+    let score = null;
+    this.scores.forEach((assignment) => {
+      if (assignment.assignmentId === assignmentId)
+        score = assignment.score;
+    });
+    return score;
   }
 
   ngOnDestroy() {

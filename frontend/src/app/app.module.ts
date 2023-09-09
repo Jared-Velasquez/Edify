@@ -23,7 +23,6 @@ import { CoursesEffects } from './store/effects/courses.effects';
   ],
   imports: [
     RouterModule,
-    CommonModule,
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducer),

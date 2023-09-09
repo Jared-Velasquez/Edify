@@ -9,10 +9,12 @@ import { Assignment, AssignmentEmpty } from 'src/app/models';
 export class AssignmentUnitComponent {
   @Input() assignment: Assignment;
   @Input() score: number | null;
+  @Input() offWhite: boolean;
 
   constructor() {
     this.assignment = AssignmentEmpty;
     this.score = null;
+    this.offWhite = false;
   }
 
   convertDateToString(date: Date): string {

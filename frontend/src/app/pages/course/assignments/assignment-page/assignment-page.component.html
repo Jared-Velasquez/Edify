@@ -7,7 +7,7 @@
                 <span class="font-bold font-cabin mr-[1rem]">Due:</span> {{convertDateToString(assignment.dueAt)}}
             </div>
             <div class="font-raleway">
-                <span class="font-bold font-cabin mr-[1rem]">Points:</span> {{assignment.pointsPossible}}
+                <span class="font-bold font-cabin mr-[1rem]">Points:</span> {{score ? score : '-'}}/{{assignment.pointsPossible}}
             </div>
             <div class="font-raleway">
                 <span class="font-bold font-cabin mr-[1rem]">Submitting:</span> File
