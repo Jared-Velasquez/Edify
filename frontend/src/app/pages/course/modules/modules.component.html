@@ -11,6 +11,6 @@
     <!-- If modules have been fetched -->
     <!-- Modules Container -->
     <div class="px-[2rem] mt-[2rem]" [@listAnimation]="modules.length">
-        <app-module *ngFor="let module of modules; let i=index" [module]="module" [courseId]="courseId"></app-module>
+        <app-module *ngFor="let module of modules; let i=index" [module]="module" [courseId]="courseId" [scores]="scores"></app-module>
     </div>
 </div>

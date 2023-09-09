@@ -6,8 +6,8 @@ import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-assignment',
-  templateUrl: './assignment.component.html',
-  styleUrls: ['./assignment.component.css']
+  templateUrl: './assignment-page.component.html',
+  styleUrls: ['./assignment-page.component.css']
 })
 export class AssignmentComponent implements OnInit, OnDestroy {
   @Input() assignment: Assignment;

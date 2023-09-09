@@ -1,0 +1,9 @@
+<div 
+    class="assignment flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.5rem] rounded-lg bg-offWhite border-offWhite shadow-sm hover:shadow-xl cursor-pointer"
+>
+    <i class="fal fa-pencil text-2xl mx-[0.75rem]" aria-hidden="true"></i>
+    <div class="flex flex-col">
+        <div class="font-cabin font-semibold">{{assignment.title}}: <span class="font-light">{{score ? score : '-'}}/{{assignment.pointsPossible}} pts</span></div>
+        <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm"><span class="text-gray-600 font-semibold">Due at:</span> {{convertDateToString(assignment.dueAt)}}</div>
+    </div>
+</div>

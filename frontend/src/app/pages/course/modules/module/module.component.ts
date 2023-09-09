@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger, query, sequence, stagger } 
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Module } from 'src/app/models';
-import { ModuleEmpty } from 'src/app/models/httpResponseModels';
+import { ModuleEmpty, Score } from 'src/app/models/httpResponseModels';
 
 @Component({
   selector: 'app-module',
@@ -53,12 +53,14 @@ import { ModuleEmpty } from 'src/app/models/httpResponseModels';
 export class ModuleComponent {
   @Input() module: Module;
   @Input() courseId: number;
+  @Input() scores: Score[];
   moduleExpanded: boolean;
 
   constructor(private router: Router) {
     this.module = ModuleEmpty;
     this.courseId = 0;
     this.moduleExpanded = false;
+    this.scores = [];
   }
 
   onClick() {
@@ -72,5 +74,14 @@ export class ModuleComponent {
 
   convertDateToString(date: Date): string {
     return date.toLocaleString();
+  }
+
+  getScoreOfAssignment(assignmentId: number): number | null {
+    let score = null;
+    this.scores.forEach((assignment) => {
+      if (assignment.assignmentId === assignmentId)
+        score = assignment.score;
+    });
+    return score;
   }
 }

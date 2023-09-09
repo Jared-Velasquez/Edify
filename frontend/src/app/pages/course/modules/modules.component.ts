@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { map, Subscription, switchMap } from 'rxjs';
 import { fadeDelayedAnimation, listAnimation } from 'src/app/animations/shared_animations';
 import { Course, Module } from 'src/app/models';
-import { CourseEmpty } from 'src/app/models/httpResponseModels';
+import { CourseEmpty, Score } from 'src/app/models/httpResponseModels';
 import { CoursesService } from 'src/app/services/courses.service';
 import { AppState } from 'src/app/store/models/edifyState';
 
@@ -23,6 +23,7 @@ export class ModulesComponent implements OnInit, OnDestroy {
   courseId: number;
   isLoading: boolean;
   course: Course;
+  scores: Score[];
 
   constructor(private courseService: CoursesService, private route: ActivatedRoute, private store: Store<AppState>) {
     this.modules = [];
@@ -30,6 +31,7 @@ export class ModulesComponent implements OnInit, OnDestroy {
     this.courseId = 0;
     this.isLoading = true;
     this.course = CourseEmpty;
+    this.scores = [];
   }
 
   ngOnInit(): void {
@@ -65,6 +67,14 @@ export class ModulesComponent implements OnInit, OnDestroy {
         );
       }),
       switchMap(response => {
+        return this.store.select('course').pipe(
+          map((course) => ({
+            scores: course.scores,
+            ...response,
+          }))
+        );
+      }),
+      switchMap(response => {
         return this.courseService.getTeacherOfCourse(response.courseId).pipe(
           map(teacher => ({
             teacher,
@@ -77,6 +87,7 @@ export class ModulesComponent implements OnInit, OnDestroy {
       this.courseId = response.courseId;
       this.course = response.course;
       this.isLoading = false;
+      this.scores = response.scores;
       console.log(this.modules);
     });
   }

@@ -15,7 +15,7 @@ import { ModulesComponent } from './course/modules/modules.component';
 import { AssignmentsComponent } from './course/assignments/assignments.component';
 import { AnnouncementsComponent } from './course/announcements/announcements.component';
 import { SharedModule } from 'src/app/components/shared/shared.module';
-import { AssignmentComponent } from './course/assignments/assignment/assignment.component';
+import { AssignmentComponent } from './course/assignments/assignment-page/assignment-page.component';
 import { ModuleComponent } from './course/modules/module/module.component';
 
 @NgModule({

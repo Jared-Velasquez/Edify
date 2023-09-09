@@ -10,7 +10,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { AnnouncementsComponent } from './pages/course/announcements/announcements.component';
 import { ModulesComponent } from './pages/course/modules/modules.component';
 import { AssignmentsComponent } from './pages/course/assignments/assignments.component';
-import { AssignmentComponent } from './pages/course/assignments/assignment/assignment.component';
+import { AssignmentComponent } from './pages/course/assignments/assignment-page/assignment-page.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent, canActivate: [authenticationGuard] },
