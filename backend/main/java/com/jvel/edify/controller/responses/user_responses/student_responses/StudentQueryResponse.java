@@ -13,5 +13,5 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentQueryResponse {
-    private User student;
+    private User user;
 }

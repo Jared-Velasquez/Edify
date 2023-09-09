@@ -76,7 +76,7 @@ public class StudentService {
             throw new StudentNotFoundException("Student not found by id " + studentId);
 
         return StudentQueryResponse.builder()
-                .student(student.get())
+                .user(student.get())
                 .build();
     }
 
@@ -89,7 +89,7 @@ public class StudentService {
             throw new StudentNotFoundException("Student not found by email address " + emailAddress);
 
         return StudentQueryResponse.builder()
-                .student(student.get())
+                .user(student.get())
                 .build();
     }
 

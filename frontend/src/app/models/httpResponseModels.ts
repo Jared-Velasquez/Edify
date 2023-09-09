@@ -139,3 +139,27 @@ export interface Announcement {
 export interface AnnouncementResponse {
     announcements: Announcement[],
 };
+
+export interface User {
+    id: number,
+    firstName: string,
+    lastName: string,
+    emailAddress: string,
+    dob: string,
+    role: string,
+    gender: string,
+    address: string,
+    phoneNumber: string,
+    enabled: boolean,
+    authorities: {
+        authority: string,
+    }[],
+    username: string,
+    accountNonExpired: boolean,
+    accountNonLocked: boolean,
+    credentialsNonExpired: boolean,
+}
+
+export interface UserResponse {
+    user: User,
+};

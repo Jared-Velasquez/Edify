@@ -49,7 +49,7 @@ public class TeacherService {
             throw new TeacherNotFoundException("Teacher not found by id " + teacherId);
 
         return TeacherQueryResponse.builder()
-                .teacher(teacher.get())
+                .user(teacher.get())
                 .build();
     }
 
@@ -62,7 +62,7 @@ public class TeacherService {
             throw new TeacherNotFoundException("Teacher not found by email address " + emailAddress);
 
         return TeacherQueryResponse.builder()
-                .teacher(teacher.get())
+                .user(teacher.get())
                 .build();
     }
 
