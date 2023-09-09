@@ -88,7 +88,6 @@ export class ModulesComponent implements OnInit, OnDestroy {
       this.course = response.course;
       this.isLoading = false;
       this.scores = response.scores;
-      console.log(this.modules);
     });
   }
 

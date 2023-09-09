@@ -19,6 +19,7 @@ export class AssignmentComponent implements OnInit, OnDestroy {
   submitTitle: string = "";
   scores: Score[];
   score: number | null;
+  isLoading: boolean;
 
   constructor(private courseService: CoursesService, private route: ActivatedRoute, private store: Store<AppState>) {
     this.assignment = AssignmentEmpty;
@@ -27,6 +28,7 @@ export class AssignmentComponent implements OnInit, OnDestroy {
     this.submitTitle = "Submit";
     this.scores = [];
     this.score = null;
+    this.isLoading = true;
   }
 
   ngOnInit() {
@@ -56,6 +58,7 @@ export class AssignmentComponent implements OnInit, OnDestroy {
       this.assignment = response.assignment;
       this.assignmentId = response.assignmentId;
       this.score = this.getScoreOfAssignment(this.assignmentId);
+      this.isLoading = false;
     });
   }
 

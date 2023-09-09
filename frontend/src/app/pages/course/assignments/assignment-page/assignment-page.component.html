@@ -1,23 +1,63 @@
 <div class="flex flex-col w-full h-screen">
     <!-- Title and Important Information -->
     <div>
-        <h1 class="font-cabin font-bold text-3xl mb-[1.5rem]">{{assignment.title}}</h1>
-        <span class="flex flex-row space-x-[2rem] py-[1rem] border-y-2 border-richBlack">
+        <ng-container 
+            *ngIf="isLoading; then loading; else loaded">
+        </ng-container>
+        <ng-template #loading>
+            <ngx-skeleton-loader [theme]="{height: '30px', width: '200px', background: '#D3D3D3'}" appearance="line"></ngx-skeleton-loader>
+        </ng-template>
+        <ng-template #loaded>
+            <span skeleton="isLoading; height: '20px'; width: '200px'" class="font-cabin font-bold text-3xl">{{assignment.title}}</span>
+        </ng-template>
+        <span class="flex flex-row space-x-[2rem] py-[1rem] border-y-2 border-richBlack mt-[1rem]">
             <div class="font-raleway">
-                <span class="font-bold font-cabin mr-[1rem]">Due:</span> {{convertDateToString(assignment.dueAt)}}
+                <ng-container 
+                    *ngIf="isLoading; then loadingDate; else loadedDate">
+                </ng-container>
+                <ng-template #loadingDate>
+                    <ngx-skeleton-loader [theme]="{height: '20px', width: '150px', background: '#D3D3D3'}" appearance="line"></ngx-skeleton-loader>
+                </ng-template>
+                <ng-template #loadedDate>
+                    <span class="font-bold font-cabin mr-[1rem]">Due:</span> {{convertDateToString(assignment.dueAt)}}
+                </ng-template>
             </div>
             <div class="font-raleway">
-                <span class="font-bold font-cabin mr-[1rem]">Points:</span> {{score ? score : '-'}}/{{assignment.pointsPossible}}
+                <ng-container 
+                    *ngIf="isLoading; then loadingPoints; else loadedPoints">
+                </ng-container>
+                <ng-template #loadingPoints>
+                    <ngx-skeleton-loader [theme]="{height: '20px', width: '100px', background: '#D3D3D3'}" appearance="line"></ngx-skeleton-loader>
+                </ng-template>
+                <ng-template #loadedPoints>
+                    <span class="font-bold font-cabin mr-[1rem]">Points:</span> {{score ? score : '-'}}/{{assignment.pointsPossible}}
+                </ng-template>
             </div>
             <div class="font-raleway">
-                <span class="font-bold font-cabin mr-[1rem]">Submitting:</span> File
+                <ng-container 
+                    *ngIf="isLoading; then loadingSubmit; else loadedSubmit">
+                </ng-container>
+                <ng-template #loadingSubmit>
+                    <ngx-skeleton-loader [theme]="{height: '20px', width: '100px', background: '#D3D3D3'}" appearance="line"></ngx-skeleton-loader>
+                </ng-template>
+                <ng-template #loadedSubmit>
+                    <span class="font-bold font-cabin mr-[1rem]">Submitting:</span> File
+                </ng-template>
             </div>
         </span>
     </div>
     <!-- Content -->
     <div class="mt-[1rem] font-raleway min-h-[5rem] border-2 rounded-md border-richBlack p-[0.75rem]">
         <p class="font-bold font-cabin mr-[1rem] mb-[0.5rem]">Description:</p>
-        <p>{{assignment.description}}</p>
+        <ng-container 
+            *ngIf="isLoading; then loadingDescription; else loadedDescription">
+        </ng-container>
+        <ng-template #loadingDescription>
+            <ngx-skeleton-loader count="3" [theme]="{height: '20px', width: '200px', background: '#D3D3D3'}" appearance="line"></ngx-skeleton-loader>
+        </ng-template>
+        <ng-template #loadedDescription>
+            <p>{{assignment.description}}</p>
+        </ng-template>
     </div>
     <app-custom-button [title]="submitTitle" class="mt-[2rem]"></app-custom-button>
 </div>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +17,8 @@ import { AnnouncementsComponent } from './course/announcements/announcements.com
 import { SharedModule } from 'src/app/components/shared/shared.module';
 import { AssignmentComponent } from './course/assignments/assignment-page/assignment-page.component';
 import { ModuleComponent } from './course/modules/module/module.component';
+
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { ModuleComponent } from './course/modules/module/module.component';
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    NgxSkeletonLoaderModule,
   ],
   exports: [
     AccountComponent,
@@ -48,5 +51,9 @@ import { ModuleComponent } from './course/modules/module/module.component';
     LoginComponent,
     SettingsComponent,
   ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA,
+  ]
 })
 export class PagesModule { }

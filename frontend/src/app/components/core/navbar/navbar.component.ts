@@ -43,10 +43,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.expanded = data.expanded;
         this.navElements = navLinkOptions(data.courses);
       });
-
-      this.coursesSubscription = this.store.select('course').subscribe((data) => {
-        console.log(data.scores);
-      })
     }
   }
 

@@ -17,6 +17,8 @@ import { appReducer } from 'src/app/store/reducers/app.reducers';
 import { AuthInterceptor } from 'src/app/auth/authentication/auth.interceptor';
 import { CoursesEffects } from './store/effects/courses.effects';
 
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +34,7 @@ import { CoursesEffects } from './store/effects/courses.effects';
     FontAwesomeModule,
     CoreModule,
     PagesModule,
+    NgxSkeletonLoaderModule,
   ],
   providers: [
     {
