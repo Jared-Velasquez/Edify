@@ -5,9 +5,9 @@ import { NavLinksInterface } from 'src/constants';
 import { expand, collapse, toggle } from 'src/app/store/actions/navbar.actions';
 import { AppState } from 'src/app/store/models/edifyState'; 
 import { fadeAnimation } from '../../../animations/shared_animations';
-import { CoursesService } from 'src/app/services/courses.service';
-import { CourseActionTypes, NavbarActionTypes } from 'src/app/store/models/actionTypes';
+import { CourseActionTypes, NavbarActionTypes, UserActionTypes } from 'src/app/store/models/actionTypes';
 import { navLinkOptions } from './navLinkOptions';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   coursesSubscription: Subscription;
   isNavbarLoading: boolean;
 
-  constructor(private store: Store<AppState>, private courseService: CoursesService) {
+  constructor(private store: Store<AppState>) {
     this.expanded = true;
     this.showNavbar = false;
     this.navElements = navLinkOptions([]);
@@ -38,10 +38,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.showNavbar) {
       this.store.dispatch({ type: NavbarActionTypes.GetCourses });
       this.store.dispatch({ type: CourseActionTypes.GetScores });
+      this.store.dispatch({ type: UserActionTypes.GetUser });
 
       this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
         this.expanded = data.expanded;
         this.navElements = navLinkOptions(data.courses);
+      });
+
+      this.store.select('user').subscribe((data) => {
+        console.log(data);
       });
     }
   }

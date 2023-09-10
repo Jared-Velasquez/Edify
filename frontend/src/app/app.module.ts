@@ -16,6 +16,7 @@ import { PagesModule } from './pages/pages.module';
 import { appReducer } from 'src/app/store/reducers/app.reducers';
 import { AuthInterceptor } from 'src/app/auth/authentication/auth.interceptor';
 import { CoursesEffects } from './store/effects/courses.effects';
+import { UserEffects } from './store/effects/user.effects';
 
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
@@ -28,7 +29,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([CoursesEffects]),
+    EffectsModule.forRoot([CoursesEffects, UserEffects]),
     BrowserAnimationsModule,
     HttpClientModule,
     FontAwesomeModule,

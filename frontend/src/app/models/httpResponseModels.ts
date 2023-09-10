@@ -163,3 +163,21 @@ export interface User {
 export interface UserResponse {
     user: User,
 };
+
+export const UserEmpty: User = {
+    id: 0,
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    dob: "",
+    role: "",
+    gender: "",
+    address: "",
+    phoneNumber: "",
+    enabled: false,
+    authorities: [],
+    username: "",
+    accountNonExpired: false,
+    accountNonLocked: false,
+    credentialsNonExpired: false,
+};

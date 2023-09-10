@@ -1,8 +1,9 @@
-import { Course, Score } from "src/app/models/httpResponseModels"
+import { Course, Score, User } from "src/app/models/httpResponseModels"
 
 export interface AppState {
     navbar: NavbarState,
     course: CourseState,
+    user: UserState,
 };
 
 export interface NavbarState {
@@ -12,4 +13,8 @@ export interface NavbarState {
 
 export interface CourseState {
     scores: Score[]
+};
+
+export interface UserState {
+    user: User
 };

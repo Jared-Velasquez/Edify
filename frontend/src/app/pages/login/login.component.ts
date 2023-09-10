@@ -2,6 +2,9 @@ import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpStatusCode } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/models/edifyState';
+import { UserActionTypes } from 'src/app/store/models/actionTypes';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +17,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router, 
     private loginService: LoginService,
+    private store: Store<AppState>
   ) { 
     this.badCredentials = false;
   }

@@ -1,8 +1,8 @@
 import { CourseActionTypes, NavbarActionTypes } from './../models/actionTypes';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, of } from 'rxjs';
-import { map, mergeMap, exhaustMap, catchError, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { CoursesService } from 'src/app/services/courses.service';
 import { loadCoursesSuccess } from '../actions/navbar.actions';
 import { loadScoresSuccess } from '../actions/course.actions';
