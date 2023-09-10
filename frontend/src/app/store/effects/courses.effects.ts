@@ -4,8 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { CoursesService } from 'src/app/services/courses.service';
-import { loadCoursesSuccess } from '../actions/navbar.actions';
-import { loadScoresSuccess } from '../actions/course.actions';
+import { loadCoursesSuccess, loadScoresSuccess } from '../actions/course.actions';
 
 @Injectable()
 export class CoursesEffects {
@@ -14,11 +13,11 @@ export class CoursesEffects {
     }
 
     loadCourses$ = createEffect(() => this.actions$.pipe(
-        ofType(NavbarActionTypes.GetCourses),
+        ofType(CourseActionTypes.GetCourses),
         switchMap(() => this.courseService.getCourses()
             .pipe(
                 map((courses) => loadCoursesSuccess({courseResponse: courses})),
-                catchError(() => of({ type: NavbarActionTypes.LoadCoursesError }))
+                catchError(() => of({ type: CourseActionTypes.LoadCoursesError }))
             ))
         )
     );

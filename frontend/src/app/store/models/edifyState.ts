@@ -8,11 +8,11 @@ export interface AppState {
 
 export interface NavbarState {
     expanded: boolean,
-    courses: Course[],
 };
 
 export interface CourseState {
-    scores: Score[]
+    scores: Score[],
+    courses: Course[],
 };
 
 export interface UserState {

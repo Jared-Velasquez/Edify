@@ -55,9 +55,9 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
         );
       }),
       switchMap(response => {
-        return this.store.select('navbar').pipe(
-          map((navbarData) => {
-            const courseOptional: Course | undefined = navbarData.courses.find(course => course.courseId === response.courseId);
+        return this.store.select('course').pipe(
+          map((courseData) => {
+            const courseOptional: Course | undefined = courseData.courses.find(course => course.courseId === response.courseId);
             if (courseOptional) {
               const course: Course = courseOptional;
               return {

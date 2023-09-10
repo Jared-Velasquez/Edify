@@ -1,0 +1,3 @@
+<div *ngIf="enabled" [@textFade]="characters.length" (@textFade.done)="animationFinished($event)">
+    <span *ngFor="let character of characters" class="character">{{character}}</span>
+</div>

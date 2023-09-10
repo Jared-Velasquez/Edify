@@ -1,9 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadScoresError, loadScoresSuccess } from '../actions/course.actions';
+import { loadCoursesError, loadCoursesSuccess, loadScoresError, loadScoresSuccess } from '../actions/course.actions';
 import { CourseState } from '../models/edifyState';
 
 export const initialCourseState: CourseState = {
-    scores: []
+    scores: [],
+    courses: [],
 };
 
 export const courseReducer = createReducer(
@@ -16,6 +17,19 @@ export const courseReducer = createReducer(
     }),
     on(loadScoresError, (state) => {
         console.log('Loading scores error');
+        return {
+            ...state,
+            courses: [],
+        };
+    }),
+    on(loadCoursesSuccess, (state, { courseResponse }) => {
+        return {
+            ...state,
+            courses: courseResponse.courses,
+        };
+    }),
+    on(loadCoursesError, (state) => {
+        console.log('Loading courses error');
         return {
             ...state,
             courses: [],

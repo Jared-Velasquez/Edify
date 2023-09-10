@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownOptionComponent } from './drop-down-menu/drop-down-option/drop-down-option.component';
 import { CustomButtonComponent } from './custom-button/custom-button.component';
 import { AssignmentUnitComponent } from './assignment-unit/assignment-unit.component';
+import { AnimatedTextComponent } from './animated-text/animated-text.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { AssignmentUnitComponent } from './assignment-unit/assignment-unit.compo
     DropDownOptionComponent,
     CustomButtonComponent,
     AssignmentUnitComponent,
+    AnimatedTextComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { AssignmentUnitComponent } from './assignment-unit/assignment-unit.compo
     DropDownMenuComponent,
     CustomButtonComponent,
     AssignmentUnitComponent,
+    AnimatedTextComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
