@@ -11,11 +11,13 @@ import { AnnouncementsComponent } from './pages/course/announcements/announcemen
 import { ModulesComponent } from './pages/course/modules/modules.component';
 import { AssignmentsComponent } from './pages/course/assignments/assignments.component';
 import { AssignmentComponent } from './pages/course/assignments/assignment-page/assignment-page.component';
+import { HomeComponent } from './pages/course/home/home.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent, canActivate: [authenticationGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authenticationGuard] },
   { path: 'calendar', component: CalendarComponent, canActivate: [authenticationGuard] },
+  { path: 'courses/:id', component: HomeComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/announcements', component: AnnouncementsComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/modules', component: ModulesComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/assignments', component: AssignmentsComponent, canActivate: [authenticationGuard] },

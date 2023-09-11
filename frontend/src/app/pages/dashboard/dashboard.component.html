@@ -14,10 +14,11 @@
         </div>
         <!-- Courses Body -->
         <div class="mt-[3rem] overflow-auto courses" *ngIf="textFinished" [@listAnimation]="courses.length && textFinished">
-            <p class="font-oswald font-semibold text-md mb-[0.75rem]" [@fade]="textFinished">Your courses:</p>
+            <p class="font-raleway text-gray-600 text-md mb-[0.75rem]" [@fade]="textFinished">Your courses:</p>
             <div 
                 *ngFor="let course of courses" 
                 class="flex flex-row bg-dimWhite items-center rounded-md w-[90%] mx-[1rem] px-[0.5rem] py-[1rem] cursor-pointer shadow-sm hover:shadow-xl mb-[1rem]"
+                (click)="onCourseClick(course.courseId)"
             >
                 <i class="fa fa-book text-2xl ml-[0.5rem] mr-[1.25rem]"></i>
                 <div class="flex flex-col">
@@ -28,7 +29,30 @@
         </div>
     </div>
     <!-- Calendar and Course Info -->
-    <div class="flex-[3] flex flex-row bg-white rounded-l-3xl">
+    <!-- TODO: Fix listAnimationReverse-->
+    <div 
+        class="flex-[3] flex flex-col bg-white rounded-l-3xl p-[2rem]"
+        [@listAnimationReverse]="textFinished"
+    >
+        <!-- Date Header -->
+        <div 
+            *ngIf="date[0] && date[1] && date[2] && textFinished"
+        >
+            <p class="font-semibold font-cabin text-sm">{{date[0]}}</p>
+            <p class="text-gray-600 text-sm">{{date[1]}}</p>
+            <p class="text-gray-600 text-sm">{{date[2]}}</p>
+        </div>
+        <!-- Calendar -->
+        <div 
+            class="flex flex-row rounded-2xl bg-offWhite p-[1rem] py-[3.5rem] mt-[2rem] mx-[1rem]"
+            *ngIf="date[0] && date[1] && date[2] && textFinished"
+        >
 
+        </div>
+
+        <!-- Assignments -->
+        <div>
+
+        </div>
     </div>
 </div>

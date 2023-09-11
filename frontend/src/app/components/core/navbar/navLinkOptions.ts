@@ -11,7 +11,7 @@ export const navLinkOptions = (courses: Course[]): NavLinksInterface[] => {
             icon: 'fal fa-pencil',
             subitems: [
             {
-                link: `courses/${course.courseId}/home`,
+                link: `courses/${course.courseId}`,
                 name: "Home",
             },
             {

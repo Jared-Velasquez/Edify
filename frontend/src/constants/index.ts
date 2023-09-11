@@ -1,3 +1,4 @@
+import { dayPicker, dayPickerShort, monthPicker, monthPickerShort } from './dateConstants';
 import { FooterInterface, LinksInterface, NavLinksInterface } from './interfaceConstants';
 import { footerLinks, socialMedia } from './footerConstants';
 
@@ -7,4 +8,8 @@ export {
     FooterInterface,
     LinksInterface,
     NavLinksInterface,
+    monthPicker,
+    monthPickerShort,
+    dayPicker,
+    dayPickerShort,
 };
