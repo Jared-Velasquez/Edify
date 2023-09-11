@@ -11,7 +11,7 @@ import { AppState } from 'src/app/store/models/edifyState';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.scss'],
   animations: [
     listAnimationFast,
     trigger('fade', [

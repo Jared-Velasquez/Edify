@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/models/edifyState';
@@ -13,30 +13,49 @@ export class BodyComponent implements OnInit {
   @Input() showNavbar: boolean;
   navbarExpanded: boolean;
   navbarSubscription: Subscription;
+  routerSubscription: Subscription;
+  onDashboard: boolean;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private activatedRoute: ActivatedRoute, private router: Router) {
     this.navbarExpanded = true;
     this.showNavbar = true;
     this.navbarSubscription = Subscription.EMPTY;
+    this.routerSubscription = Subscription.EMPTY;
+    this.onDashboard = true;
   }
 
   ngOnInit(): void {
-    this.store.select('navbar').subscribe((data) => {
+    this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
       this.navbarExpanded = data.expanded;
-    })
+    });
+
+    this.routerSubscription = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe((event) => {
+      const routerEvent: NavigationEnd = event as NavigationEnd;
+      this.onDashboard = ((routerEvent.url === "/dashboard" || routerEvent.url === '/') ? true : false);
+    });
   }
 
   ngOnDestroy(): void {
     if (this.navbarSubscription)
       this.navbarSubscription.unsubscribe();
+    if (this.routerSubscription)
+      this.routerSubscription.unsubscribe();
   }
 
   bodyStyles(): string {
     if (!this.showNavbar)
       return 'app-body-navbar-hidden';
-    else if (this.navbarExpanded)
-      return 'app-body-navbar-expanded';
-    else
-      return 'app-body-navbar-collapsed';
+    else {
+      if (this.navbarExpanded) {
+        if (this.onDashboard)
+          return 'app-body-dashboard-navbar-expanded';
+        return 'app-body-navbar-expanded';
+      } else {
+        if (this.onDashboard)
+          return 'app-body-dashboard-navbar-collapsed';
+        return 'app-body-navbar-collapsed';
+      }
+    }
   }
 }
