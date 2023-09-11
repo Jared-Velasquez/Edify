@@ -18,6 +18,7 @@ module.exports = {
         raleway: ["Raleway", "sans-serif"],
         roboto: ["Roboto Condensed", "sans-serif"],
         cabin: ["Cabin", "sans-serif"],
+        oswald: ["Oswald", "sans-serif"],
       },
     },
     screens: {

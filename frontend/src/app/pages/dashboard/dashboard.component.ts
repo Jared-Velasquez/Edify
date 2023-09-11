@@ -2,6 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { listAnimationFast } from 'src/app/animations/shared_animations';
 import { Role } from 'src/app/models/edifyModels';
 import { Course, User, UserEmpty } from 'src/app/models/httpResponseModels';
 import { CoursesService } from 'src/app/services/courses.service';
@@ -12,6 +13,7 @@ import { AppState } from 'src/app/store/models/edifyState';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   animations: [
+    listAnimationFast,
     trigger('fade', [
       transition(':enter', [
         style({

@@ -5,7 +5,7 @@
         <div>
             <app-animated-text 
                 text="Welcome back..." 
-                class="font-cabin text-xl italic"
+                class="font-oswald text-xl italic"
                 [enabled]="true"
                 (finished)="onTextFinished($event)"
             >
@@ -13,14 +13,21 @@
             <p *ngIf="textFinished" [@fade]="textFinished" class="font-raleway text-gray-600 text-2xl ml-[1rem] mt-[0.25rem]">{{user.firstName}} {{user.lastName}}</p>
         </div>
         <!-- Courses Body -->
-        <div>
-            <div *ngFor="let course of courses" class="bg-dimWhite rounded-md w-[80%] mx-[1rem] p-[0.5rem]">
-                <span class="font-cabin font-semibold text-sm">{{course.title}}</span>
-                <span>{{course.teacher}}</span>
+        <div class="mt-[3rem]" *ngIf="textFinished" [@listAnimation]="courses.length && textFinished">
+            <p class="font-oswald font-semibold text-md mb-[0.75rem]" [@fade]="textFinished">Your courses:</p>
+            <div 
+                *ngFor="let course of courses" 
+                class="flex flex-row bg-dimWhite items-center rounded-md w-[90%] mx-[1rem] px-[0.5rem] py-[1rem] cursor-pointer shadow-sm hover:shadow-xl mb-[1rem]"
+            >
+                <i class="fa fa-book text-2xl ml-[0.5rem] mr-[1.25rem]"></i>
+                <div class="flex flex-col">
+                    <h1 class="font-cabin font-semibold text-md">{{course.title}}</h1>
+                    <p class="text-sm">{{course.firstName}} {{course.lastName}}</p>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Calendar -->
+    <!-- Calendar and Course Info -->
     <div class="flex-[3] flex flex-row">
 
     </div>

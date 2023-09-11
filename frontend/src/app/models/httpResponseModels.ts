@@ -73,6 +73,8 @@ export interface Course {
     courseContent?: CourseContent,
     modules?: Module[],
     announcements?: Announcement[],
+    firstName: string,
+    lastName: string,
 };
 
 export const CourseEmpty: Course = {
@@ -81,6 +83,8 @@ export const CourseEmpty: Course = {
     code: "",
     publiclyVisible: false,
     units: 0,
+    firstName: "",
+    lastName: "",
   };
 
 export interface CourseResponse {
