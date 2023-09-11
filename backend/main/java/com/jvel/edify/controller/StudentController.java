@@ -4,6 +4,7 @@ import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.user_requests.student_requests.MajorRequest;
 import com.jvel.edify.controller.requests.user_requests.student_requests.ScoreRequest;
 import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.CourseTeacherMultipleResponse;
 import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.ScoreQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
@@ -69,9 +70,9 @@ public class StudentController {
     }
 
     @GetMapping("/courses")
-    public ResponseEntity<CourseQueryMultipleResponse> getCourses(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<CourseTeacherMultipleResponse> getCourses(@RequestHeader("Authorization") String token) {
         Integer id = jwtService.resolveToken(token);
-        CourseQueryMultipleResponse response = studentService.getCourses(id);
+        CourseTeacherMultipleResponse response = studentService.getCourses(id);
         return new ResponseEntity<>(
                 response,
                 HttpStatus.OK
@@ -83,24 +84,6 @@ public class StudentController {
         Integer id = jwtService.resolveToken(token);
         return new ResponseEntity<>(
                 studentService.getCoursesSimple(id),
-                HttpStatus.OK
-        );
-    }
-
-    @GetMapping("/courses/id/{id}")
-    public ResponseEntity<CourseQueryMultipleResponse> getCoursesById(@PathVariable("id") Integer studentId) {
-        CourseQueryMultipleResponse response = studentService.getCourses(studentId);
-        return new ResponseEntity<>(
-                response,
-                HttpStatus.OK
-        );
-    }
-
-    @GetMapping("/courses/email/{email}")
-    public ResponseEntity<CourseQueryMultipleResponse> getCoursesByEmail(@PathVariable("email") String emailAddress) {
-        CourseQueryMultipleResponse response = studentService.getCourses(emailAddress);
-        return new ResponseEntity<>(
-                response,
                 HttpStatus.OK
         );
     }

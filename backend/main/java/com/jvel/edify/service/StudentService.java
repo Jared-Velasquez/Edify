@@ -1,9 +1,7 @@
 package com.jvel.edify.service;
 
 import com.jvel.edify.controller.exceptions.*;
-import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryResponse;
+import com.jvel.edify.controller.responses.course_responses.*;
 import com.jvel.edify.controller.responses.user_responses.student_responses.ScoreQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.ScoreQueryResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
@@ -93,7 +91,7 @@ public class StudentService {
                 .build();
     }
 
-    public CourseQueryMultipleResponse getCourses(Integer studentId) {
+    public CourseTeacherMultipleResponse getCourses(Integer studentId) {
         Optional<User> user = studentRepository.findById(studentId);
 
         if (user.isEmpty())
@@ -103,8 +101,21 @@ public class StudentService {
 
         Student student = (Student) user.get();
 
-        return CourseQueryMultipleResponse.builder()
-                .courses(student.getCourses())
+        List<CourseTeacherResponse> courses = student.getCourses().stream().map((course) -> CourseTeacherResponse.builder()
+                .courseId(course.getCourseId())
+                .title(course.getTitle())
+                .code(course.getCode())
+                .publiclyVisible(course.isPubliclyVisible())
+                .units(course.getUnits())
+                .courseContent(course.getCourseContent())
+                .modules(course.getModules())
+                .announcements(course.getAnnouncements())
+                .firstName(course.getTeacher().getFirstName())
+                .lastName(course.getTeacher().getLastName())
+                .build()).toList();
+
+        return CourseTeacherMultipleResponse.builder()
+                .courses(courses)
                 .build();
     }
 

@@ -5,16 +5,19 @@
         <div>
             <app-animated-text 
                 text="Welcome back..." 
-                class="font-raleway text-4xl"
+                class="font-cabin text-xl italic"
                 [enabled]="true"
                 (finished)="onTextFinished($event)"
             >
             </app-animated-text>
-            <p class="font-cabin font-bold text-gray-600 text-3xl ml-[4rem] mt-[0.5rem]">{{user.firstName}} {{user.lastName}}</p>
+            <p *ngIf="textFinished" [@fade]="textFinished" class="font-raleway text-gray-600 text-2xl ml-[1rem] mt-[0.25rem]">{{user.firstName}} {{user.lastName}}</p>
         </div>
         <!-- Courses Body -->
         <div>
-
+            <div *ngFor="let course of courses" class="bg-dimWhite rounded-md w-[80%] mx-[1rem] p-[0.5rem]">
+                <span class="font-cabin font-semibold text-sm">{{course.title}}</span>
+                <span>{{course.teacher}}</span>
+            </div>
         </div>
     </div>
     <!-- Calendar -->
