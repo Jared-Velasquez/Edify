@@ -1,6 +1,6 @@
 import { JWTInterface } from "./jwtModels";
 import { TokenResponse, CourseContent, Assignment, Module, Course, CourseResponse, Announcement, AnnouncementResponse, AssignmentEmpty } from './httpResponseModels';
-import { DropDownMenuEmpty, DropDownMenuInterface } from "./edifyModels";
+import { CalendarDay, DropDownMenuEmpty, DropDownMenuInterface } from "./edifyModels";
 
 export {
     TokenResponse,
@@ -15,4 +15,5 @@ export {
     AnnouncementResponse,
     DropDownMenuInterface,
     DropDownMenuEmpty,
+    CalendarDay,
 };

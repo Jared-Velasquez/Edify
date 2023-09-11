@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { listAnimationFast, listAnimationFastReverse } from 'src/app/animations/shared_animations';
-import { Role } from 'src/app/models/edifyModels';
+import { CalendarDay, Role } from 'src/app/models/edifyModels';
 import { Course, User, UserEmpty } from 'src/app/models/httpResponseModels';
 import { ClockService } from 'src/app/services/clock.service';
 import { AppState } from 'src/app/store/models/edifyState';
@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   textFinished: boolean;
   courses: Course[];
   date: string[];
+  week: CalendarDay[];
 
   constructor(private store: Store<AppState>, private clockService: ClockService, private router: Router) {
     this.userSubscription = Subscription.EMPTY;
@@ -48,6 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.textFinished = false;
     this.courses = [];
     this.date = ["", "", ""];
+    this.week = [];
   }
 
   ngOnInit() {
@@ -57,14 +59,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.courseSubscription = this.store.select('course').subscribe((data) => {
       this.courses = data.courses;
-    })
+    });
 
     this.clockSubscription = this.clockService.getClock().subscribe((data) => {
-      console.log(data);
       this.date[0] = dayPicker(data.getDay());
       this.date[1] = monthPicker(data.getMonth()) + " " + data.getDate() + ", " + data.getFullYear();
-      this.date[2] = data.getHours() + ":" + data.getMinutes() + ":" + (data.getSeconds() < 10 ? '0' : '') + data.getSeconds();
-    })
+      this.date[2] = data.getHours() + ":" + (data.getMinutes() < 10 ? '0' : '') + data.getMinutes() + ":" + (data.getSeconds() < 10 ? '0' : '') + data.getSeconds();
+    });
+
+    // Generate seven CalendarDays: yesterday, today, and the five days after today
+    for (let i = 0; i < 7; i++) {
+      let currentDay = new Date();
+      currentDay.setDate(currentDay.getDate() - 1 + i);
+      this.week.push({
+        dayTitle: dayPicker(currentDay.getDay()),
+        dayNumber: currentDay.getDate(),
+        monthNumber: currentDay.getMonth(),
+        yearNumber: currentDay.getFullYear()
+      });
+    }
   }
 
   getRole(role: string): string {

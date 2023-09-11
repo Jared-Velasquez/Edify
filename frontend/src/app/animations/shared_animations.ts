@@ -89,12 +89,12 @@ export const listAnimationFast: AnimationTriggerMetadata = trigger('listAnimatio
 export const listAnimationFastReverse: AnimationTriggerMetadata = trigger('listAnimationReverse', [
   transition('* => *', [
     query(':enter', style({ opacity: 0 }), { optional: true }),
-    query(':enter', stagger('350ms', [
-      animate('750ms ease-in', keyframes([
-        style({ opacity: 0, transform: 'translateY(-100px)', offset: 0 }),
-        style({ opacity: .25, transform: 'translateY(-50px)', offset: 0.25 }),
-        style({ opacity: .5, transform: 'translateY(-25px)', offset: 0.5 }),
-        style({ opacity: .75, transform: 'translateY(-10px)', offset: 0.75 }),
+    query(':enter', stagger('300ms', [
+      animate('500ms ease-in-out', keyframes([
+        style({ opacity: 0, transform: 'translateY(100px)', offset: 0 }),
+        style({ opacity: .25, transform: 'translateY(50px)', offset: 0.5 }),
+        style({ opacity: .5, transform: 'translateY(25px)', offset: 0.75 }),
+        style({ opacity: .75, transform: 'translateY(10px)', offset: 0.90 }),
         style({ opacity: 1, transform: 'translateY(0)', offset: 1 }),
       ]))
     ]), { optional: true })

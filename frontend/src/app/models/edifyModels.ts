@@ -11,4 +11,11 @@ export const DropDownMenuEmpty: DropDownMenuInterface = {
 export enum Role {
     STUDENT = "STUDENT",
     TEACHER = "TEACHER",
-}
+};
+
+export interface CalendarDay {
+    dayTitle: string,
+    dayNumber: number,
+    monthNumber: number,
+    yearNumber: number,
+};

@@ -29,30 +29,38 @@
         </div>
     </div>
     <!-- Calendar and Course Info -->
-    <!-- TODO: Fix listAnimationReverse-->
     <div 
         class="flex-[3] flex flex-col bg-white rounded-l-3xl p-[2rem]"
-        [@listAnimationReverse]="textFinished"
     >
-        <!-- Date Header -->
-        <div 
+        <div
             *ngIf="date[0] && date[1] && date[2] && textFinished"
+            [@listAnimationReverse]="textFinished"
         >
-            <p class="font-semibold font-cabin text-sm">{{date[0]}}</p>
-            <p class="text-gray-600 text-sm">{{date[1]}}</p>
-            <p class="text-gray-600 text-sm">{{date[2]}}</p>
-        </div>
-        <!-- Calendar -->
-        <div 
-            class="flex flex-row rounded-2xl bg-offWhite p-[1rem] py-[3.5rem] mt-[2rem] mx-[1rem]"
-            *ngIf="date[0] && date[1] && date[2] && textFinished"
-        >
+            <!-- Date Header -->
+            <ng-container 
+                *ngIf="date[0] && date[1] && date[2] && textFinished"
+            >
+                <p class="font-semibold font-cabin text-sm">{{date[0]}}</p>
+                <p class="text-gray-600 text-sm">{{date[1]}}</p>
+                <p class="text-gray-600 text-sm">{{date[2]}}</p>
+            </ng-container>
+            <!-- Calendar -->
+            <div 
+                class="flex flex-col rounded-2xl bg-offWhite px-[2.5rem] py-[2rem] mt-[2rem] mx-[1rem] justify-between"
+                *ngIf="date[0] && date[1] && date[2] && textFinished && (week.length >= 7)"
+            >
+                <div class="flex flex-row">
+                    <div *ngFor="let day of week" class="flex flex-col rounded-4xl items-center">
+                        <p>{{day.dayTitle[0]}}</p>
+                        <p>{{day.dayNumber}}</p>
+                    </div>
+                </div>
+            </div>
 
-        </div>
+            <!-- Assignments -->
+            <div>
 
-        <!-- Assignments -->
-        <div>
-
+            </div>
         </div>
     </div>
 </div>
