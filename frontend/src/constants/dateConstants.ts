@@ -17,3 +17,14 @@ export const dayPickerShort = (day: number): string => {
     const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return DAYS[day];
 }
+
+export const dayNumberPickerSuffix = (day: number): string => {
+    if (day % 10 === 1)
+        return `${day.toString()}st`;
+    else if (day % 10 === 2)
+        return `${day.toString()}nd`;
+    else if (day % 10 === 3)
+        return `${day.toString()}rd`;
+    else
+        return `${day.toString()}th`;
+}

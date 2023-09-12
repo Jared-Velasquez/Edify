@@ -55,15 +55,43 @@
                 </div>
             </div>
 
-            <div class="flex flex-row">
+            <div class="flex flex-row mt-[2rem]">
                 <!-- Assignments due today -->
-                <div>
-                    <p>Assignments due today:</p>
+                <div *ngIf="textFinished" class=" ml-[1rem] mr-[3.5rem] w-[16rem]">
+                    <p class="font-raleway mb-[1rem]">Assignments due today:</p>
+                    <ng-container *ngIf="assignmentsToday.length">
+                        <div *ngFor="let assignment of assignmentsToday" class="flex flex-col cursor-pointer" (click)="onAssignmentClick(assignment.assignmentId)">
+                            <div class="assignment flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.5rem] w-full rounded-lg shadow-sm hover:shadow-xl cursor-pointer">
+                                <i class="fal fa-pencil text-2xl mx-[0.75rem]" aria-hidden="true"></i>
+                                <div class="flex flex-col">
+                                    <div class="font-cabin font-semibold">{{assignment.title}}</div>
+                                    <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm"><span class="text-gray-600 font-semibold">Due at:</span> {{convertToTimeString(assignment.dueAt)}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!assignmentsToday.length">
+                        <p class="font-raleway">--- No assignments due today! ---</p>
+                    </ng-container>
                 </div>
 
                 <!-- Assignments due shortly -->
-                <div>
-                    <p>Assignments due shortly:</p>
+                <div *ngIf="textFinished" class="w-[16rem]">
+                    <p class="font-raleway mb-[1rem]">Assignments due:</p>
+                    <ng-container *ngIf="assignmentsShortly.length">
+                        <div *ngFor="let assignment of assignmentsShortly" class="flex flex-col cursor-pointer" (click)="onAssignmentClick(assignment.assignmentId)">
+                            <div class="assignment flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.5rem] w-full rounded-lg shadow-sm hover:shadow-xl cursor-pointer">
+                                <i class="fal fa-pencil text-2xl mx-[0.75rem]" aria-hidden="true"></i>
+                                <div class="flex flex-col">
+                                    <div class="font-cabin font-semibold">{{assignment.title}}</div>
+                                    <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm"><span class="text-gray-600 font-semibold">Due at:</span> {{convertToDateString(assignment.dueAt)}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!assignmentsShortly.length" class="font-raleway">
+                        <p class="font-raleway">--- No assignments due! ---</p>
+                    </ng-container>
                 </div>
             </div>
         </div>

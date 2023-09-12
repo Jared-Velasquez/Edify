@@ -56,7 +56,7 @@ export class CoursesService {
   }
 
   public getScores(): Observable<ScoreResponse> {
-    return this.http.get<ScoreResponse>('https://edify.azurewebsites.net/api/student/assignments');
+    return this.http.get<ScoreResponse>('https://edify.azurewebsites.net/api/student/scores');
   }
 
   public getModules(courseId: number): Observable<Module[]> {
