@@ -17,6 +17,7 @@ export interface Assignment {
     pointsPossible: number,
     createdAt: Date,
     visible: boolean,
+    courseId?: number,
 };
 
 export const AssignmentEmpty: Assignment = {
@@ -37,6 +38,15 @@ export interface AssignmentResponse {
 
 export interface AssignmentMultipleResponse {
     assignments: Assignment[],
+};
+
+export interface AssignmentCourseResponse {
+    assignment: Assignment,
+    courseId: number,
+};
+
+export interface AssignmentCourseMultipleResponse {
+    assignments: AssignmentCourseResponse[],
 };
 
 export interface Score {

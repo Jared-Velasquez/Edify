@@ -133,8 +133,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/calendar?year=${day.yearNumber}&month=${day.monthNumber}&day=${day.dayNumber}`);
   }
 
-  onAssignmentClick(assignmentId: number) {
-    console.log(assignmentId);
+  onAssignmentClick(assignment: Assignment) {
+    if (assignment.courseId)
+      this.router.navigateByUrl(`/courses/${assignment.courseId}/assignments/${assignment.assignmentId}`);
   }
 
   ngOnDestroy() {

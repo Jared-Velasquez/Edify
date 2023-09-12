@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Assignment, AssignmentMultipleResponse, AssignmentResponse, UserResponse } from '../models/httpResponseModels';
+import { Assignment, AssignmentCourseMultipleResponse, AssignmentMultipleResponse, AssignmentResponse, UserResponse } from '../models/httpResponseModels';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +15,16 @@ export class UserService {
   }
 
   public getUserAssignments(): Observable<Assignment[]> {
-    return this.http.get<AssignmentMultipleResponse>('https://edify.azurewebsites.net/api/student/assignments').pipe(
-      map((res: AssignmentMultipleResponse) => {
-        return res.assignments.map((assignment) => ({
-          ...assignment,
-          dueAt: new Date(assignment.dueAt),
-          unlockAt: new Date(assignment.unlockAt),
-          lockAt: new Date(assignment.lockAt),
-          createdAt: new Date(assignment.createdAt),
-        }));
+    return this.http.get<AssignmentCourseMultipleResponse>('https://edify.azurewebsites.net/api/student/assignments').pipe(
+      map((res: AssignmentCourseMultipleResponse) => {
+        return res.assignments.map((assignmentWrapper) => ({
+          ...assignmentWrapper.assignment,
+          dueAt: new Date(assignmentWrapper.assignment.dueAt),
+          unlockAt: new Date(assignmentWrapper.assignment.unlockAt),
+          lockAt: new Date(assignmentWrapper.assignment.lockAt),
+          createdAt: new Date(assignmentWrapper.assignment.createdAt),
+          courseId: assignmentWrapper.courseId,
+        }))
       })
     );
   }
