@@ -3,10 +3,7 @@ package com.jvel.edify.controller;
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.user_requests.student_requests.MajorRequest;
 import com.jvel.edify.controller.requests.user_requests.student_requests.ScoreRequest;
-import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.CourseQueryMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.CourseTeacherMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.SimpleCourseQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.*;
 import com.jvel.edify.controller.responses.user_responses.student_responses.ScoreQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryMultipleResponse;
 import com.jvel.edify.controller.responses.user_responses.student_responses.StudentQueryResponse;
@@ -99,7 +96,7 @@ public class StudentController {
     }
 
     @GetMapping("/assignments")
-    public ResponseEntity<AssignmentQueryMultipleResponse> getAssignments(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<AssignmentCourseQueryMultipleResponse> getAssignments(@RequestHeader("Authorization") String token) {
         Integer id = jwtService.resolveToken(token);
         return new ResponseEntity<>(
                 studentService.getAssignments(id),

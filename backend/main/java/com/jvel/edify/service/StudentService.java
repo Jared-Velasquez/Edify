@@ -152,7 +152,7 @@ public class StudentService {
                 .build();
     }
 
-    public AssignmentQueryMultipleResponse getAssignments(Integer studentId) {
+    public AssignmentCourseQueryMultipleResponse getAssignments(Integer studentId) {
         Optional<User> user = studentRepository.findById(studentId);
 
         if (user.isEmpty())
@@ -162,11 +162,14 @@ public class StudentService {
 
         Student student = (Student) user.get();
 
-        List<Assignment> assignments = new ArrayList<>();
+        List<AssignmentCourseQueryResponse> assignments = new ArrayList<>();
         student.getStudentAssignments().forEach((sa) -> {
-            assignments.add(sa.getAssignment());
+            Long courseId = sa.getAssignment().getModule().getCourse().getCourseId();
+            assignments.add(AssignmentCourseQueryResponse.builder()
+                    .assignment(sa.getAssignment())
+                    .courseId(courseId).build());
         });
-        return AssignmentQueryMultipleResponse.builder().assignments(assignments).build();
+        return AssignmentCourseQueryMultipleResponse.builder().assignments(assignments).build();
     }
 
     public ScoreQueryMultipleResponse getScores(Integer studentId) {
