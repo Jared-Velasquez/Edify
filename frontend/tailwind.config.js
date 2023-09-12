@@ -9,10 +9,12 @@ module.exports = {
         primary: "rgb(0, 12, 40)",
         dimWhite: "rgba(255, 255, 255, 0.7)",
         offWhite: "rgb(238, 238, 238)",
+        offDimWhite: "rgb(210, 210, 210)",
         richBlack: "#0D1821",
         indigoDye: "#344966",
         powderBlue: "#B4CDED",
-        babyPowder: "#F0F4EF"
+        babyPowder: "#F0F4EF",
+        darkYellow: "rgb(245, 190, 102)",
       },
       fontFamily: {
         raleway: ["Raleway", "sans-serif"],

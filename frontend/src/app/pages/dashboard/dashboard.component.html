@@ -46,14 +46,12 @@
             </ng-container>
             <!-- Calendar -->
             <div 
-                class="flex flex-col rounded-2xl bg-offWhite px-[2.5rem] py-[2rem] mt-[2rem] mx-[1rem] justify-between"
+                class="flex flex-row rounded-2xl bg-offWhite px-[1.5rem] py-[1rem] mt-[2rem] mx-[1rem] justify-between"
                 *ngIf="date[0] && date[1] && date[2] && textFinished && (week.length >= 7)"
             >
-                <div class="flex flex-row">
-                    <div *ngFor="let day of week" class="flex flex-col rounded-4xl items-center">
-                        <p>{{day.dayTitle[0]}}</p>
-                        <p>{{day.dayNumber}}</p>
-                    </div>
+                <div *ngFor="let day of week; let i=index" class="flex flex-col items-center justify-center rounded-full p-[0.5rem] cursor-pointer" [ngClass]="(i === 1) ? 'bg-darkYellow' : 'calendarDay'" (click)="onDayClick(day)">
+                    <p [ngClass]="(i === 1) ? 'text-black' : 'text-gray-600'">{{day.dayTitle[0]}}</p>
+                    <p class="rounded-full h-[35px] w-[35px] mt-[0.75rem] text-center leading-[35px]" [ngClass]="(i === 1) ? 'bg-richBlack text-white' : 'bg-dimWhite'">{{day.dayNumber}}</p>
                 </div>
             </div>
 
