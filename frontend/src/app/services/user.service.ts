@@ -13,4 +13,6 @@ export class UserService {
   public getUser(): Observable<UserResponse> {
     return this.http.get<UserResponse>('https://edify.azurewebsites.net/api/student');
   }
+
+  //public getUserAssignments():
 }

@@ -152,7 +152,24 @@ public class StudentService {
                 .build();
     }
 
-    public ScoreQueryMultipleResponse getAssignments(Integer studentId) {
+    public AssignmentQueryMultipleResponse getAssignments(Integer studentId) {
+        Optional<User> user = studentRepository.findById(studentId);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + studentId);
+        if (user.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by id " + studentId);
+
+        Student student = (Student) user.get();
+
+        List<Assignment> assignments = new ArrayList<>();
+        student.getStudentAssignments().forEach((sa) -> {
+            assignments.add(sa.getAssignment());
+        });
+        return AssignmentQueryMultipleResponse.builder().assignments(assignments).build();
+    }
+
+    public ScoreQueryMultipleResponse getScores(Integer studentId) {
         Optional<User> user = studentRepository.findById(studentId);
 
         if (user.isEmpty())
