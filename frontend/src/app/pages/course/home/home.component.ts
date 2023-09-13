@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, of, Subscription, switchMap } from 'rxjs';
 import { Course } from 'src/app/models';
-import { CourseEmpty, Teacher, TeacherEmpty } from 'src/app/models/httpResponseModels';
+import { CourseEmpty, Module, Teacher, TeacherEmpty } from 'src/app/models/httpResponseModels';
 import { AppState } from 'src/app/store/models/edifyState';
 import { Position } from 'src/app/models/edifyModels';
 
@@ -17,11 +17,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
   course: Course;
   courseId: number;
+  modules: Module[];
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute, private router: Router, private courseService: CoursesService) {
     this.routeSubscription = Subscription.EMPTY;
     this.course = CourseEmpty;
     this.courseId = 0;
+    this.modules = [];
   }
 
   ngOnInit() {
@@ -41,12 +43,14 @@ export class HomeComponent implements OnInit, OnDestroy {
               const course: Course = courseOptional;
               return {
                 course,
+                modules: course.modules,
                 ...response,
               }
             } else {
               const course: Course = CourseEmpty;
               return {
                 course,
+                modules: [],
                 ...response,
               }
             }
@@ -56,6 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ).subscribe((response) => {
       this.courseId = response.courseId;
       this.course = response.course;
+      this.modules = response.modules ? response.modules : [];
       console.log(this.course);
     });
   }
@@ -71,6 +76,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         return "Assistant Professor";
     else
         return "Professor";
+  }
+
+  onModuleClick() {
+    this.router.navigateByUrl(`/courses/${this.courseId}/modules`);
   }
 
   ngOnDestroy() {

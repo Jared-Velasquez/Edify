@@ -78,6 +78,7 @@ export interface Course {
     courseId: number,
     title: string,
     code: string,
+    syllabusBody?: string,
     publiclyVisible: boolean,
     units: number,
     courseContent?: CourseContent,
@@ -86,6 +87,7 @@ export interface Course {
     firstName: string,
     lastName: string,
     position: string,
+    department: string,
 };
 
 export const CourseEmpty: Course = {
@@ -97,6 +99,7 @@ export const CourseEmpty: Course = {
     firstName: "",
     lastName: "",
     position: "",
+    department: ""
   };
 
 export interface CourseResponse {

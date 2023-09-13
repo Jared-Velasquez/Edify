@@ -4,4 +4,16 @@
         <h1 class="font-fjalla text-3xl text-white ml-[3rem] mt-[3rem] pb-[0.25rem] border-b-2 border-gray-600 w-fit">{{course.title}}</h1>
         <p class="font-raleway text-xl text-white ml-[3rem] mt-[1rem]">{{course.firstName}} {{course.lastName}}, {{positionPicker(course.position)}}</p>
     </div>
+    <!-- Syllabus -->
+    <div *ngIf="course.syllabusBody" class="mt-[1rem] mx-[3rem] font-raleway min-h-[5rem] border-2 rounded-md border-richBlack p-[0.75rem]">
+        <p class="font-bold font-cabin mr-[1rem] mb-[0.5rem]">Syllabus:</p>
+        <p>{{course.syllabusBody}}</p>
+    </div>
+    <!-- Modules -->
+    <div *ngIf="course.modules && course.modules.length > 0" class="mt-[1rem] mx-[3rem] font-raleway min-h-[5rem] border-2 rounded-md border-richBlack p-[0.75rem] overflow-auto">
+        <p class="font-bold font-cabin mr-[1rem] mb-[0.5rem]">Course Overview:</p>
+        <div *ngFor="let module of modules" class="flex flex-col px-[0.5rem] py-[0.5rem] border-2 mb-[0.75rem] rounded-lg bg-white border-white shadow-sm hover:shadow-xl cursor-pointer" (click)="onModuleClick()">
+            {{module.title}}
+        </div>
+    </div>
 </div>
