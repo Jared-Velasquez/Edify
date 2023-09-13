@@ -14,7 +14,7 @@ export class CoursesService {
     return this.http.get<CourseResponse>('https://edify.azurewebsites.net/api/student/courses');
   }
 
-  public getTeacherOfCourse(teacherId: number): Observable<Teacher> {
+  public getTeacher(teacherId: number): Observable<Teacher> {
     return this.http.get<Teacher>(`https://edify.azurewebsites.net/api/course/teacher/${teacherId}`);
   }
 

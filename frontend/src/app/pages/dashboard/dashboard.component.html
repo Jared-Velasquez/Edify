@@ -1,101 +1,153 @@
 <div class="flex flex-row w-full h-screen">
-    <!-- Course List -->
-    <div class="flex-[2] flex flex-col pt-[2rem]">
-        <!-- Welcome Header -->
-        <div>
-            <app-animated-text 
-                text="Welcome back..." 
-                class="font-oswald text-xl italic"
-                [enabled]="true"
-                (finished)="onTextFinished($event)"
-            >
-            </app-animated-text>
-            <p *ngIf="textFinished" [@fade]="textFinished" class="font-raleway text-gray-600 text-2xl ml-[1rem] mt-[0.25rem]">{{user.firstName}} {{user.lastName}}</p>
-        </div>
-        <!-- Courses Body -->
-        <div class="mt-[3rem] overflow-auto courses" *ngIf="textFinished" [@listAnimation]="courses.length && textFinished">
-            <p class="font-raleway text-gray-600 text-md mb-[0.75rem]" [@fade]="textFinished">Your courses:</p>
-            <div 
-                *ngFor="let course of courses" 
-                class="flex flex-row bg-dimWhite items-center rounded-md w-[90%] mx-[1rem] px-[0.5rem] py-[1rem] cursor-pointer shadow-sm hover:shadow-xl mb-[1rem]"
-                (click)="onCourseClick(course.courseId)"
-            >
-                <i class="fa fa-book text-2xl ml-[0.5rem] mr-[1.25rem]"></i>
-                <div class="flex flex-col">
-                    <h1 class="font-cabin font-semibold text-md">{{course.title}}</h1>
-                    <p class="text-sm">{{course.firstName}} {{course.lastName}}</p>
-                </div>
-            </div>
-        </div>
+  <!-- Course List -->
+  <div class="flex-[2] flex flex-col pt-[2rem]">
+    <!-- Welcome Header -->
+    <div>
+      <app-animated-text
+        text="Welcome back..."
+        class="font-oswald text-xl italic"
+        [enabled]="true"
+        (finished)="onTextFinished($event)"
+      >
+      </app-animated-text>
+      <p
+        *ngIf="textFinished"
+        [@fade]="textFinished"
+        class="font-raleway text-gray-600 text-2xl ml-[1rem] mt-[0.25rem]"
+      >
+        {{ user.firstName }} {{ user.lastName }}
+      </p>
     </div>
-    <!-- Calendar and Course Info -->
-    <div 
-        class="flex-[3] flex flex-col bg-white rounded-l-3xl p-[2rem]"
+    <!-- Courses Body -->
+    <div
+      class="mt-[3rem] overflow-auto courses"
+      *ngIf="textFinished"
+      [@listAnimation]="courses.length && textFinished"
     >
-        <div
-            *ngIf="date[0] && date[1] && date[2] && textFinished"
-            [@listAnimationReverse]="textFinished"
-        >
-            <!-- Date Header -->
-            <ng-container 
-                *ngIf="date[0] && date[1] && date[2] && textFinished"
-            >
-                <p class="font-semibold font-cabin text-sm">{{date[0]}}</p>
-                <p class="text-gray-600 text-sm">{{date[1]}}</p>
-                <p class="text-gray-600 text-sm">{{date[2]}}</p>
-            </ng-container>
-            <!-- Calendar -->
-            <div 
-                class="flex flex-row rounded-2xl bg-offWhite px-[1.5rem] py-[1rem] mt-[2rem] mx-[1rem] justify-between"
-                *ngIf="date[0] && date[1] && date[2] && textFinished && (week.length >= 7)"
-            >
-                <div *ngFor="let day of week; let i=index" class="flex flex-col items-center justify-center rounded-full p-[0.5rem] cursor-pointer" [ngClass]="(i === 1) ? 'bg-darkYellow' : 'calendarDay'" (click)="onDayClick(day)">
-                    <p [ngClass]="(i === 1) ? 'text-black' : 'text-gray-600'">{{day.dayTitle[0]}}</p>
-                    <p class="rounded-full h-[35px] w-[35px] mt-[0.75rem] text-center leading-[35px]" [ngClass]="(i === 1) ? 'bg-richBlack text-white' : 'bg-dimWhite'">{{day.dayNumber}}</p>
-                </div>
-            </div>
-
-            <!-- Assignments container -->
-            <!-- TODO: Add routing to assignment elements -->
-            <div class="flex flex-row mt-[2rem]">
-                <!-- Assignments due today -->
-                <div *ngIf="textFinished" class=" ml-[1rem] mr-[3.5rem] w-[16rem]">
-                    <p class="font-raleway mb-[1rem]">Assignments due today:</p>
-                    <ng-container *ngIf="assignmentsToday.length">
-                        <div *ngFor="let assignment of assignmentsToday" class="flex flex-col cursor-pointer" (click)="onAssignmentClick(assignment)">
-                            <div class="assignment flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.5rem] w-full rounded-lg shadow-sm hover:shadow-xl cursor-pointer">
-                                <i class="fal fa-pencil text-2xl mx-[0.75rem]" aria-hidden="true"></i>
-                                <div class="flex flex-col">
-                                    <div class="font-cabin font-semibold">{{assignment.title}}</div>
-                                    <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm"><span class="text-gray-600 font-semibold">Due at:</span> {{convertToTimeString(assignment.dueAt)}}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="!assignmentsToday.length">
-                        <p class="font-raleway">--- No assignments due today! ---</p>
-                    </ng-container>
-                </div>
-
-                <!-- Assignments due shortly -->
-                <div *ngIf="textFinished" class="w-[16rem]">
-                    <p class="font-raleway mb-[1rem]">Assignments due:</p>
-                    <ng-container *ngIf="assignmentsShortly.length">
-                        <div *ngFor="let assignment of assignmentsShortly" class="flex flex-col cursor-pointer" (click)="onAssignmentClick(assignment)">
-                            <div class="assignment flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.5rem] w-full rounded-lg shadow-sm hover:shadow-xl cursor-pointer">
-                                <i class="fal fa-pencil text-2xl mx-[0.75rem]" aria-hidden="true"></i>
-                                <div class="flex flex-col">
-                                    <div class="font-cabin font-semibold">{{assignment.title}}</div>
-                                    <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm"><span class="text-gray-600 font-semibold">Due at:</span> {{convertToDateString(assignment.dueAt)}}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="!assignmentsShortly.length" class="font-raleway">
-                        <p class="font-raleway">--- No assignments due! ---</p>
-                    </ng-container>
-                </div>
-            </div>
+      <p
+        class="font-raleway text-gray-600 text-md mb-[0.75rem]"
+        [@fade]="textFinished"
+      >
+        Your courses:
+      </p>
+      <div
+        *ngFor="let course of courses"
+        class="flex flex-row bg-dimWhite items-center rounded-md w-[90%] mx-[1rem] px-[0.5rem] py-[1rem] cursor-pointer shadow-sm hover:shadow-xl mb-[1rem]"
+        (click)="onCourseClick(course.courseId)"
+      >
+        <i class="fa fa-book text-2xl ml-[0.5rem] mr-[1.25rem]"></i>
+        <div class="flex flex-col">
+          <h1 class="font-cabin font-semibold text-md">{{ course.title }}</h1>
+          <p class="text-sm">{{ course.firstName }} {{ course.lastName }}</p>
         </div>
+      </div>
     </div>
+  </div>
+  <!-- Calendar and Course Info -->
+  <div class="flex-[3] flex flex-col bg-white rounded-l-3xl p-[2rem]">
+    <div
+      *ngIf="date[0] && date[1] && date[2] && textFinished"
+      [@listAnimationReverse]="textFinished"
+    >
+      <!-- Date Header -->
+      <ng-container *ngIf="date[0] && date[1] && date[2] && textFinished">
+        <p class="font-semibold font-cabin text-sm">{{ date[0] }}</p>
+        <p class="text-gray-600 text-sm">{{ date[1] }}</p>
+        <p class="text-gray-600 text-sm">{{ date[2] }}</p>
+      </ng-container>
+      <!-- Calendar -->
+      <div
+        class="flex flex-row rounded-2xl bg-offWhite px-[1.5rem] py-[1rem] mt-[2rem] mx-[1rem] justify-between"
+        *ngIf="
+          date[0] && date[1] && date[2] && textFinished && week.length >= 7
+        "
+      >
+        <div
+          *ngFor="let day of week; let i = index"
+          class="flex flex-col items-center justify-center rounded-full p-[0.5rem] cursor-pointer"
+          [ngClass]="i === 1 ? 'bg-darkYellow' : 'calendarDay'"
+          (click)="onDayClick(day)"
+        >
+          <p [ngClass]="i === 1 ? 'text-black' : 'text-gray-600'">
+            {{ day.dayTitle[0] }}
+          </p>
+          <p
+            class="rounded-full h-[35px] w-[35px] mt-[0.75rem] text-center leading-[35px]"
+            [ngClass]="i === 1 ? 'bg-richBlack text-white' : 'bg-dimWhite'"
+          >
+            {{ day.dayNumber }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignments container -->
+      <div class="flex flex-row mt-[2rem]">
+        <!-- Assignments due today -->
+        <div *ngIf="textFinished" class="ml-[1rem] mr-[3.5rem] w-[16rem]">
+          <p class="font-raleway mb-[1rem]">Assignments due today:</p>
+          <ng-container *ngIf="assignmentsToday.length">
+            <div
+              *ngFor="let assignment of assignmentsToday"
+              class="flex flex-col cursor-pointer"
+              (click)="onAssignmentClick(assignment)"
+            >
+              <div
+                class="assignment flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.5rem] w-full rounded-lg shadow-sm hover:shadow-xl cursor-pointer"
+              >
+                <i
+                  class="fal fa-pencil text-2xl mx-[0.75rem]"
+                  aria-hidden="true"
+                ></i>
+                <div class="flex flex-col">
+                  <div class="font-cabin font-semibold">
+                    {{ assignment.title }}
+                  </div>
+                  <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm">
+                    <span class="text-gray-600 font-semibold">Due at:</span>
+                    {{ convertToTimeString(assignment.dueAt) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!assignmentsToday.length">
+            <p class="font-raleway">--- No assignments due today! ---</p>
+          </ng-container>
+        </div>
+
+        <!-- Assignments due shortly -->
+        <div *ngIf="textFinished" class="w-[16rem]">
+          <p class="font-raleway mb-[1rem]">Assignments due:</p>
+          <ng-container *ngIf="assignmentsShortly.length">
+            <div
+              *ngFor="let assignment of assignmentsShortly"
+              class="flex flex-col cursor-pointer"
+              (click)="onAssignmentClick(assignment)"
+            >
+              <div
+                class="assignment flex flex-row items-center px-[0.5rem] py-[0.75rem] border-2 mb-[0.5rem] w-full rounded-lg shadow-sm hover:shadow-xl cursor-pointer"
+              >
+                <i
+                  class="fal fa-pencil text-2xl mx-[0.75rem]"
+                  aria-hidden="true"
+                ></i>
+                <div class="flex flex-col">
+                  <div class="font-cabin font-semibold">
+                    {{ assignment.title }}
+                  </div>
+                  <div class="font-raleway pl-[0.5rem] mb-[0.5rem] text-sm">
+                    <span class="text-gray-600 font-semibold">Due at:</span>
+                    {{ convertToDateString(assignment.dueAt) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!assignmentsShortly.length" class="font-raleway">
+            <p class="font-raleway">--- No assignments due! ---</p>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

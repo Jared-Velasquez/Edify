@@ -112,6 +112,7 @@ public class StudentService {
                 .announcements(course.getAnnouncements())
                 .firstName(course.getTeacher().getFirstName())
                 .lastName(course.getTeacher().getLastName())
+                .position(course.getTeacher().getPosition())
                 .build()).toList();
 
         return CourseTeacherMultipleResponse.builder()

@@ -15,6 +15,7 @@ export class BodyComponent implements OnInit {
   navbarSubscription: Subscription;
   routerSubscription: Subscription;
   onDashboard: boolean;
+  onCourseHome: boolean;
 
   constructor(private store: Store<AppState>, private activatedRoute: ActivatedRoute, private router: Router) {
     this.navbarExpanded = true;
@@ -22,6 +23,7 @@ export class BodyComponent implements OnInit {
     this.navbarSubscription = Subscription.EMPTY;
     this.routerSubscription = Subscription.EMPTY;
     this.onDashboard = true;
+    this.onCourseHome = true;
   }
 
   ngOnInit(): void {
@@ -33,6 +35,7 @@ export class BodyComponent implements OnInit {
     .subscribe((event) => {
       const routerEvent: NavigationEnd = event as NavigationEnd;
       this.onDashboard = ((routerEvent.url === "/dashboard" || routerEvent.url === '/') ? true : false);
+      this.onCourseHome = ((routerEvent.url.indexOf("/course") >= 0 && (routerEvent.url.split('/').length - 1 === 2)) ? true : false);
     });
   }
 
@@ -50,10 +53,14 @@ export class BodyComponent implements OnInit {
       if (this.navbarExpanded) {
         if (this.onDashboard)
           return 'app-body-dashboard-navbar-expanded';
+        else if (this.onCourseHome)
+          return 'app-body-full-navbar-expanded';
         return 'app-body-navbar-expanded';
       } else {
         if (this.onDashboard)
-          return 'app-body-dashboard-navbar-collapsed';
+          return 'app-body-full-navbar-collapsed';
+        else if (this.onCourseHome)
+          return 'app-body-full-navbar-collapsed';
         return 'app-body-navbar-collapsed';
       }
     }

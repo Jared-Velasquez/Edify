@@ -75,7 +75,7 @@ export class ModulesComponent implements OnInit, OnDestroy {
         );
       }),
       switchMap(response => {
-        return this.courseService.getTeacherOfCourse(response.courseId).pipe(
+        return this.courseService.getTeacher(response.courseId).pipe(
           map(teacher => ({
             teacher,
             ...response,
