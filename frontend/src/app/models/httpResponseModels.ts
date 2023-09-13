@@ -85,6 +85,7 @@ export interface Course {
     announcements?: Announcement[],
     firstName: string,
     lastName: string,
+    position: string,
 };
 
 export const CourseEmpty: Course = {
@@ -95,6 +96,7 @@ export const CourseEmpty: Course = {
     units: 0,
     firstName: "",
     lastName: "",
+    position: "",
   };
 
 export interface CourseResponse {

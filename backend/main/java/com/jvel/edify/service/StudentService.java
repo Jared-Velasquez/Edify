@@ -105,6 +105,7 @@ public class StudentService {
                 .courseId(course.getCourseId())
                 .title(course.getTitle())
                 .code(course.getCode())
+                .syllabusBody(course.getSyllabusBody())
                 .publiclyVisible(course.isPubliclyVisible())
                 .units(course.getUnits())
                 .courseContent(course.getCourseContent())
@@ -113,6 +114,7 @@ public class StudentService {
                 .firstName(course.getTeacher().getFirstName())
                 .lastName(course.getTeacher().getLastName())
                 .position(course.getTeacher().getPosition())
+                .department(course.getTeacher().getDepartment())
                 .build()).toList();
 
         return CourseTeacherMultipleResponse.builder()
