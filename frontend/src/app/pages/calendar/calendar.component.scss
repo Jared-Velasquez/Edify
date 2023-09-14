@@ -4,6 +4,7 @@
         rgba(245,190,102,1) 14.2857%, rgba(245,190,102,1) 28.5714%,
         rgba(13,24,33,1) 28.5714%, rgba(13,24,33,1) 100%
     );
+    //margin-left: -14.2857%;
 }
 
 .movetxt {
@@ -19,4 +20,30 @@
 .day {
     mix-blend-mode: difference;
     color: rgba(150, 150, 150, 1);
+    width: 14.2857%;
+    min-width: 14.2857%;
+    max-width: 14.2857%;
 }
+
+.day-first {
+    mix-blend-mode: difference;
+    color: rgba(150, 150, 150, 1);
+    width: 14.2857%;
+    min-width: 14.2857%;
+    max-width: 14.2857%;
+    margin-left: -14.2857%;
+}
+
+/*.day-navbar-expanded {
+    mix-blend-mode: difference;
+    color: rgba(150, 150, 150, 1);
+    //width: calc((100vw - 18.125rem - (6rem * 2)) / 7);
+    //transition: width 500ms ease;
+}
+
+.day-navbar-collapsed {
+    mix-blend-mode: difference;
+    color: rgba(150, 150, 150, 1);
+    //width: calc((100vw - 5.5rem - (6rem * 2)) / 7);
+    //transition: width 500ms ease;
+}*/

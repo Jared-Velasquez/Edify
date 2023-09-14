@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { CalendarDay } from 'src/app/models';
+import { AppState } from 'src/app/store/models/edifyState';
 import { dayPicker, dayPickerShort } from 'src/constants';
 
 @Component({
@@ -10,15 +12,19 @@ import { dayPicker, dayPickerShort } from 'src/constants';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit, OnDestroy {
+  navbarSubscription: Subscription;
   routeSubscription: Subscription;
+  navbarExpanded: boolean;
   selectedDate: Date;
   selectedYear: number;
   selectedMonth: number;
   selectedDay: number;
   week: CalendarDay[];
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private store: Store<AppState>) {
+    this.navbarSubscription = Subscription.EMPTY;
     this.routeSubscription = Subscription.EMPTY;
+    this.navbarExpanded = true;
     this.selectedDate = new Date();
     this.selectedYear = 0;
     this.selectedMonth = 0;
@@ -27,6 +33,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
+      this.navbarExpanded = data.expanded;
+    });
+
     this.routeSubscription = this.route.queryParamMap.subscribe((params) => {
       this.selectedYear = Number(params.get('year'));
       this.selectedMonth = Number(params.get('month'));
@@ -74,9 +84,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const DAYS_AFTER_TODAY = 5;
       
     // Generate seven CalendarDays: yesterday, today, and the five days after today
-    for (let i = 0; i < DAYS_BEFORE_TODAY + 1 + DAYS_AFTER_TODAY; i++) {
+
+    // Pad week with one day before yesterday
+    // Moving backwards on the calendar is a problem because an element cannot be inserted to the start
+    // of an array with an animation; the movement would be jarring
+    for (let i = 0; i < (DAYS_BEFORE_TODAY * 2) + 1 + DAYS_AFTER_TODAY; i++) {
       var currentDay = new Date(this.selectedDate);
-      currentDay.setDate(currentDay.getDate() - 1 + i);
+      currentDay.setDate(currentDay.getDate() - (DAYS_BEFORE_TODAY * 2) + i);
       this.week.push({
         dayTitle: dayPickerShort(currentDay.getDay()),
         dayNumber: currentDay.getDate(),
@@ -86,10 +100,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
     };
 
     console.log(this.week);
-
-    // Pad week with one day before yesterday and 5 days after the 5 days after today
-    // If the user clicks yesterday, the calendar will show the day before yesterday during the animation
-    // If the user clicks 5 days after today, the calendar will show 5 days after the selected date during the animation
 
   }
 

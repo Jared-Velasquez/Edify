@@ -4,13 +4,12 @@
         connecting the calendar container to the navbar -->
     <div class="h-[27rem] bg-richBlack px-[6rem] overflow-hidden">
         <!-- Calendar Body -->
-        <div class="flex flex-row calendar-background w-full h-full justify-between">
-            <!--<p class="text-4xl font-fjalla movetxt">Test test test</p>-->
+        <div class="flex flex-row calendar-background w-full h-full relative overflow-hidden">
             <div 
-                *ngFor="let day of week" 
-                class="flex flex-col flex-[1] pt-[2rem] day cursor-pointer select-none font-fjalla" 
+                *ngFor="let day of week; let i = index" 
+                class="flex flex-col pt-[2rem] cursor-pointer select-none font-fjalla" 
                 (click)="onDayClick(day)"
-                [id]="generateId(day)"
+                [ngClass]="i === 0 ? 'day-first' : 'day'"
             >
                 <p class="text-3xl text-center">{{day.dayTitle}}</p>
                 <p class="italic text-3xl text-center">{{day.dayNumber}}</p>
