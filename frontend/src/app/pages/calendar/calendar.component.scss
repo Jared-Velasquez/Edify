@@ -6,11 +6,17 @@
     );
 }
 
-#movetxt {
+.movetxt {
     animation: moving 5s infinite;
     mix-blend-mode: difference;
+    color: rgba(150, 150, 150, 1);
 }
 @keyframes moving {
     from {transform: translateX(500px);}
     to {transform: translateX(0px);}
+}
+
+.day {
+    mix-blend-mode: difference;
+    color: rgba(150, 150, 150, 1);
 }

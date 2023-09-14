@@ -7,7 +7,7 @@
         <p [@fade]="expanded ? 'in' : 'out'" class="font-raleway font-semibold text-white text-4xl ml-[1.5rem]">Edify</p>
     </div>
     <!-- Menu -->
-    <div class="mx-[0.5rem] overflow-auto navbar">
+    <div class="mx-[0.5rem] overflow-auto navbar select-none">
         <app-nav-link *ngFor="let navElement of navElements" [navIcon]="navElement.icon" [navLink]="navElement.link" [navName]="navElement.name" [expanded]="expanded" [subitems]="navElement.subitems"></app-nav-link>
     </div>
 </div>

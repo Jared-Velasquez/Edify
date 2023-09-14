@@ -2,10 +2,21 @@
     <!-- Calendar Container -->
     <!-- This calendar wrapper was added to give padding to the calendar body while seamlessly
         connecting the calendar container to the navbar -->
-    <div class="flex flex-row h-[45vh] bg-richBlack px-[6rem]">
+    <div class="h-[27rem] bg-richBlack px-[6rem] overflow-hidden">
         <!-- Calendar Body -->
-        <div class="calendar-background w-full h-full">
-            <p id="movetxt" class="text-4xl font-fjalla text-white">Test test test</p>
+        <div class="flex flex-row calendar-background w-full h-full justify-between">
+            <!--<p class="text-4xl font-fjalla movetxt">Test test test</p>-->
+            <div 
+                *ngFor="let day of week" 
+                class="flex flex-col flex-[1] pt-[2rem] day cursor-pointer select-none font-fjalla" 
+                (click)="onDayClick(day)"
+                [id]="generateId(day)"
+            >
+                <p class="text-3xl text-center">{{day.dayTitle}}</p>
+                <p class="italic text-3xl text-center">{{day.dayNumber}}</p>
+                <p class="italic text-7xl text-center mt-[12rem]">{{day.monthNumber + 1}}</p>
+                <p class="text-5xl text-center">{{day.yearNumber}}</p>
+            </div>
         </div>
     </div>
 </div>
