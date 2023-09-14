@@ -3,18 +3,20 @@
     <!-- This calendar wrapper was added to give padding to the calendar body while seamlessly
         connecting the calendar container to the navbar -->
     <div class="h-[27rem] bg-richBlack px-[6rem] overflow-hidden">
-        <!-- Calendar Body -->
-        <div class="flex flex-row calendar-background w-full h-full relative overflow-hidden">
-            <div 
-                *ngFor="let day of week; let i = index" 
-                class="flex flex-col pt-[2rem] cursor-pointer select-none font-fjalla" 
-                (click)="onDayClick(day)"
-                [ngClass]="i === 0 ? 'day-first' : 'day'"
-            >
-                <p class="text-3xl text-center">{{day.dayTitle}}</p>
-                <p class="italic text-3xl text-center">{{day.dayNumber}}</p>
-                <p class="italic text-7xl text-center mt-[12rem]">{{day.monthNumber + 1}}</p>
-                <p class="text-5xl text-center">{{day.yearNumber}}</p>
+        <!-- Calendar Background -->
+        <div class="flex flex-row calendar-background w-full h-full overflow-hidden">
+            <div class="flex flex-row w-full h-full calendar-body" #calendarBody>
+                <div 
+                    *ngFor="let day of week; let i = index" 
+                    class="flex flex-col pt-[2rem] cursor-pointer select-none font-fjalla" 
+                    (click)="onDayClick(day, calendarBody)"
+                    [ngClass]="i === 0 ? 'day-first' : 'day'"
+                >
+                    <p class="text-3xl text-center">{{day.dayTitle}}</p>
+                    <p class="italic text-3xl text-center">{{day.dayNumber}}</p>
+                    <p class="italic text-7xl text-center mt-[12rem]">{{day.monthNumber + 1}}</p>
+                    <p class="text-5xl text-center">{{day.yearNumber}}</p>
+                </div>
             </div>
         </div>
     </div>

@@ -1,3 +1,4 @@
+import { animate, AnimationBuilder, style } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,10 +10,12 @@ import { dayPicker, dayPickerShort } from 'src/constants';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
+  animations: [
+
+  ]
 })
 export class CalendarComponent implements OnInit, OnDestroy {
-  navbarSubscription: Subscription;
   routeSubscription: Subscription;
   navbarExpanded: boolean;
   selectedDate: Date;
@@ -20,9 +23,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   selectedMonth: number;
   selectedDay: number;
   week: CalendarDay[];
+  calendarOffset: number;
+  isSelectDone: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: Store<AppState>) {
-    this.navbarSubscription = Subscription.EMPTY;
+  constructor(private route: ActivatedRoute, private animationBuilder: AnimationBuilder) {
     this.routeSubscription = Subscription.EMPTY;
     this.navbarExpanded = true;
     this.selectedDate = new Date();
@@ -30,13 +34,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.selectedMonth = 0;
     this.selectedDay = 0;
     this.week = []
+    this.calendarOffset = 0;
+    this.isSelectDone = true;
   }
 
   ngOnInit() {
-    this.navbarSubscription = this.store.select('navbar').subscribe((data) => {
-      this.navbarExpanded = data.expanded;
-    });
-
     this.routeSubscription = this.route.queryParamMap.subscribe((params) => {
       this.selectedYear = Number(params.get('year'));
       this.selectedMonth = Number(params.get('month'));
@@ -63,13 +65,47 @@ export class CalendarComponent implements OnInit, OnDestroy {
     };
   }
 
-  onDayClick(day: CalendarDay) {
+  onDayClick(day: CalendarDay, calendarBody: any) {
+    if (!this.isSelectDone)
+      return;
+    this.isSelectDone = false;
     const prevDate = this.selectedDate;
-    //this.router.navigateByUrl(`/calendar?year=${day.yearNumber}&month=${day.monthNumber}&day=${day.dayNumber}`);
-    const nextDate = new Date(day.yearNumber, day.monthNumber, day.dayNumber);
-    console.log(this.daysDifference(prevDate, nextDate));
-    this.selectedDate = new Date(day.yearNumber, day.monthNumber, day.dayNumber);
-    this.generateWeek(this.selectedDate);
+    const nextDate = this.calendarDayToDate(day);
+    const difference = this.daysDifference(prevDate, nextDate)
+    console.log(difference);
+    //this.selectedDate = new Date(day.yearNumber, day.monthNumber, day.dayNumber);
+    const animation = this.animationBuilder.build([
+      style({
+        transform: `translateX(${this.calendarOffset}%)`,
+        mixBlendMode: 'difference',
+      }),
+      animate(300, style({
+        transform: `translateX(${this.calendarOffset + (-1 * difference * 14.2857)}%)`,
+        mixBlendMode: 'difference',
+      }))
+    ]);
+
+    // If difference is positive, add to end of the week array
+    if (difference >= 1) {
+      for (let i = 0; i < difference; i++) {
+        var currentDay = new Date(this.calendarDayToDate(this.week[this.week.length - difference - i]));
+        currentDay.setDate(currentDay.getDate() + difference + i);
+        this.week.push({
+          dayTitle: dayPickerShort(currentDay.getDay()),
+          dayNumber: currentDay.getDate(),
+          monthNumber: currentDay.getMonth(),
+          yearNumber: currentDay.getFullYear()
+        });
+      };
+    }
+
+    const player = animation.create(calendarBody);
+    player.play();
+    player.onDone(() => {
+      this.selectedDate = nextDate;
+      this.calendarOffset += -1 * difference * 14.2857;
+      this.isSelectDone = true;
+    })
   }
 
   generateId(day: CalendarDay): string {
@@ -98,9 +134,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
         yearNumber: currentDay.getFullYear()
       });
     };
-
-    console.log(this.week);
-
   }
 
   daysDifference(prevDate: Date, nextDate: Date) {
@@ -109,6 +142,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const prevDateUTC = Date.UTC(prevDate.getFullYear(), prevDate.getMonth(), prevDate.getDate());
     const nextDateUTC = Date.UTC(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate());
     return (nextDateUTC - prevDateUTC) / day;
+  }
+
+  calendarDayToDate(day: CalendarDay): Date {
+    return new Date(day.yearNumber, day.monthNumber, day.dayNumber);
   }
 
   ngOnDestroy() {

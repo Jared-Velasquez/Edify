@@ -34,6 +34,10 @@
     margin-left: -14.2857%;
 }
 
+.calendar-body {
+    transform: translateX(var(--size));
+}
+
 /*.day-navbar-expanded {
     mix-blend-mode: difference;
     color: rgba(150, 150, 150, 1);
