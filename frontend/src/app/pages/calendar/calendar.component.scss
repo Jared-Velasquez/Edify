@@ -1,0 +1,16 @@
+.calendar-background {
+    background: linear-gradient(90deg,
+        rgba(13,24,33,1) 0%, rgba(13,24,33,1) 14.2857%,
+        rgba(245,190,102,1) 14.2857%, rgba(245,190,102,1) 28.5714%,
+        rgba(13,24,33,1) 28.5714%, rgba(13,24,33,1) 100%
+    );
+}
+
+#movetxt {
+    animation: moving 5s infinite;
+    mix-blend-mode: difference;
+}
+@keyframes moving {
+    from {transform: translateX(500px);}
+    to {transform: translateX(0px);}
+}

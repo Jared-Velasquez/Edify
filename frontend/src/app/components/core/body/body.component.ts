@@ -50,19 +50,10 @@ export class BodyComponent implements OnInit {
     if (!this.showNavbar)
       return 'app-body-navbar-hidden';
     else {
-      if (this.navbarExpanded) {
-        if (this.onDashboard)
-          return 'app-body-dashboard-navbar-expanded';
-        else if (this.onCourseHome)
-          return 'app-body-full-navbar-expanded';
+      if (this.navbarExpanded)
         return 'app-body-navbar-expanded';
-      } else {
-        if (this.onDashboard)
-          return 'app-body-full-navbar-collapsed';
-        else if (this.onCourseHome)
-          return 'app-body-full-navbar-collapsed';
+      else
         return 'app-body-navbar-collapsed';
-      }
     }
   }
 }
