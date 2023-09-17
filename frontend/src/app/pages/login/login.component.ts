@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { LoginService } from './../../services/login.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpStatusCode } from '@angular/common/http';
 import { Store } from '@ngrx/store';
@@ -11,15 +12,16 @@ import { UserActionTypes } from 'src/app/store/models/actionTypes';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   badCredentials: boolean;
+  loginSubscription: Subscription;
 
   constructor(
     private router: Router, 
     private loginService: LoginService,
-    private store: Store<AppState>
   ) { 
     this.badCredentials = false;
+    this.loginSubscription = Subscription.EMPTY;
   }
 
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(username: string, password: string) {
-    this.loginService.login(username, password).subscribe({
+    this.loginSubscription = this.loginService.login(username, password).subscribe({
       next: (response) => {
         if (!response) {
           this.badCredentials = true;
@@ -43,5 +45,10 @@ export class LoginComponent implements OnInit {
           this.badCredentials = true;
       }
     })
+  }
+
+  ngOnDestroy(): void {
+      if (this.loginSubscription)
+      this.loginSubscription.unsubscribe();
   }
 }

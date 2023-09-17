@@ -7,9 +7,14 @@
         <div class="flex flex-col w-[80%] mt-[10rem]">
             <app-animated-text class="font-fjalla text-5xl mb-[0.5rem]" text="Welcome." [enabled]="true"></app-animated-text>
             <app-animated-text class="font-raleway text-2xl mb-[4rem] font-semibold" text="Sign up for Edify here:" [enabled]="true"></app-animated-text>
-            <input type="text" placeholder="Your Edify Email" class="rounded-md w-full p-[10px] pl-[7px] bg-offWhite w-[70%]" #email />
-            <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] w-full p-[10px] pl-[7px] bg-offWhite w-[70%]" #password />
-            <button (click)="onSignup(email.value, password.value)" class="bg-primary text-dimWhite font-raleway px-[1rem] py-[0.75rem] rounded-md self-start mt-[1.5rem]">
+            <input type="text" placeholder="Your Edify Email" class="rounded-md p-[10px] pl-[7px] bg-offWhite w-[70%]" #email />
+            <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] p-[10px] pl-[7px] bg-offWhite w-[70%]" #password />
+            <div class="flex flex-row mb-[1.5rem]">
+                <input type="text" placeholder="First Name" class="rounded-md mt-[1.5rem] p-[10px] mr-[3.3rem] bg-offWhite" #firstName />
+                <input type="text" placeholder="Last Name" class="rounded-md mt-[1.5rem] p-[10px] bg-offWhite" #lastName />
+            </div>
+            <app-drop-down-menu [menu]="menu" (optionChosen)="onChosenRole($event)"></app-drop-down-menu>
+            <button (click)="onSignup(email.value, password.value, firstName.value, lastName.value, chosenRole)" class="bg-primary text-dimWhite font-raleway px-[1rem] py-[0.75rem] rounded-md self-start mt-[1.5rem]">
                 Sign up
             </button>
         </div>

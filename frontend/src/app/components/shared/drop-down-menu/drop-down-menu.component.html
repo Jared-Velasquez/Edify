@@ -17,6 +17,7 @@
         <app-drop-down-option
             *ngFor="let option of menu.options"
             [option]="option"
+            [chosenOption]="option === chosenOption"
             (click)="onChooseOption(option)"
         ></app-drop-down-option>
     </div>

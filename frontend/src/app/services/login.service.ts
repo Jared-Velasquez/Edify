@@ -11,10 +11,6 @@ import jwtDecode from 'jwt-decode';
 export class LoginService {
   constructor(private http: HttpClient) { }
 
-  signup(): void {
-
-  }
-
   private obtainToken(username: string, password: string): Observable<HttpResponse<TokenResponse>> {
     // Need observe: 'response' to return the full response instead of just the body
     return this.http.post<TokenResponse>('https://edify.azurewebsites.net/api/auth/authenticate', {
@@ -25,8 +21,37 @@ export class LoginService {
     });
   }
 
+  private signupToken(username: string, password: string, firstName: string, lastName: string, role: string): Observable<HttpResponse<TokenResponse>> {
+    return this.http.post<TokenResponse>('https://edify.azurewebsites.net/api/auth/register', {
+      "emailAddress": username,
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName,
+      "role": role,
+      "ssn": Math.floor(Math.random() * 1000000000)
+    }, {
+      observe: 'response',
+    });
+  }
+
   login(username: string, password: string): Observable<boolean> {
     return this.obtainToken(username, password).pipe(
+      map((response) => {
+        if (!response.body)
+          return false;
+        localStorage.setItem('token', response.body.token);
+        const decodedToken: JWTInterface | undefined = this.getDecodedAccessToken(response.body.token);
+        if (!decodedToken)
+          return false;
+        this.setSession(decodedToken);
+        return true;
+      }),
+      catchError(this.handleLoginError),
+    );
+  }
+
+  signup(username: string, password: string, firstName: string, lastName: string, role: string): Observable<boolean> {
+    return this.signupToken(username, password, firstName, lastName, role).pipe(
       map((response) => {
         if (!response.body)
           return false;

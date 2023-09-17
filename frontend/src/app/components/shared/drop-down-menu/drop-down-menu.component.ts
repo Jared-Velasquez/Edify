@@ -53,6 +53,7 @@ const dropDownMenuStyle = {
 export class DropDownMenuComponent {
   @Input() menu: DropDownMenuInterface;
   @Output() optionChosen = new EventEmitter<string>();
+  chosenOption: string;
   dropDownExpanded: boolean;
   isOver: boolean;
 
@@ -60,6 +61,7 @@ export class DropDownMenuComponent {
     this.menu = DropDownMenuEmpty;
     this.dropDownExpanded = false;
     this.isOver = false;
+    this.chosenOption = "";
   }
 
   toggleExpanded() {
@@ -67,6 +69,7 @@ export class DropDownMenuComponent {
   }
 
   onChooseOption(option: string) {
+    this.chosenOption = option;
     this.optionChosen.emit(option);
   }
 }
