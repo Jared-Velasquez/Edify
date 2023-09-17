@@ -39,14 +39,14 @@ public class CourseRepositoryTest {
         Teacher teacher = Teacher.builder()
                 .firstName("Glenn")
                 .lastName("Reinman")
-                .emailAddress("reinman4@cs.ucla.edu")
+                .username("reinman4")
                 .build();
         Course course = Course.builder()
                 .title("Introduction to Computer Organization")
                 .units(4)
                 .teacher(teacher)
                 .build();
-        Optional<User> student = userRepository.findByEmailAddress("jaredvel24@gmail.com");
+        Optional<User> student = userRepository.findByUsername("jaredvel");
         //course.addStudents(student.get());
 
         teacherRepository.save(teacher);

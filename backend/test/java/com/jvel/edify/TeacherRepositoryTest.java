@@ -22,7 +22,7 @@ public class TeacherRepositoryTest {
         Teacher teacher = Teacher.builder()
                 .firstName("Faul")
                 .lastName("Eggert")
-                .emailAddress("feggert@ucla.edu")
+                .username("feggert")
                 .build();
 
         Course course1 = Course.builder()
