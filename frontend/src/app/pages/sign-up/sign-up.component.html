@@ -1,0 +1,21 @@
+<div class="flex flex-row w-full h-screen bg-[url('assets/img/student.jpg')]">
+    <!-- Sign-up screen -->
+    <div class="flex-[0.75] my-[1.5rem] flex flex-col bg-white rounded-r-3xl p-[2rem] items-center">
+        <div class="flex self-start ml-[1rem] mt-[0.75rem]">
+            <img src="assets/img/edify-logo-transparent.png" alt="Edify Logo" class="h-[55px]" />
+        </div>
+        <div class="flex flex-col w-[80%] mt-[10rem]">
+            <app-animated-text class="font-fjalla text-5xl mb-[0.5rem]" text="Welcome." [enabled]="true"></app-animated-text>
+            <app-animated-text class="font-raleway text-2xl mb-[4rem] font-semibold" text="Sign up for Edify here:" [enabled]="true"></app-animated-text>
+            <input type="text" placeholder="Your Edify Email" class="rounded-md w-full p-[10px] pl-[7px] bg-offWhite w-[70%]" #email />
+            <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] w-full p-[10px] pl-[7px] bg-offWhite w-[70%]" #password />
+            <button (click)="onSignup(email.value, password.value)" class="bg-primary text-dimWhite font-raleway px-[1rem] py-[0.75rem] rounded-md self-start mt-[1.5rem]">
+                Sign up
+            </button>
+        </div>
+    </div>
+    <!-- Background screen -->
+    <div class="flex-[1] backdrop-blur-sm">
+
+    </div>
+</div>

@@ -12,6 +12,7 @@ import { ModulesComponent } from './pages/course/modules/modules.component';
 import { AssignmentsComponent } from './pages/course/assignments/assignments.component';
 import { AssignmentComponent } from './pages/course/assignments/assignment-page/assignment-page.component';
 import { HomeComponent } from './pages/course/home/home.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent, canActivate: [authenticationGuard] },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'courses/:id/assignments', component: AssignmentsComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/assignments/:assignmentId', component: AssignmentComponent, canActivate: [authenticationGuard] },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignUpComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [authenticationGuard] },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

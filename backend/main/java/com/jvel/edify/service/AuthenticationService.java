@@ -36,12 +36,9 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
         if (request.getEmailAddress() == null || request.getEmailAddress().length() == 0)
             throw new IllegalStateException("Email address not specified");
-        if (request.getSsn() == null)
-            throw new IllegalStateException("SSN not specified");
 
-        boolean emailExists = userRepository.existsByEmailAddress(request.getEmailAddress());
         boolean ssnExists = userRepository.existsBySsn(request.getSsn());
-
+        boolean emailExists = userRepository.existsByEmailAddress(request.getEmailAddress());
         if (emailExists) throw new DuplicateEntryException("Email already exists");
         if (ssnExists) throw new DuplicateEntryException("SSN already exists");
 
@@ -58,15 +55,10 @@ public class AuthenticationService {
             throw new IllegalStateException("First name not specified");
         if (request.getLastName() == null || request.getLastName().length() == 0)
             throw new IllegalStateException("Last name not specified");
-        if (request.getDob() == null)
-            throw new IllegalStateException("Date of Birth not specified");
         if (request.getPassword() == null || request.getPassword().length() == 0)
-        if (request.getGender() == null)
-            throw new IllegalStateException("Gender not specified");
-        if (request.getAddress() == null || request.getAddress().length() == 0)
-            throw new IllegalStateException("Address not specified");
-        if (request.getPhoneNumber() == null || request.getPhoneNumber().length() == 0)
-            throw new IllegalStateException("Phone number not specified");
+            throw new IllegalStateException("Password not specified");
+        if (request.getSsn() == null)
+            throw new IllegalStateException("Password not specified");
 
         Student student = new Student(
                 request.getFirstName(),
@@ -94,22 +86,16 @@ public class AuthenticationService {
             throw new IllegalStateException("First name not specified");
         if (request.getLastName() == null || request.getLastName().length() == 0)
             throw new IllegalStateException("Last name not specified");
-        if (request.getDob() == null)
-            throw new IllegalStateException("Date of Birth not specified");
         if (request.getPassword() == null || request.getPassword().length() == 0)
             throw new IllegalStateException("Password not specified");
-        if (request.getGender() == null)
-            throw new IllegalStateException("Gender not specified");
-        if (request.getAddress() == null || request.getAddress().length() == 0)
-            throw new IllegalStateException("Address not specified");
-        if (request.getPhoneNumber() == null || request.getPhoneNumber().length() == 0)
-            throw new IllegalStateException("Phone number not specified");
 
-        // Match phone number with Regex pattern
-        Pattern phonePattern = Pattern.compile("^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$");
-        Matcher phoneMatcher = phonePattern.matcher(request.getPhoneNumber());
-        if (!phoneMatcher.find())
-            throw new IllegalArgumentException("Not a phone number");
+        if (request.getPhoneNumber() != null) {
+            // Match phone number with Regex pattern
+            Pattern phonePattern = Pattern.compile("^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$");
+            Matcher phoneMatcher = phonePattern.matcher(request.getPhoneNumber());
+            if (!phoneMatcher.find())
+                throw new IllegalArgumentException("Not a phone number");
+        }
 
         Teacher teacher = new Teacher(
                 request.getFirstName(),

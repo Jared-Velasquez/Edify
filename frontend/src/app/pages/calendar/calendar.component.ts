@@ -2,8 +2,9 @@ import { animate, AnimationBuilder, style } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { CalendarDay } from 'src/app/models';
+import { map, Subscription, switchMap } from 'rxjs';
+import { Assignment, CalendarDay } from 'src/app/models';
+import { UserService } from 'src/app/services/user.service';
 import { AppState } from 'src/app/store/models/edifyState';
 import { dayPicker, dayPickerShort } from 'src/constants';
 
@@ -25,8 +26,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   week: CalendarDay[];
   calendarOffset: number;
   isSelectDone: boolean;
+  assignments: Assignment[];
+  weekAssignments: Assignment[];
 
-  constructor(private route: ActivatedRoute, private animationBuilder: AnimationBuilder) {
+  constructor(private route: ActivatedRoute, private animationBuilder: AnimationBuilder, private userService: UserService) {
     this.routeSubscription = Subscription.EMPTY;
     this.navbarExpanded = true;
     this.selectedDate = new Date();
@@ -36,10 +39,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.week = []
     this.calendarOffset = 0;
     this.isSelectDone = true;
+    this.assignments = [];
+    this.weekAssignments = [];
   }
 
   ngOnInit() {
-    this.routeSubscription = this.route.queryParamMap.subscribe((params) => {
+    /*this.routeSubscription = this.route.queryParamMap.subscribe((params) => {
       this.selectedYear = Number(params.get('year'));
       this.selectedMonth = Number(params.get('month'));
       this.selectedDay = Number(params.get('day'));
@@ -53,7 +58,33 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.selectedDate = new Date();
 
       this.generateWeek(this.selectedDate);
-    });
+    });*/
+    this.routeSubscription = this.route.queryParamMap.pipe(
+      switchMap(response => {
+        return this.userService.getUserAssignments().pipe(
+          map(assignments => ({
+            assignments,
+            ...response,
+          }))
+        );
+      })
+    ).subscribe(response => {
+      this.selectedYear = Number(response.get('year'));
+      this.selectedMonth = Number(response.get('month'));
+      this.selectedDay = Number(response.get('day'));
+      this.assignments = response.assignments;
+
+      console.log(`${this.selectedYear} ${this.selectedMonth} ${this.selectedDay}`);
+
+      // Select date to display
+      if (this.selectedYear && this.selectedMonth && this.selectedDay)
+        this.selectedDate = new Date(this.selectedYear, this.selectedMonth, this.selectedDay);
+      else 
+        this.selectedDate = new Date();
+
+      this.getAssignmentsToday();
+      this.generateWeek(this.selectedDate);
+    })
   }
 
   getCalendarDay(date: Date): CalendarDay {
@@ -79,7 +110,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         transform: `translateX(${this.calendarOffset}%)`,
         mixBlendMode: 'difference',
       }),
-      animate(300, style({
+      animate('350ms ease-in-out', style({
         transform: `translateX(${this.calendarOffset + (-1 * difference * 14.2857)}%)`,
         mixBlendMode: 'difference',
       }))
@@ -102,6 +133,17 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const player = animation.create(calendarBody);
     player.play();
     player.onDone(() => {
+      if (difference < 0 && day === this.week[0]) {
+        var currentDay = new Date(nextDate);
+        currentDay.setDate(currentDay.getDate() - 1);
+        this.week.unshift({
+          dayTitle: dayPickerShort(currentDay.getDay()),
+          dayNumber: currentDay.getDate(),
+          monthNumber: currentDay.getMonth(),
+          yearNumber: currentDay.getFullYear()
+        });
+      }
+      
       this.selectedDate = nextDate;
       this.calendarOffset += -1 * difference * 14.2857;
       this.isSelectDone = true;
@@ -134,6 +176,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
         yearNumber: currentDay.getFullYear()
       });
     };
+  }
+
+  getAssignmentsToday() {
+    const startDate: Date = new Date(Date.UTC(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate(), 0, 0, 0));
+    const endDate: Date = new Date(Date.UTC(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate(), 23, 59, 59));
+    console.log(startDate);
+    console.log(endDate);
+    this.weekAssignments = this.assignments.filter((assignment) => startDate.getTime() <= assignment.dueAt.getTime() && assignment.dueAt.getTime() <= endDate.getTime());
   }
 
   daysDifference(prevDate: Date, nextDate: Date) {

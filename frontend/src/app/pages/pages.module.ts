@@ -20,6 +20,7 @@ import { ModuleComponent } from './course/modules/module/module.component';
 
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { HomeComponent } from './course/home/home.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { HomeComponent } from './course/home/home.component';
     AssignmentComponent,
     ModuleComponent,
     HomeComponent,
+    SignUpComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { HomeComponent } from './course/home/home.component';
     LoginComponent,
     SettingsComponent,
     HomeComponent,
+    SignUpComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

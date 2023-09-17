@@ -19,7 +19,7 @@ export class AppComponent implements OnDestroy {
     this.routerSubscription = router.events.pipe(filter(event => event instanceof NavigationEnd))
     .subscribe((event) => {
       const routerEvent: NavigationEnd = event as NavigationEnd;
-      this.showNavbar = ((routerEvent.url === "/login") ? false : true);
+      this.showNavbar = ((routerEvent.url === "/login" || routerEvent.url === "/signup") ? false : true);
     })
   }
 
