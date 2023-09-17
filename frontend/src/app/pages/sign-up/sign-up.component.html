@@ -1,5 +1,6 @@
 <div class="flex flex-row w-full h-screen bg-[url('assets/img/student.jpg')]">
     <!-- Sign-up screen -->
+    <!-- TODO: Add error checking -->
     <div class="flex-[0.75] my-[1.5rem] flex flex-col bg-white rounded-r-3xl p-[2rem] items-center">
         <div class="flex self-start ml-[1rem] mt-[0.75rem]">
             <img src="assets/img/edify-logo-transparent.png" alt="Edify Logo" class="h-[55px]" />
@@ -7,14 +8,23 @@
         <div class="flex flex-col w-[80%] mt-[10rem]">
             <app-animated-text class="font-fjalla text-5xl mb-[0.5rem]" text="Welcome." [enabled]="true"></app-animated-text>
             <app-animated-text class="font-raleway text-2xl mb-[4rem] font-semibold" text="Sign up for Edify here:" [enabled]="true"></app-animated-text>
-            <input type="text" placeholder="Your Edify Email" class="rounded-md p-[10px] pl-[7px] bg-offWhite w-[70%]" #email />
-            <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] p-[10px] pl-[7px] bg-offWhite w-[70%]" #password />
+            <ng-container *ngIf="missingUsername || missingPassword || missingFirstName || missingLastName">
+                <p class="font-roboto text-red-500 text-2xl font-extrabold -mt-[2rem] mb-[1rem]">One or more fields are missing.</p>
+            </ng-container>
+            <input type="text" placeholder="Your Edify Username" class="rounded-md p-[10px] pl-[7px] bg-offWhite w-[70%]" [ngClass]="missingUsername || badUsername ? 'border-2 border-red-600' : ''" #username />
+            <ng-container *ngIf="badUsername">
+                <p class="text-sm mt-[0.5rem] text-red-600">Edify Usernames consist of 2 to 15 lower case letters and numbers.</p>
+            </ng-container>
+            <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] p-[10px] pl-[7px] bg-offWhite w-[70%]" [ngClass]="missingPassword || badPassword ? 'border-2 border-red-600' : ''" #password />
+            <ng-container *ngIf="badPassword">
+                <p class="text-sm mt-[0.5rem] text-red-600">Passwords are at least 6 characters long and can consist of letters, numbers, and the following symbols: !@#$%&*().,</p>
+            </ng-container>
             <div class="flex flex-row mb-[1.5rem]">
-                <input type="text" placeholder="First Name" class="rounded-md mt-[1.5rem] p-[10px] mr-[3.3rem] bg-offWhite" #firstName />
-                <input type="text" placeholder="Last Name" class="rounded-md mt-[1.5rem] p-[10px] bg-offWhite" #lastName />
+                <input type="text" placeholder="First Name" class="rounded-md mt-[1.5rem] p-[10px] mr-[3.3rem] bg-offWhite" [ngClass]="missingFirstName ? 'border-2 border-red-600' : ''" #firstName />
+                <input type="text" placeholder="Last Name" class="rounded-md mt-[1.5rem] p-[10px] bg-offWhite" [ngClass]="missingLastName ? 'border-2 border-red-600' : ''" #lastName />
             </div>
             <app-drop-down-menu [menu]="menu" (optionChosen)="onChosenRole($event)"></app-drop-down-menu>
-            <button (click)="onSignup(email.value, password.value, firstName.value, lastName.value, chosenRole)" class="bg-primary text-dimWhite font-raleway px-[1rem] py-[0.75rem] rounded-md self-start mt-[1.5rem]">
+            <button (click)="onSignup(username.value, password.value, firstName.value, lastName.value, chosenRole)" class="bg-primary text-dimWhite font-raleway px-[1rem] py-[0.75rem] rounded-md self-start mt-[1.5rem]">
                 Sign up
             </button>
         </div>

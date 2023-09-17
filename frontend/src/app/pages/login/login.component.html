@@ -20,13 +20,19 @@
       </div>
       <!-- Input Space -->
       <div class="flex flex-col mt-[2rem]">
-        <input type="text" placeholder="Your Edify Email" class="rounded-md w-full p-[10px] pl-[7px]" #email />
-        <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] w-full p-[10px] pl-[7px]" #password />
+        <input type="text" placeholder="Your Edify Username" class="rounded-md w-full p-[10px] pl-[7px]" [ngClass]="missingUsername || badUsername ? 'border-2 border-red-600' : ''" #username />
+        <ng-container *ngIf="missingUsername || badUsername">
+          <p class="text-sm mt-[0.5rem] text-red-600">Edify Usernames consist of 2 to 15 lower case letters and numbers.</p>
+        </ng-container>
+        <input type="password" placeholder="Your Edify Password" class="rounded-md mt-[1.5rem] w-full p-[10px] pl-[7px]" [ngClass]="missingPassword || badPassword ? 'border-2 border-red-600' : ''" #password />
+        <ng-container *ngIf="missingPassword || badPassword">
+          <p class="text-sm mt-[0.5rem] text-red-600">Passwords are at least 6 characters long and can consist of letters, numbers, and the following symbols: !@#$%&*().,</p>
+        </ng-container>
       </div>
       <!-- Sign-in -->
       <div class="flex flex-row pt-[0.75rem] mt-[0.75rem]">
         <div class="flex-[1]">
-          <button (click)="onLogin(email.value, password.value)" class="bg-primary text-dimWhite font-raleway px-[1rem] py-[0.75rem] rounded-md">
+          <button (click)="onLogin(username.value, password.value)" class="bg-primary text-dimWhite font-raleway px-[1rem] py-[0.75rem] rounded-md">
             Sign in
           </button>
         </div>
