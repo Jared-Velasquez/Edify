@@ -112,7 +112,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onTextFinished(event: boolean) {
     if (event) {
-      console.log("Text finished")
       this.textFinished = true;
     }
   }

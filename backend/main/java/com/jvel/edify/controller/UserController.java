@@ -48,7 +48,7 @@ public class UserController {
         );
     }
 
-    @PutMapping("/email")
+    /*@PutMapping("/email")
     public ResponseEntity<Map<String, String>> updateEmail(@RequestHeader("Authorization") String token, @RequestBody EmailRequest emailRequest) {
         Integer id = jwtService.resolveToken(token);
         userService.updateEmail(id, emailRequest.getEmailAddress());
@@ -58,7 +58,7 @@ public class UserController {
                 response,
                 HttpStatus.OK
         );
-    }
+    }*/
 
     @PutMapping("/name")
     public ResponseEntity<Map<String, String>> updateName(@RequestHeader("Authorization") String token, @RequestBody NameRequest nameRequest) {

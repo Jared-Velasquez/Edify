@@ -19,8 +19,8 @@ import java.util.List;
         name = "user_table",
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name="email_address_unique",
-                        columnNames = "emailAddress"
+                        name="username_unique",
+                        columnNames = "username"
                 ),
                 @UniqueConstraint(
                         name = "ssn_unique",
@@ -51,7 +51,7 @@ public abstract class User implements UserDetails {
     @Column(
             nullable = false
     )
-    private String emailAddress;
+    private String username;
     @Column(
             nullable = false
     )
@@ -79,10 +79,10 @@ public abstract class User implements UserDetails {
 
     }
 
-    public User(String firstName, String lastName, String emailAddress, Integer ssn, String password, Date dob, Role role, Gender gender, String address, String phoneNumber) {
+    public User(String firstName, String lastName, String username, Integer ssn, String password, Date dob, Role role, Gender gender, String address, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.emailAddress = emailAddress;
+        this.username = username;
         this.ssn = ssn;
         this.password = password;
         this.dob = dob;
@@ -99,7 +99,7 @@ public abstract class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return emailAddress;
+        return username;
     }
 
     @Override

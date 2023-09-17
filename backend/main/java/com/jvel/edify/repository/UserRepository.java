@@ -19,23 +19,28 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByFirstNameContaining(String firstName);
     List<User> findByLastNameContaining(String lastName);
     List<User> findByFirstNameAndLastName(String firstName, String lastName);
-    Optional<User> findByEmailAddress(String emailAddress);
+    //Optional<User> findByEmailAddress(String emailAddress);
+    Optional<User> findByUsername(String username);
     Optional<User> findBySsn(Integer ssn);
 
-    @Modifying
-    @Transactional
-    @Query(
-            value = "update User set firstName = ?1 where emailAddress = ?2"
-    )
-    void updateFirstNameByEmailAddress(String firstName, String emailAddress);
+    //@Modifying
+    //@Transactional
+    //@Query(
+    //        value = "update User set firstName = ?1 where emailAddress = ?2"
+    //)
+    //void updateFirstNameByEmailAddress(String firstName, String emailAddress);
 
+    //@Modifying
+    //@Transactional
+    //void deleteByEmailAddress(String emailAddress);
     @Modifying
     @Transactional
-    void deleteByEmailAddress(String emailAddress);
+    void deleteByUsername(String username);
     @Modifying
     @Transactional
     void deleteBySsn(Integer ssn);
-    boolean existsByEmailAddress(String emailAddress);
+    //boolean existsByEmailAddress(String emailAddress);
+    boolean existsByUsername(String username);
     boolean existsBySsn(Integer ssn);
 
 

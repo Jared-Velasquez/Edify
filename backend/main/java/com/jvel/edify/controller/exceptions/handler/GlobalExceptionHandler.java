@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
@@ -284,6 +285,17 @@ public class GlobalExceptionHandler {
         HashMap<String, String> map = new HashMap<>();
         map.put("exception", "HibernateException");
         map.put("error", he.getMessage());
+        return new ResponseEntity<>(
+                map,
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    public ResponseEntity<Map<String, String>> username(UsernameNotFoundException unfe) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("exception", "HibernateException");
+        map.put("error", unfe.getMessage());
         return new ResponseEntity<>(
                 map,
                 HttpStatus.INTERNAL_SERVER_ERROR

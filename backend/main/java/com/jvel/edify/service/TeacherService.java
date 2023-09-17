@@ -53,18 +53,6 @@ public class TeacherService {
                 .build();
     }
 
-    public TeacherQueryResponse getTeacherByEmailAddress(String emailAddress) {
-        Optional<User> teacher = teacherRepository.findByEmailAddress(emailAddress);
-
-        if (teacher.isEmpty())
-            throw new UserNotFoundException("User not found by email address " + emailAddress);
-        if (teacher.get().getRole() != Role.TEACHER)
-            throw new TeacherNotFoundException("Teacher not found by email address " + emailAddress);
-
-        return TeacherQueryResponse.builder()
-                .user(teacher.get())
-                .build();
-    }
 
     public CourseQueryMultipleResponse getCourses(Integer teacherId) {
         Optional<User> teacherOptional = teacherRepository.findById(teacherId);
@@ -81,20 +69,6 @@ public class TeacherService {
         return courses;
     }
 
-    public CourseQueryMultipleResponse getCoursesByEmailAddress(String emailAddress) {
-        Optional<User> teacherOptional = teacherRepository.findByEmailAddress(emailAddress);
-
-        if (teacherOptional.isEmpty())
-            throw new UserNotFoundException("No user found by email address " + emailAddress);
-        if (teacherOptional.get().getRole() != Role.TEACHER)
-            throw new TeacherNotFoundException("No teacher found by email address " + emailAddress);
-
-        List<Course> coursesList = courseRepository.findByTeacher((Teacher) teacherOptional.get());
-        CourseQueryMultipleResponse courses = CourseQueryMultipleResponse.builder()
-                .courses(coursesList)
-                .build();
-        return courses;
-    }
 
     @Transactional
     public void updatePositionById(Integer teacherId, String position) {

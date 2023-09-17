@@ -67,15 +67,6 @@ public class TeacherController {
         );
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<TeacherQueryResponse> getTeacherByEmail(@PathVariable("email") String emailAddress) {
-        TeacherQueryResponse teacher = teacherService.getTeacherByEmailAddress(emailAddress);
-        return new ResponseEntity<>(
-                teacher,
-                HttpStatus.OK
-        );
-    }
-
     @PutMapping("/department")
     public ResponseEntity<CourseQueryMultipleResponse> updateDepartment(
             @RequestHeader("Authorization") String token,

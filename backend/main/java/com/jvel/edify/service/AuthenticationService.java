@@ -34,12 +34,12 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        if (request.getEmailAddress() == null || request.getEmailAddress().length() == 0)
-            throw new IllegalStateException("Email address not specified");
+        if (request.getUsername() == null || request.getUsername().length() == 0)
+            throw new IllegalStateException("Username not specified");
 
         boolean ssnExists = userRepository.existsBySsn(request.getSsn());
-        boolean emailExists = userRepository.existsByEmailAddress(request.getEmailAddress());
-        if (emailExists) throw new DuplicateEntryException("Email already exists");
+        boolean usernameExists = userRepository.existsByUsername(request.getUsername());
+        if (usernameExists) throw new DuplicateEntryException("Username already exists");
         if (ssnExists) throw new DuplicateEntryException("SSN already exists");
 
         if (request.getRole().contains("STUDENT")) {
@@ -58,12 +58,12 @@ public class AuthenticationService {
         if (request.getPassword() == null || request.getPassword().length() == 0)
             throw new IllegalStateException("Password not specified");
         if (request.getSsn() == null)
-            throw new IllegalStateException("Password not specified");
+            throw new IllegalStateException("SSN not specified");
 
         Student student = new Student(
                 request.getFirstName(),
                 request.getLastName(),
-                request.getEmailAddress(),
+                request.getUsername(),
                 request.getSsn(),
                 passwordEncoder.encode(request.getPassword()),
                 request.getDob(),
@@ -100,7 +100,7 @@ public class AuthenticationService {
         Teacher teacher = new Teacher(
                 request.getFirstName(),
                 request.getLastName(),
-                request.getEmailAddress(),
+                request.getUsername(),
                 request.getSsn(),
                 passwordEncoder.encode(request.getPassword()),
                 request.getDob(),
@@ -119,19 +119,19 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        if (request.getEmailAddress() == null || request.getEmailAddress().length() == 0)
-            throw new IllegalStateException("Email address not specified");
+        if (request.getUsername() == null || request.getUsername().length() == 0)
+            throw new IllegalStateException("Username not specified");
         if (request.getPassword() == null || request.getPassword().length() == 0)
             throw new IllegalStateException("Last name not specified");
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmailAddress(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
-        Optional<User> user = userRepository.findByEmailAddress(request.getEmailAddress());
-        if (user.isEmpty()) throw new UserNotFoundException("User not found by email address " + request.getEmailAddress());
+        Optional<User> user = userRepository.findByUsername(request.getUsername());
+        if (user.isEmpty()) throw new UserNotFoundException("User not found by username " + request.getUsername());
         Map<String, Object> customClaims = Map.of("id", user.get().getId());
         String jwtToken = jwtService.generateToken(customClaims, user.get());
         return AuthenticationResponse.builder()

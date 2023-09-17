@@ -58,30 +58,12 @@ public class StudentController {
         );
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<StudentQueryResponse> getStudentByEmail(@PathVariable("email") String email) {
-        StudentQueryResponse response = studentService.getStudentByEmailAddress(email);
-        return new ResponseEntity<>(
-                response,
-                HttpStatus.OK
-        );
-    }
-
     @GetMapping("/courses")
     public ResponseEntity<CourseTeacherMultipleResponse> getCourses(@RequestHeader("Authorization") String token) {
         Integer id = jwtService.resolveToken(token);
         CourseTeacherMultipleResponse response = studentService.getCourses(id);
         return new ResponseEntity<>(
                 response,
-                HttpStatus.OK
-        );
-    }
-
-    @GetMapping("/courses-basic")
-    public ResponseEntity<SimpleCourseQueryMultipleResponse> getCoursesSimple(@RequestHeader("Authorization") String token) {
-        Integer id = jwtService.resolveToken(token);
-        return new ResponseEntity<>(
-                studentService.getCoursesSimple(id),
                 HttpStatus.OK
         );
     }

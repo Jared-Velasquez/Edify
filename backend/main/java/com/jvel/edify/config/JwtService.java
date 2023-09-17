@@ -98,12 +98,12 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String userEmail = this.extractUsername(token);
+        final String username = this.extractUsername(token);
         final String audience = this.extractAudience(token);
         final String issuer = this.extractIssuer(token);
         final Date expiration = this.extractExpiration(token);
 
-        if ((userEmail == null) || !userEmail.equals(userDetails.getUsername())) {
+        if ((username == null) || !username.equals(userDetails.getUsername())) {
             System.out.println("JWT invalid: username");
             return false;
         }
@@ -126,13 +126,13 @@ public class JwtService {
         return true;
     }
 
-    public String resolveTokenEmail(String bearerToken) {
+    public String resolveTokenUsername(String bearerToken) {
         if (!StringUtils.hasText(bearerToken) || !bearerToken.startsWith("Bearer "))
             throw new IllegalStateException("Bearer token not specified");
 
         String jwt = bearerToken.substring(7);
-        String userEmail = extractUsername(jwt);
-        return userEmail;
+        String username = extractUsername(jwt);
+        return username;
     }
 
     public Integer resolveToken(String bearerToken) {

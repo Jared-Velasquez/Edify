@@ -24,13 +24,13 @@ public class Teacher extends User {
     @Builder
     public Teacher(String firstName,
                    String lastName,
-                   String emailAddress,
+                   String username,
                    Integer ssn, String password,
                    Date dob,
                    Gender gender,
                    String address,
                    String phoneNumber) {
-        super(firstName, lastName, emailAddress, ssn, password, dob, Role.TEACHER, gender, address, phoneNumber);
+        super(firstName, lastName, username, ssn, password, dob, Role.TEACHER, gender, address, phoneNumber);
     }
 
     @Builder

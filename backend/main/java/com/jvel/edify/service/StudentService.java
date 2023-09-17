@@ -36,19 +36,18 @@ public class StudentService {
     private AssignmentRepository assignmentRepository;
 
     public void addStudent(Student student) {
-        //System.out.println("student = " + student);
-        // Check if email is present
-        if (student.getEmailAddress() == null)
-            throw new IllegalStateException("Email address is not present");
+        // Check if username is present
+        if (student.getUsername() == null)
+            throw new IllegalStateException("Username is not present");
 
         // Check if SSN is present
         if (student.getSsn() == null)
             throw new IllegalStateException("SSN is not present");
 
-        // Check if another user has the same email address as this student
-        Optional<User> userOptionalEmail = userRepository.findByEmailAddress(student.getEmailAddress());
-        if (userOptionalEmail.isPresent())
-            throw new UserAlreadyExistsException("Email already taken by user");
+        // Check if another user has the same username as this student
+        Optional<User> userOptional = userRepository.findByUsername(student.getUsername());
+        if (userOptional.isPresent())
+            throw new UserAlreadyExistsException("Username already taken by user");
 
         // Check if another student has the same SSN as this student
         Optional<User> userOptionalSSN = userRepository.findBySsn(student.getSsn());
@@ -72,19 +71,6 @@ public class StudentService {
             throw new UserNotFoundException("User not found by id " + studentId);
         if (student.get().getRole() != Role.STUDENT)
             throw new StudentNotFoundException("Student not found by id " + studentId);
-
-        return StudentQueryResponse.builder()
-                .user(student.get())
-                .build();
-    }
-
-    public StudentQueryResponse getStudentByEmailAddress(String emailAddress) {
-        Optional<User> student = studentRepository.findByEmailAddress(emailAddress);
-
-        if (student.isEmpty())
-            throw new UserNotFoundException("User not found by email address " + emailAddress);
-        if (student.get().getRole() != Role.STUDENT)
-            throw new StudentNotFoundException("Student not found by email address " + emailAddress);
 
         return StudentQueryResponse.builder()
                 .user(student.get())
@@ -119,39 +105,6 @@ public class StudentService {
 
         return CourseTeacherMultipleResponse.builder()
                 .courses(courses)
-                .build();
-    }
-
-    public SimpleCourseQueryMultipleResponse getCoursesSimple(Integer studentId) {
-        Optional<User> user = studentRepository.findById(studentId);
-
-        if (user.isEmpty())
-            throw new UserNotFoundException("User not found by id " + studentId);
-        if (user.get().getRole() != Role.STUDENT)
-            throw new StudentNotFoundException("Student not found by id " + studentId);
-
-        Student student = (Student) user.get();
-
-        List<SimpleCourseQueryResponse> response = student.getCourses().stream().map(element -> SimpleCourseQueryResponse.builder()
-                .courseId(element.getCourseId())
-                .title(element.getTitle()).build()).toList();
-
-        return SimpleCourseQueryMultipleResponse.builder()
-                .courses(response).build();
-    }
-
-    public CourseQueryMultipleResponse getCourses(String emailAddress) {
-        Optional<User> user = studentRepository.findByEmailAddress(emailAddress);
-
-        if (user.isEmpty())
-            throw new UserNotFoundException("User not found by id " + emailAddress);
-        if (user.get().getRole() != Role.STUDENT)
-            throw new StudentNotFoundException("Student not found by id " + emailAddress);
-
-        Student student = (Student) user.get();
-
-        return CourseQueryMultipleResponse.builder()
-                .courses(student.getCourses())
                 .build();
     }
 

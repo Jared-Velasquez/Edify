@@ -26,8 +26,8 @@ public class Student extends User {
     private List<Course> courses;
 
     @Builder
-    public Student(String firstName, String lastName, String emailAddress, Integer ssn, String password, Date dob, Gender gender, String address, String phoneNumber) {
-        super(firstName, lastName, emailAddress, ssn, password, dob, Role.STUDENT, gender, address, phoneNumber);
+    public Student(String firstName, String lastName, String username, Integer ssn, String password, Date dob, Gender gender, String address, String phoneNumber) {
+        super(firstName, lastName, username, ssn, password, dob, Role.STUDENT, gender, address, phoneNumber);
         this.courses = new ArrayList<>();
     }
     @Builder
