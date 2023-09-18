@@ -148,7 +148,7 @@ public class StudentService {
                 .assignments(assignments).build();
     }
 
-    public CourseQueryMultipleResponse getUnenrolledCourses(Integer studentId) {
+    public CourseTeacherMultipleResponse getUnenrolledCourses(Integer studentId) {
         Optional<User> user = studentRepository.findById(studentId);
 
         if (user.isEmpty())
@@ -159,9 +159,31 @@ public class StudentService {
         Student student = (Student) user.get();
 
         List<Course> studentCourses = student.getCourses();
-        List<Course> courses = courseRepository.findAll();
-        courses.removeAll(studentCourses);
-        return CourseQueryMultipleResponse.builder().courses(courses).build();
+        List<CourseTeacherResponse> courses = courseRepository.findAll().stream().filter((course) -> {
+            for (Course studentCourse : studentCourses) {
+                if (studentCourse.getCourseId().equals(course.getCourseId()))
+                    return false;
+            }
+            return true;
+        }).map((course) -> CourseTeacherResponse.builder()
+                .courseId(course.getCourseId())
+                .title(course.getTitle())
+                .code(course.getCode())
+                .syllabusBody(course.getSyllabusBody())
+                .publiclyVisible(course.isPubliclyVisible())
+                .units(course.getUnits())
+                .courseContent(course.getCourseContent())
+                .modules(course.getModules())
+                .announcements(course.getAnnouncements())
+                .firstName(course.getTeacher().getFirstName())
+                .lastName(course.getTeacher().getLastName())
+                .position(course.getTeacher().getPosition())
+                .department(course.getTeacher().getDepartment())
+                .build()).toList();
+
+        return CourseTeacherMultipleResponse.builder()
+                .courses(courses)
+                .build();
     }
 
     @Transactional

@@ -87,7 +87,7 @@ public class StudentController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<CourseQueryMultipleResponse> getUnenrolledCourses(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<CourseTeacherMultipleResponse> getUnenrolledCourses(@RequestHeader("Authorization") String token) {
         Integer id = jwtService.resolveToken(token);
         return new ResponseEntity<>(
                 studentService.getUnenrolledCourses(id),

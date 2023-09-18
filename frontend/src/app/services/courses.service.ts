@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { AnnouncementResponse, Announcement, CourseResponse, Teacher, Assignment, AssignmentResponse, AssignmentMultipleResponse, Module, ModuleResponse, ScoreResponse } from 'src/app/models/httpResponseModels';
+import { AnnouncementResponse, Announcement, CourseResponse, Teacher, Assignment, AssignmentResponse, AssignmentMultipleResponse, Module, ModuleResponse, ScoreResponse, Course } from 'src/app/models/httpResponseModels';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +63,13 @@ export class CoursesService {
     return this.http.get<ModuleResponse>(`https://edify.azurewebsites.net/api/course/module/${courseId}`)
     .pipe(
       map((res: ModuleResponse) => res.modules),
+      catchError(this.handleGetError),
+    );
+  }
+
+  public getUnenrolledCourses(): Observable<Course[]> {
+    return this.http.get<CourseResponse>(`https://edify.azurewebsites.net/api/student/search`).pipe(
+      map((res) => res.courses),
       catchError(this.handleGetError),
     );
   }
