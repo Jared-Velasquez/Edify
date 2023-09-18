@@ -101,6 +101,18 @@ public class TeacherService {
 
         Teacher teacher = (Teacher) teacherOptional.get();
         teacher.setDepartment(departmentEnum);
+        if (departmentEnum.equals(Department.COMPUTER_SCIENCE))
+            teacher.setDepartmentalEmail(teacher.getUsername() + "@cs.edify.edu");
+        else if (departmentEnum.equals(Department.CLASSICS))
+            teacher.setDepartmentalEmail(teacher.getUsername() + "@humnet.edify.edu");
+        else if (departmentEnum.equals(Department.ASIAN_AMERICAN_STUDIES))
+            teacher.setDepartmentalEmail(teacher.getUsername() + "@asianam.edify.edu");
+        else if (departmentEnum.equals(Department.MUSICOLOGY))
+            teacher.setDepartmentalEmail(teacher.getUsername() + "@schoolofmusic.edify.edu");
+        else if (departmentEnum.equals(Department.ELECTRICAL_ENGINEERING))
+            teacher.setDepartmentalEmail(teacher.getUsername() + "@ee.edify.edu");
+        else
+            teacher.setDepartmentalEmail(teacher.getUsername() + "@edify.edu");
         teacherRepository.save(teacher);
     }
 }

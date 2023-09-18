@@ -37,6 +37,18 @@ public class AuthenticationService {
         if (request.getUsername() == null || request.getUsername().length() == 0)
             throw new IllegalStateException("Username not specified");
 
+        // Check username
+        Pattern usernamePattern = Pattern.compile("^[a-z0-9]{2,15}$");
+        Matcher usernameMatcher = usernamePattern.matcher(request.getUsername());
+        if (!usernameMatcher.find())
+            throw new IllegalArgumentException("Edify Usernames consist of 2 to 15 lower case letters and numbers.");
+
+        // Check password
+        Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9!@#$%^&*().,]{6,}$");
+        Matcher passwordMatcher = passwordPattern.matcher(request.getPassword());
+        if (!passwordMatcher.find())
+            throw new IllegalArgumentException("Passwords are at least 6 characters long and can consist of letters, numbers, and the following symbols: !@#$%&*().,");
+
         boolean ssnExists = userRepository.existsBySsn(request.getSsn());
         boolean usernameExists = userRepository.existsByUsername(request.getUsername());
         if (usernameExists) throw new DuplicateEntryException("Username already exists");
@@ -122,7 +134,19 @@ public class AuthenticationService {
         if (request.getUsername() == null || request.getUsername().length() == 0)
             throw new IllegalStateException("Username not specified");
         if (request.getPassword() == null || request.getPassword().length() == 0)
-            throw new IllegalStateException("Last name not specified");
+            throw new IllegalStateException("Password not specified");
+
+        // Check username
+        Pattern usernamePattern = Pattern.compile("^[a-z0-9]{2,15}$");
+        Matcher usernameMatcher = usernamePattern.matcher(request.getUsername());
+        if (!usernameMatcher.find())
+            throw new IllegalArgumentException("Edify Usernames consist of 2 to 15 lower case letters and numbers.");
+
+        // Check password
+        Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9!@#$%^&*().,]{6,}$");
+        Matcher passwordMatcher = passwordPattern.matcher(request.getPassword());
+        if (!passwordMatcher.find())
+            throw new IllegalArgumentException("Passwords are at least 6 characters long and can consist of letters, numbers, and the following symbols: !@#$%&*().,");
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

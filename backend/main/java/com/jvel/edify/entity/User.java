@@ -25,6 +25,18 @@ import java.util.List;
                 @UniqueConstraint(
                         name = "ssn_unique",
                         columnNames = "ssn"
+                ),
+                @UniqueConstraint(
+                        name = "official_email_unique",
+                        columnNames = "officialEmail"
+                ),
+                @UniqueConstraint(
+                        name = "university_email_unique",
+                        columnNames = "universityEmail"
+                ),
+                @UniqueConstraint(
+                        name = "maildrop_unique",
+                        columnNames = "maildrop"
                 )
         }
 )
@@ -74,6 +86,9 @@ public abstract class User implements UserDetails {
     private Gender gender;
     private String address;
     private String phoneNumber;
+    private String officialEmail;
+    private String universityEmail;
+    private String maildrop;
 
     public User() {
 
@@ -90,6 +105,9 @@ public abstract class User implements UserDetails {
         this.gender = gender;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.officialEmail = username + "@edify.edu";
+        this.universityEmail = this.officialEmail;
+        this.maildrop = this.officialEmail;
     }
 
     @Override

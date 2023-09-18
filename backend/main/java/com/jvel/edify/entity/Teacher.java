@@ -13,7 +13,13 @@ import java.util.Date;
 @Data
 @Entity
 @Table(
-        name = "teacher_table"
+        name = "teacher_table",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "departmental_email_unique",
+                        columnNames = "departmentalEmail"
+                )
+        }
 )
 @DiscriminatorValue("TEACHER")
 public class Teacher extends User {
@@ -21,6 +27,7 @@ public class Teacher extends User {
     private Department department;
     @Enumerated(EnumType.STRING)
     private Position position;
+    private String departmentalEmail;
     @Builder
     public Teacher(String firstName,
                    String lastName,
@@ -31,6 +38,7 @@ public class Teacher extends User {
                    String address,
                    String phoneNumber) {
         super(firstName, lastName, username, ssn, password, dob, Role.TEACHER, gender, address, phoneNumber);
+        this.departmentalEmail = this.getUniversityEmail();
     }
 
     @Builder
