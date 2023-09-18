@@ -27,7 +27,7 @@ export class CoursesService {
           createdAt: new Date(announcement.createdAt),
         }));
       }),
-      catchError(this.handleGetError),
+      catchError(this.handleError),
     );
   }
 
@@ -43,7 +43,7 @@ export class CoursesService {
           createdAt: new Date(assignment.createdAt),
         }));
       }),
-      catchError(this.handleGetError),
+      catchError(this.handleError),
     );
   }
 
@@ -51,7 +51,7 @@ export class CoursesService {
     return this.http.get<AssignmentResponse>(`https://edify.azurewebsites.net/api/course/assignment/${assignmentId}`)
     .pipe(
       map((res: AssignmentResponse) => res.assignment),
-      catchError(this.handleGetError),
+      catchError(this.handleError),
     );
   }
 
@@ -63,18 +63,31 @@ export class CoursesService {
     return this.http.get<ModuleResponse>(`https://edify.azurewebsites.net/api/course/module/${courseId}`)
     .pipe(
       map((res: ModuleResponse) => res.modules),
-      catchError(this.handleGetError),
+      catchError(this.handleError),
     );
   }
 
   public getUnenrolledCourses(): Observable<Course[]> {
     return this.http.get<CourseResponse>(`https://edify.azurewebsites.net/api/student/search`).pipe(
       map((res) => res.courses),
-      catchError(this.handleGetError),
+      catchError(this.handleError),
     );
   }
 
-  private handleGetError(error: HttpErrorResponse) {
+  public addStudentToCourse(courseId: number): Observable<Boolean> {
+    return this.http.put(`https://edify.azurewebsites.net/api/course/student`, {
+      courseId: courseId,
+    }, {
+      responseType: 'text',
+    }).pipe(
+      map(() => {
+        return true;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       console.error('An error occurred:', error.error);
     } else {

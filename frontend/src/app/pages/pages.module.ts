@@ -22,6 +22,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { HomeComponent } from './course/home/home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SearchComponent } from './search/search.component';
+import { CourseSearchComponent } from './search/course-search/course-search.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { SearchComponent } from './search/search.component';
     HomeComponent,
     SignUpComponent,
     SearchComponent,
+    CourseSearchComponent,
   ],
   imports: [
     CommonModule,

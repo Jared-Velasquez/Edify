@@ -24,6 +24,12 @@ export class SearchComponent implements OnInit, OnDestroy {
     })
   }
 
+  onSelectCourse(courseId: number) {
+    this.courseService.addStudentToCourse(courseId).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
   ngOnDestroy() {
     if (this.courseSubscription)
       this.courseSubscription.unsubscribe();
