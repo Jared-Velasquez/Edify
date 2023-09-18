@@ -2,10 +2,7 @@ package com.jvel.edify.controller;
 
 import com.jvel.edify.config.JwtService;
 import com.jvel.edify.controller.requests.course_requests.*;
-import com.jvel.edify.controller.responses.course_responses.AnnouncementQueryMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.AssignmentQueryResponse;
-import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.*;
 import com.jvel.edify.entity.*;
 import com.jvel.edify.service.CourseContentService;
 import com.jvel.edify.service.CourseService;
@@ -41,6 +38,16 @@ public class CourseController {
         Course course = courseService.getCourse(id, courseId);
         return new ResponseEntity<>(
                 course,
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<CourseQueryMultipleResponse> getAllCourse(@RequestHeader("Authorization") String token) {
+        Integer id = jwtService.resolveToken(token);
+        CourseQueryMultipleResponse courses = courseService.getAllCourses(id);
+        return new ResponseEntity<>(
+                courses,
                 HttpStatus.OK
         );
     }

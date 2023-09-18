@@ -46,6 +46,11 @@ export const navLinkOptions = (courses: Course[]): NavLinksInterface[] => {
             name: "Dashboard",
         },
         {
+            icon: "fal fa-search",
+            link: "search",
+            name: "Search",
+        },
+        {
             icon: "fal fa-book",
             name: "Courses",
             subitems: coursesOptions,

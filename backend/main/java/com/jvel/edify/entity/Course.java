@@ -42,6 +42,7 @@ public class Course {
     private String code;
     private boolean publiclyVisible;
     private Integer units;
+    @Column(length=1000)
     private String syllabusBody;
 
     @OneToOne(

@@ -14,7 +14,7 @@ export class LoginService {
   private obtainToken(username: string, password: string): Observable<HttpResponse<TokenResponse>> {
     // Need observe: 'response' to return the full response instead of just the body
     return this.http.post<TokenResponse>('https://edify.azurewebsites.net/api/auth/authenticate', {
-      "emailAddress": username,
+      "username": username,
       "password": password,
     }, {
       observe: 'response',
@@ -23,7 +23,7 @@ export class LoginService {
 
   private signupToken(username: string, password: string, firstName: string, lastName: string, role: string): Observable<HttpResponse<TokenResponse>> {
     return this.http.post<TokenResponse>('https://edify.azurewebsites.net/api/auth/register', {
-      "emailAddress": username,
+      "username": username,
       "password": password,
       "firstName": firstName,
       "lastName": lastName,

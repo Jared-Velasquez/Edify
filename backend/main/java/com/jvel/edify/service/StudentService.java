@@ -148,6 +148,22 @@ public class StudentService {
                 .assignments(assignments).build();
     }
 
+    public CourseQueryMultipleResponse getUnenrolledCourses(Integer studentId) {
+        Optional<User> user = studentRepository.findById(studentId);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("User not found by id " + studentId);
+        if (user.get().getRole() != Role.STUDENT)
+            throw new StudentNotFoundException("Student not found by id " + studentId);
+
+        Student student = (Student) user.get();
+
+        List<Course> studentCourses = student.getCourses();
+        List<Course> courses = courseRepository.findAll();
+        courses.removeAll(studentCourses);
+        return CourseQueryMultipleResponse.builder().courses(courses).build();
+    }
+
     @Transactional
     public void updateScore(Integer studentId, Integer score, Integer assignmentId) {
         Optional<User> user = studentRepository.findById(studentId);

@@ -86,6 +86,15 @@ public class StudentController {
         );
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<CourseQueryMultipleResponse> getUnenrolledCourses(@RequestHeader("Authorization") String token) {
+        Integer id = jwtService.resolveToken(token);
+        return new ResponseEntity<>(
+                studentService.getUnenrolledCourses(id),
+                HttpStatus.OK
+        );
+    }
+
     @PutMapping("/scores")
     public ResponseEntity<String> updateScore(@RequestHeader("Authorization") String token, @RequestBody ScoreRequest sr) {
         Integer id = jwtService.resolveToken(token);

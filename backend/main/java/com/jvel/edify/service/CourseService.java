@@ -5,10 +5,7 @@ import com.jvel.edify.controller.requests.course_requests.AnnouncementCreateRequ
 import com.jvel.edify.controller.requests.course_requests.AssignmentCreateRequest;
 import com.jvel.edify.controller.requests.course_requests.ModuleCreateRequest;
 import com.jvel.edify.controller.requests.course_requests.UpdateCourse;
-import com.jvel.edify.controller.responses.course_responses.AnnouncementQueryMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.AssignmentQueryMultipleResponse;
-import com.jvel.edify.controller.responses.course_responses.AssignmentQueryResponse;
-import com.jvel.edify.controller.responses.course_responses.ModuleQueryMultipleResponse;
+import com.jvel.edify.controller.responses.course_responses.*;
 import com.jvel.edify.entity.*;
 import com.jvel.edify.entity.Module;
 import com.jvel.edify.entity.enums.Role;
@@ -548,5 +545,13 @@ public class CourseService {
             throw new UnauthorizedAccessException("User is not teacher of course " + module.getCourse().getCourseId());
 
         moduleRepository.delete(module);
+    }
+
+    public CourseQueryMultipleResponse getAllCourses(Integer userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("User not found by id " + userId);
+        List<Course> courses = courseRepository.findAll();
+        return CourseQueryMultipleResponse.builder().courses(courses).build();
     }
 }

@@ -21,6 +21,7 @@ import { ModuleComponent } from './course/modules/module/module.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { HomeComponent } from './course/home/home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     ModuleComponent,
     HomeComponent,
     SignUpComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,

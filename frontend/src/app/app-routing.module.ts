@@ -13,10 +13,12 @@ import { AssignmentsComponent } from './pages/course/assignments/assignments.com
 import { AssignmentComponent } from './pages/course/assignments/assignment-page/assignment-page.component';
 import { HomeComponent } from './pages/course/home/home.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { SearchComponent } from './pages/search/search.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent, canActivate: [authenticationGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authenticationGuard] },
+  { path: 'search', component: SearchComponent, canActivate: [authenticationGuard] },
   { path: 'calendar', component: CalendarComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id', component: HomeComponent, canActivate: [authenticationGuard] },
   { path: 'courses/:id/announcements', component: AnnouncementsComponent, canActivate: [authenticationGuard] },
