@@ -1,12 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { listAnimationFast } from 'src/app/animations/shared_animations';
 import { Course } from 'src/app/models';
 import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrls: ['./search.component.css'],
+  animations: [
+    listAnimationFast,
+  ]
 })
 export class SearchComponent implements OnInit, OnDestroy {
   courseSubscription: Subscription;

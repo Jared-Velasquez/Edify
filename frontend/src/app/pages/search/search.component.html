@@ -1,6 +1,12 @@
 <div class="flex flex-col w-full h-screen p-[2rem]">
+    <!-- Assignments Logo -->
+    <div class="flex flex-row items-center mb-[2rem]">
+        <i class="fa fa-search text-2xl" aria-hidden="true"></i>
+        <span class="ml-[1.5rem] font-cabin text-4xl">Search for Courses</span>
+    </div>
+    <p class="font-raleway text-xl mb-[1.5rem]">Suggested Courses:</p>
     <!-- Search Container -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" *ngIf="courses.length">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" [@listAnimation]="courses.length" *ngIf="courses.length">
         <app-course-search *ngFor="let course of courses" [course]="course"></app-course-search>
     </div>
 </div>
